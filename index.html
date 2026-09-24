@@ -76,18 +76,24 @@
       border-radius: 50%;
       pointer-events: none;
     }
-    /* Style Tambahan Khusus Logo Sekolah */
+    
+    /* Style Logo Sekolah */
     .school-logo {
-      width: 80px;
+      width: 90px;
       height: auto;
-      margin-bottom: 10px;
-      filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.2));
+      margin-bottom: 12px;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+      position: relative;
+      z-index: 1;
     }
+
     .header-banner h1 { 
       font-size: 1.6rem; 
       font-weight: 800; 
       letter-spacing: 1px; 
       text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      position: relative;
+      z-index: 1;
     }
     .header-banner h2 { 
       font-size: 1.25rem; 
@@ -95,8 +101,17 @@
       margin-top: 6px; 
       color: var(--yellow-bright); 
       text-shadow: 0 0 10px rgba(250, 204, 21, 0.4);
+      position: relative;
+      z-index: 1;
     }
-    .header-banner p { font-size: 0.9rem; opacity: 0.95; margin-top: 6px; font-weight: 500; }
+    .header-banner p { 
+      font-size: 0.9rem; 
+      opacity: 0.95; 
+      margin-top: 6px; 
+      font-weight: 500; 
+      position: relative;
+      z-index: 1;
+    }
 
     .screen { display: none; animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
     .screen.active { display: block; }
@@ -236,9 +251,7 @@
   <div class="container">
     <!-- HEADER SEKOLAH -->
     <div class="header-banner">
-      <!-- TAG LOGO SEKOLAH -->
-      <img src="https://drive.google.com/file/d/1KRWtl9vDYFRc6DNC0Ez3Uac6D2XzWydf/view?usp=sharing" alt="Logo SMPN 4 Praya" class="school-logo">
-      
+      <img src="https://lh3.googleusercontent.com/d/1KRWtl9vDYFRc6DNC0Ez3Uac6D2XzWydf" alt="Logo SMPN 4 Praya" class="school-logo">
       <h1>SMP NEGERI 4 PRAYA</h1>
       <h2>UJIAN ONLINE ASTS</h2>
       <p>Mata Pelajaran Terpadu Tahun Pelajaran 2026/2027</p>
