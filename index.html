@@ -548,6 +548,18 @@
     bankSoalPrakarya["7.3"] = bankSoalPrakarya["7.1"];
     bankSoalPrakarya["8.2"] = bankSoalPrakarya["8.1"];
 
+    // Bank Soal PAI (Dapat diakses oleh SEMUA KELAS)
+    const bankSoalPAI = {
+      "all": [
+        { 
+          type: "pg", 
+          q: "Sifat wajib bagi Allah SWT 'As-Sami'' (السميع) memiliki arti bahwa Allah Maha ...", 
+          opt: ["A. Melihat", "B. Mendengar", "C. Mengetahui", "D. Bijaksana"], 
+          ans: 1 
+        }
+      ]
+    };
+
     let studentData = { name: "", class: "", violations: 0 };
     let currentSubject = "mtk";
     let currentIdx = 0;
@@ -689,6 +701,8 @@
         if (bankSoalPrakarya[studentData.class]) {
           return bankSoalPrakarya[studentData.class];
         }
+      } else if (currentSubject === 'pai') {
+        return bankSoalPAI["all"];
       }
       return [];
     }
