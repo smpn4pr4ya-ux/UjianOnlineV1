@@ -1462,65 +1462,86 @@
 
     function nextQuestion() {
       const questions = getQuestions();
-      if (currentIdx < questions.length - 1) {
-        currentIdx++;
-        showQuestion();
-      }
-    }
+      
+      if (!forced) {
+        let unansweredQuestions = [];
 
-    function finishExam(forceSubmit = false) {
-      if (!forceSubmit) {
-        if (!confirm("Apakah Anda yakin ingin menyelesaikan ujian dan mengirim semua jawaban?")) {
+        questions.forEach((q, idx) => {
+          if (q.type === 'pg') {
+            if (userAnswersPG[idx] === undefined || userAnswersPG[idx] === null) {
+              unansweredQuestions.push(idx + 1);
+            }
+          } else if (q.type === 'essay') {
+            if (!userAnswersEssay[idx] || userAnswersEssay[idx].trim() === "") {
+              unansweredQuestions.push(idx + 1);
+            }
+          }
+        });
+
+        if (unansweredQuestions.length > 0) {
+          alert(`Pemberitahuan: Masih ada soal yang belum dikerjakan!\nNomor soal yang belum terjawab: ${unansweredQuestions.join(', ')}.`);
           return;
         }
       }
 
-      document.getElementById('loadingText').innerText = "Mengirim Jawaban Ke Server...";
-      document.getElementById('loading').style.display = 'flex';
-
-      const questions = getQuestions();
-      let totalCorrect = 0;
-      let totalPG = 0;
+      // Hitung Nilai PG
+      let pgCount = 0;
+      let correctPG = 0;
 
       questions.forEach((q, idx) => {
         if (q.type === 'pg') {
-          totalPG++;
+          pgCount++;
           if (userAnswersPG[idx] === q.ans) {
-            totalCorrect++;
+            correctPG++;
           }
         }
       });
 
-      const scorePG = totalPG > 0 ? Math.round((totalCorrect / totalPG) * 100) : 0;
+      const totalScorePG = pgCount > 0 ? Math.round((correctPG / pgCount) * 100) : 0;
 
-      const payload = {
+      // Kumpulkan Jawaban Essay
+      const essayAnswersList = [];
+      questions.forEach((q, idx) => {
+        if (q.type === 'essay') {
+          essayAnswersList.push(userAnswersEssay[idx] || "");
+        }
+      });
+
+      const result = {
+        time: new Date().toLocaleString('id-ID'),
         name: studentData.name,
         class: studentData.class,
-        subject: currentSubject,
-        score: scorePG,
-        answersPG: JSON.stringify(userAnswersPG),
-        answersEssay: JSON.stringify(userAnswersEssay),
+        subject: currentSubject.toUpperCase(),
+        score: totalScorePG,
+        essayAnswers: essayAnswersList,
         violations: studentData.violations
       };
 
-      fetch(SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload)
-      })
-      .then(() => {
+      document.getElementById('loadingText').innerText = "Mengirim Jawaban Ke Server...";
+      document.getElementById('loading').style.display = 'flex';
+
+      if (SCRIPT_URL && SCRIPT_URL.trim() !== "") {
+        fetch(SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(result)
+        })
+        .then(() => {
+          document.getElementById('loading').style.display = 'none';
+          showScreen('doneScreen');
+        })
+        .catch(err => {
+          console.error("Gagal mengirim ke server Google Sheet:", err);
+          document.getElementById('loading').style.display = 'none';
+          alert("Gagal terhubung ke server Google Sheet.");
+          showScreen('doneScreen');
+        });
+      } else {
         document.getElementById('loading').style.display = 'none';
+        alert("PERHATIAN: URL Google Apps Script belum diisi di index.html!");
         showScreen('doneScreen');
-      })
-      .catch(err => {
-        document.getElementById('loading').style.display = 'none';
-        console.error(err);
-        alert("Terjadi kesalahan pengiriman. Sistem akan mencoba menyimpan jawaban Anda.");
-        showScreen('doneScreen');
-      });
+      }
     }
   </script>
 </body>
