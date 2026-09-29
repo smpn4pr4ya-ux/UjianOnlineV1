@@ -1,0 +1,1522 @@
+<!DOCTYPE html>
+<html lang="id" class="notranslate" translate="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google" content="notranslate">
+  <title>Ujian Online Siswa - SMPN 4 Praya</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-body: #f0f7ff;
+      --primary: #0284c7;
+      --primary-cyan: #06b6d4;
+      --primary-light: #38bdf8;
+      --accent-yellow: #f59e0b;
+      --yellow-bright: #facc15;
+      --success: #10b981;
+      --danger: #ef4444;
+      --dark: #0f172a;
+      --card-bg: #ffffff;
+      --border-color: #e2e8f0;
+    }
+    
+    /* Mencegah seleksi teks global untuk keamanan */
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+      font-family: 'Plus Jakarta Sans', sans-serif; 
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    /* Mengizinkan seleksi teks hanya pada kolom isian */
+    input, textarea {
+      -webkit-user-select: text !important;
+      -moz-user-select: text !important;
+      -ms-user-select: text !important;
+      user-select: text !important;
+    }
+
+    body { 
+      background: var(--bg-body); 
+      background-image: radial-gradient(circle at 10% 10%, rgba(56, 189, 248, 0.08) 0%, transparent 40%),
+                        radial-gradient(circle at 90% 90%, rgba(250, 204, 21, 0.08) 0%, transparent 40%);
+      min-height: 100vh; 
+      color: var(--dark); 
+      padding: 24px 16px; 
+    }
+    .container { max-width: 800px; margin: 0 auto; }
+    
+    /* Header Banner Futuristik */
+    .header-banner {
+      background: linear-gradient(135deg, #0284c7 0%, #06b6d4 50%, #0284c7 100%);
+      color: #ffffff;
+      border-radius: 24px;
+      padding: 28px 24px;
+      text-align: center;
+      box-shadow: 0 12px 30px rgba(2, 132, 199, 0.25);
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+    .header-banner::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(250, 204, 21, 0.35) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .header-banner h1 { 
+      font-size: 1.6rem; 
+      font-weight: 800; 
+      letter-spacing: 1px; 
+      text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .header-banner h2 { 
+      font-size: 1.25rem; 
+      font-weight: 800; 
+      margin-top: 6px; 
+      color: var(--yellow-bright); 
+      text-shadow: 0 0 10px rgba(250, 204, 21, 0.4);
+    }
+    .header-banner p { font-size: 0.9rem; opacity: 0.95; margin-top: 6px; font-weight: 500; }
+
+    .screen { display: none; animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+    .screen.active { display: block; }
+    
+    .card { 
+      background: var(--card-bg); 
+      border-radius: 20px; 
+      padding: 26px; 
+      box-shadow: 0 10px 25px -5px rgba(2, 132, 199, 0.08); 
+      border: 1px solid rgba(56, 189, 248, 0.25); 
+      margin-bottom: 20px; 
+      backdrop-filter: blur(8px);
+    }
+    
+    .form-group { margin-bottom: 18px; text-align: left; }
+    .form-group label { font-weight: 700; display: block; margin-bottom: 6px; font-size: 0.9rem; color: #334155; }
+    .form-control { 
+      width: 100%; 
+      padding: 12px 16px; 
+      border-radius: 14px; 
+      border: 1.5px solid #cbd5e1; 
+      font-size: 0.95rem; 
+      outline: none; 
+      transition: all 0.25s ease; 
+      background: #f8fafc;
+    }
+    .form-control:focus { 
+      border-color: var(--primary-light); 
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.2); 
+    }
+    
+    .btn { 
+      font-size: 0.95rem; 
+      font-weight: 700; 
+      padding: 12px 24px; 
+      border: none; 
+      border-radius: 14px; 
+      cursor: pointer; 
+      transition: all 0.25s ease; 
+    }
+    .btn-primary { 
+      background: linear-gradient(135deg, #0284c7 0%, #06b6d4 100%); 
+      color: #fff; 
+      box-shadow: 0 4px 15px rgba(2, 132, 199, 0.3);
+    }
+    .btn-primary:hover { 
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(2, 132, 199, 0.45);
+    }
+    .btn-secondary { background: #94a3b8; color: #fff; }
+    .btn-secondary:hover { background: #64748b; transform: translateY(-2px); }
+    .btn-group { display: flex; gap: 10px; margin-top: 24px; justify-content: space-between; }
+    
+    .warning-banner { 
+      background: #fef2f2; 
+      border-left: 5px solid var(--danger); 
+      padding: 14px 18px; 
+      border-radius: 12px; 
+      margin-bottom: 20px; 
+      font-size: 0.875rem; 
+      color: #991b1b; 
+      font-weight: 700; 
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.08);
+    }
+    
+    .mapel-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 10px; margin-bottom: 22px; }
+    .mapel-btn { 
+      background: #f8fafc; 
+      border: 1.5px solid var(--border-color); 
+      padding: 12px 6px; 
+      border-radius: 14px; 
+      text-align: center; 
+      cursor: pointer; 
+      font-size: 0.8rem; 
+      font-weight: 700; 
+      color: #475569; 
+      transition: all 0.25s ease; 
+    }
+    .mapel-btn i { display: block; font-size: 1.25rem; margin-bottom: 5px; color: var(--primary-cyan); transition: transform 0.25s ease; }
+    .mapel-btn:hover { border-color: var(--primary-light); transform: translateY(-2px); }
+    .mapel-btn.active { 
+      background: linear-gradient(135deg, #0284c7 0%, #06b6d4 100%); 
+      color: #fff; 
+      border-color: transparent; 
+      box-shadow: 0 4px 12px rgba(6, 182, 212, 0.35);
+    }
+    .mapel-btn.active i { color: var(--yellow-bright); transform: scale(1.1); }
+    
+    .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .options-grid { display: grid; gap: 12px; margin-top: 18px; }
+    .option-btn { 
+      background: #f8fafc; 
+      border: 1.5px solid var(--border-color); 
+      padding: 14px 18px; 
+      border-radius: 14px; 
+      text-align: left; 
+      font-size: 0.95rem; 
+      font-weight: 600;
+      cursor: pointer; 
+      width: 100%; 
+      transition: all 0.25s ease; 
+      color: var(--dark); 
+    }
+    .option-btn:hover { background: #f0f9ff; border-color: var(--primary-light); transform: translateX(3px); }
+    .option-btn.selected { 
+      background: #e0f2fe; 
+      border-color: var(--primary); 
+      font-weight: 800; 
+      color: var(--primary); 
+      box-shadow: 0 2px 10px rgba(2, 132, 199, 0.15);
+    }
+    
+    .badge-section { 
+      background: linear-gradient(135deg, #fef08a 0%, #facc15 100%); 
+      color: #713f12; 
+      padding: 6px 16px; 
+      border-radius: 20px; 
+      font-size: 0.8rem; 
+      font-weight: 800; 
+      margin-bottom: 14px; 
+      display: inline-block; 
+      box-shadow: 0 2px 8px rgba(250, 204, 21, 0.3);
+    }
+    textarea.form-control { resize: vertical; min-height: 120px; white-space: pre-wrap; }
+    .loading-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.8); color: #fff; justify-content: center; align-items: center; flex-direction: column; z-index: 9999; backdrop-filter: blur(6px); }
+    
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body oncontextmenu="return false;" class="notranslate" translate="no">
+  <div id="loading" class="loading-overlay">
+    <i class="fa-solid fa-spinner fa-spin fa-3x" style="margin-bottom:15px; color: var(--yellow-bright);"></i>
+    <h3 style="font-weight:800;" id="loadingText">Mengirim Jawaban Ke Server...</h3>
+  </div>
+
+  <div class="container">
+    <!-- HEADER SEKOLAH -->
+    <div class="header-banner">
+      <h1>SMP NEGERI 4 PRAYA</h1>
+      <h2>UJIAN ONLINE ASTS</h2>
+      <p>Mata Pelajaran Terpadu Tahun Pelajaran 2026/2027</p>
+    </div>
+
+    <!-- LOGIN SISWA -->
+    <div id="loginScreen" class="screen card active">
+      <div class="form-group">
+        <label>Nama Lengkap</label>
+        <input type="text" id="studentName" class="form-control" placeholder="Masukkan nama kamu..." autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label>Pilihan Kelas</label>
+        <select id="studentClass" class="form-control">
+          <option value="7.1">Kelas 7.1</option>
+          <option value="7.2">Kelas 7.2</option>
+          <option value="7.3">Kelas 7.3</option>
+          <option value="8.1">Kelas 8.1</option>
+          <option value="8.2">Kelas 8.2</option>
+          <option value="9.1">Kelas 9.1</option>
+          <option value="9.2">Kelas 9.2</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Token Ujian (Minta ke Guru)</label>
+        <input type="text" id="examToken" class="form-control" placeholder="Ketik token di sini..." autocomplete="off">
+      </div>
+      <button class="btn btn-primary" style="width:100%; margin-top:10px;" onclick="startExam()"><i class="fa-solid fa-right-to-bracket"></i> Masuk Ujian</button>
+    </div>
+
+    <!-- AREA UJIAN -->
+    <div id="examScreen" class="screen card">
+      <div class="warning-banner">
+        ⚠️ <span id="violWarning">Perhatian: Dilarang berpindah tab/aplikasi & menggunakan penerjemah! (Pelanggaran: 0/3)</span>
+      </div>
+      <div class="mapel-grid">
+        <div class="mapel-btn active" onclick="loadSubject('mtk', this)"><i class="fa-solid fa-calculator"></i> MTK</div>
+        <div class="mapel-btn" onclick="loadSubject('ipa', this)"><i class="fa-solid fa-flask"></i> IPA</div>
+        <div class="mapel-btn" onclick="loadSubject('ips', this)"><i class="fa-solid fa-earth-americas"></i> IPS</div>
+        <div class="mapel-btn" onclick="loadSubject('indo', this)"><i class="fa-solid fa-book"></i> B. Indo</div>
+        <div class="mapel-btn" onclick="loadSubject('inggris', this)"><i class="fa-solid fa-language"></i> B. Ing</div>
+        <div class="mapel-btn" onclick="loadSubject('ppkn', this)"><i class="fa-solid fa-shield-halved"></i> PPKn</div>
+        <div class="mapel-btn" onclick="loadSubject('pai', this)"><i class="fa-solid fa-kaaba"></i> PAI</div>
+        <div class="mapel-btn" onclick="loadSubject('pjok', this)"><i class="fa-solid fa-volleyball"></i> PJOK</div>
+        <div class="mapel-btn" onclick="loadSubject('informa', this)"><i class="fa-solid fa-laptop-code"></i> Informa</div>
+        <div class="mapel-btn" onclick="loadSubject('prakarya', this)"><i class="fa-solid fa-scissors"></i> Prakarya</div>
+        <div class="mapel-btn" onclick="loadSubject('mulok', this)"><i class="fa-solid fa-palette"></i> Mulok</div>
+      </div>
+      <div class="quiz-header">
+        <span id="studentBadge" style="font-weight:800; color:var(--primary);"></span>
+      </div>
+      <div id="questionContainer" class="notranslate" translate="no">
+        <div id="sectionBadge" class="badge-section">Bagian A: Pilihan Ganda</div>
+        <div style="font-size:1.05rem; font-weight:700; margin-top:5px; white-space: pre-line;" id="questionText" class="notranslate" translate="no">Memuat soal...</div>
+        <div id="quizContent" style="margin-top: 15px;" class="notranslate" translate="no"></div>
+      </div>
+
+      <!-- NAVIGASI TOMBOL KEMBALI, SELESAI & BERIKUTNYA -->
+      <div class="btn-group">
+        <button id="prevBtn" class="btn btn-secondary" onclick="prevQuestion()"><i class="fa-solid fa-arrow-left"></i> Kembali</button>
+        <div>
+          <button id="nextBtn" class="btn btn-primary" onclick="nextQuestion()">Berikutnya <i class="fa-solid fa-arrow-right"></i></button>
+          <button id="finishBtn" class="btn btn-primary" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%); display:none;" onclick="finishExam()">Kirim Jawaban <i class="fa-solid fa-check"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SELESAI -->
+    <div id="doneScreen" class="screen card" style="text-align:center;">
+      <h2 style="color:var(--primary); font-weight:800;">🎉 Jawaban Berhasil Terkirim! 🎉</h2>
+      <p style="margin-top:10px; color:#475569;">Terima kasih telah mengerjakan ujian dengan jujur. Hasil Anda telah tercatat otomatis di Google Sheet Guru.</p>
+    </div>
+  </div>
+
+  <script>
+    // URL GOOGLE APPS SCRIPT
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxIhRE-1Au2CaBQLZmG0U832RVB1XCAxKYl6hRknD2lH_cEvYkKBK_qObF5cvbbeNN6Sg/exec";
+
+    // Bank Soal Matematika
+    const bankSoalMatematika = {
+      "7.1": [
+        { type: "pg", q: "1. Perhatikan bilangan-bilangan bulat berikut!\n -5, -9, 6, -6, 0, -30, 3, 13, -43. Urutan bilangan dari yang paling kecil hingga paling besar adalah….", opt: ["A. 13, 6, 3, 0, -5, -6, -9, -30, -43", "B. -43, -30, -5, -6, -9, 0, 6, 3, 13", "C. -43, -30, -9, -6, -5, 0, 3, 6, 13", "D. -43, -30, 13, -9, -6, 6, -5, 3, 0"], ans: 2 },
+        { type: "pg", q: "2. Sifat distributif berikut yang benar adalah……….", opt: ["A. p (q + r) = (p x q) + (p x r)", "B. p (q – r) = (p – q) x (q – r)", "C. p (q + r) = (p + q) x (q + r)", "D. p (q - r) = (p x q) x (p x r)"], ans: 0 },
+        { type: "pg", q: "3. Diketahui suhu mula-mula suatu benda adalah 30°C. Setelah dimasukkan ke dalam freezer, suhu benda tersebut mengalami penurunan sebesar 90°C. Suhu benda sekarang adalah…………. ", opt: ["A. 120°C", "B. 60°C", "C. -60°C", "D. -120°C"], ans: 2 },
+        { type: "pg", q: "4. Hasil dari ( -17 - 6 ) + (4 – (-9)) adalah…………", opt: ["A. -10", "B. 6", "C. -28", "D. 10"], ans: 0 },
+        { type: "pg", q: "5. Perhatikan operasi bilangan berikut!\n (1). (-5) + 4 = 9 - 10\n (2). -30 – (-8) = -22\n (3). 20 - 18 > 18 – 20\n (4). 4 - 3 + 7 > -9 - 10\nOperasi bilangan yang benar ditunjukkan oleh…………….", opt: ["A. 1, 2 dan 3", "B. 1 dan 3", "C. 2 dan 4", "D. Semua benar"], ans: 3 },
+        { type: "pg", q: "6. Hasil dari (-4)³ + 2³ adalah…………….", opt: ["A. -56", "B. -70", "C. -512", "D. -72"], ans: 0 },
+        { type: "pg", q: "7. Hasil dari -203 – 49 adalah……………….", opt: ["A. 252", "B. -154", "C. 154", "D. -252"], ans: 3 },
+        { type: "pg", q: "8. Yanti mula-mula diam. Dia menghadap kanan dan berjalan mundur sebanyak 37 langkah, kemudian dia berjalan mundur lagi 12 langkah. Posisi Santi sekarang adalah…………", opt: ["A. Sebelah kanan 25 langkah dari posisi awal", "B. Sebelah kiri 49 langkah dari posisi awal", "C. Sebelah kanan 49 langkah dari posisi awal", "D. Sebelah kiri 25 langkah dari posisi awal"], ans: 1 },
+        { type: "pg", q: "9. Seorang siswa mengerjakan 40 soal tes. Ia berhasil menjawab 30 dengan benar, tidak dijawab 6 soal. Jika jawaban benar dinilai 5, salah -2 dan tidak dijawab dinilai -1, maka nilai yang diperoleh siswa tersebut adalah…………..", opt: ["A. 140", "B. 136", "C. 126", "D. 120"], ans: 1 },
+        { type: "pg", q: "10. Hasil dari 96,4 + ( - 13,9 ) – ( - 45,7 ) adalah……………", opt: ["A. 128,2", "B. 64,6", "C. 156", "D. 36,8"], ans: 0 },
+        { type: "pg", q: "11. Seorang penyelam menyelam pada kedalaman 50 meter. Untuk mencapai dasar laut penyelam kembali menyelam sejauh 45,5 meter, lalu penyelam kembali naik ke permukaan sejauh 60,2 meter. Posisi penyelam saat ini berada pada kedalaman ………….", opt: ["A. 67,4 meter", "B. 35,3 meter", "C. 64,7 meter", "D. 32,5 meter"], ans: 1 },
+        { type: "pg", q: "12. Jika diketahui jumlah tiga bilangan bulat berurutan -12, maka ketiga bilangan itu adalah………..", opt: ["A. 5, -4, -3", "B. -5, -4, -3", "C. 3, -4, -5", "D. -4, -3, -5"], ans: 3 },
+        { type: "pg", q: "13. Gita membeli selusin gelas dengan harga Rp.17.000,00 pergelas. Kemudian Ia membeli 19 gelas lagi dengan harga Rp 34.000,00 pergelas. Jumlah uang yang harus dibayarkan Gita adalah……………..", opt: ["A. Rp. 745.000,00", "B. Rp 850.000,00", "C. Rp.646.000,00", "D. Rp 575.000,00"], ans: 1 },
+        { type: "pg", q: "14. Sebongkah batu yang bersuhu -60°C dipanaskan. Rata-rata kenaikan suhu 30°C setiap menit. Jika batu tersebut dipanaskan selama 16 menit, maka suhu akhir yang dicapai batu adalah……", opt: ["A. 360°C", "B. 400°C", "C. 420°C", "D. 460°C"], ans: 2 },
+        { type: "pg", q: "15. Seekor paus sedang berenang pada kedalaman 8 meter dibawah permukaan laut. Paus itu melompat sampai ketinggian 20 meter diatas permukaan laut. Ketinggian lompatan paus tersebut adalah……", opt: ["A. 12 m", "B. 28 m", "C. 18 m", "D. 22 m"], ans: 0 },
+        { type: "pg", q: "16. Seorang dokter memeriksa suhu pasien menggunakan thermometer suhu, suhu awal diperoleh 39,40°C, karena terlalu tinggi dokter segera memberi obat dan menyarankan beristirahat. Setelah 20 jam, dokter tersebut memeriksa kembali pasien dan suhunya turun sebesar 2,90°C. Suhu pasien saat ini adalah………….", opt: ["A. 36,40°C", "B. 36,50°C", "C. 35,90°C", "D. 35,50°C"], ans: 1 },
+        { type: "pg", q: "17. Diketahui bentuk aljabar yaitu 3x² – 6x - 3\n  (i) Terdiri dari 3 suku tidak sejenis\n (ii) Koefisien x adalah 6\n(iii) x², x adalah variabel\n (iv) Konstanta adalah 3\nBerikut ini pernyataan yang tepat sesuai dengan bentuk aljabar diatas adalah…………. ", opt: ["A. i, ii, iii", "B. i dan ii", "C. i dan iii", "D. i, ii, iii, iv"], ans: 3 },
+        { type: "pg", q: "18. Manakah pasangan suku yang sejenis?", opt: ["A. 3x dan 3y", "B. 2x dan 2x²", "C. 5a dan 7a", "D. 4ab dan 4a"], ans: 2 },
+        { type: "pg", q: "19. Ibu membeli 5 kg mangga dan 3 kg apel. Keesokan harinya ibu membeli lagi 2 kg mangga dan 4 kg apel. Jika mangga dimisalkan m dan apel dimisalkan p, bentuk aljabar total buah dibeli Ibu setelah disederhanakan adalah…….", opt: ["A. 7m + 7p", "B. 9mp", "C. 5m + 7p", "D. 7m – 7p"], ans: 0 },
+        { type: "pg", q: "20. Ani memiliki kain sepanjang 3,5 meter. Kain tersebut digunakan untuk membuat baju adiknya sepanjang 1,25 meter dan baju kakaknya sepanjang 1,5 meter. Sisa kain milik Ani sekarang adalah……..", opt: ["A. 0,25 meter", "B. 0,50 meter", "C. 0,75 meter", "D. 1,00 meter"], ans: 2 },
+        { type: "pg", q: "Perhatikan informasi berikut untuk menjawab soal nomor 21-23!\nPandemi covid-19 mengharuskan kita untuk selalu menggunakan masker. Elina membeli masker melalui toko online. Elina membeli 6 kantong masker yang masing-masing kantongnya berisi 4 masker hitam dan 4 masker biru. Harga 1 kantong masker adalah Rp 12.000,00 dengan ongkos kirim Rp 6.000,00. Masker tersebut rencananya akan dibagikan kepada ayah dan ibunya yang masing-masing memperoleh 4 masker.\n\n21. Jumlah masker yang dibeli oleh Elina adalah………….", opt: ["A. 40", "B. 45", "C. 48", "D. 50"], ans: 2 },
+        { type: "pg", q: "22. Sisa masker Elina setelah dibagikan kepada ayah dan ibunya adalah…………..", opt: ["A. 20", "B. 30", "C. 35", "D. 40"], ans: 3 },
+        { type: "pg", q: "23. Uang yang harus dibayarkan Elina untuk membeli masker adalah…………..", opt: ["A. Rp 78.000,00", "B. Rp 82.000,00", "C. Rp 80.000,00", "D. Rp 75.000,00"], ans: 0 },
+        { type: "pg", q: "24. Ani membeli 6 kg buah jeruk dan 4 kg buah anggur, sementara Nia membeli 5 kg buah jeruk dan 2 kg buah anggur. Bentuk aljabar dari masalah diatas adalah………….(dimisalkan jeruk = a, dan anggur = b)", opt: ["A. Ani (5a + 4b) dan Nia(5a + 3b)", "B. Ani (6a + 4b) dan Nia (5a + 2b)", "C. Ani (4a + 6b) dan Nia(2a + 5b)", "D. Ani (5a + 5b) dan Nia (2a + 4b)"], ans: 1 },
+        { type: "pg", q: "25. Jika harga buah jeruk Rp 10.000,00 perkilogram dan harga buah anggur Rp 50.000,00 perkilogram maka harga yang harus dibayarkan oleh Ani dan Nia adalah………………", opt: ["A. Ani = Rp 260.000,00 dan Nia = Rp 150.000,00", "B. Ani = Rp 270.000,00 dan Nia = Rp 160.000,00", "C. Ani = Rp 280.000,00 dan Nia = Rp 170.000,00", "D. Ani = Rp 290.000,00 dan Nia = Rp 180.000,00"], ans: 0 }
+      ],
+      "7.2": [],
+      "7.3": [],
+      "8.1": [
+        { type: "pg", q: "1. Hasil penyederhanaan dari operasi perpangkatan 3⁵ × 3³ adalah...", opt: ["A. 3⁸", "B. 3¹⁵", "C. 9⁸", "D. 9¹⁵"], ans: 0 },
+        { type: "pg", q: "2. Bentuk sederhana dari (2⁴)³ adalah...", opt: ["A. 2⁷", "B. 2¹²", "C. 6⁴", "D. 8³"], ans: 1 },
+        { type: "pg", q: "3. Hasil pembagian dari 7⁸ : 7⁵ adalah...", opt: ["A. 7³", "B. 7⁴", "C. 7¹³", "D. 7⁴⁰"], ans: 0 },
+        { type: "pg", q: "4. Nilai dari 12⁰ + (-5)⁰ - (1/2)⁰ adalah...", opt: ["A. 0", "B. 1", "C. 2", "D. 3"], ans: 1 },
+        { type: "pg", q: "5. Bentuk pangkat positif dari 4⁻³ adalah...", opt: ["A. -12", "B. -64", "C. 1 / 4³", "D. 1 / 3⁴"], ans: 2 },
+        { type: "pg", q: "6. Hasil dari (2a³)² × 3a⁴ adalah...", opt: ["A. 6a⁹", "B. 12a¹⁰", "C. 12a⁹", "D. 24a¹⁰"], ans: 1 },
+        { type: "pg", q: "7. Bentuk sederhana dari √75 adalah...", opt: ["A. 3√5", "B. 5√3", "C. 25√3", "D. 15√5"], ans: 1 },
+        { type: "pg", q: "8. Hasil dari √18 + √50 - √32 adalah...", opt: ["A. 2√2", "B. 3√2", "C. 4√2", "D. 5√2"], ans: 2 },
+        { type: "pg", q: "9. Hasil perkalian dari 2√3 × √15 adalah...", opt: ["A. 6√5", "B. 5√6", "C. 30", "D. 10√3"], ans: 0 },
+        { type: "pg", q: "10. Bentuk rasional dari penyebut 8 / √2 adalah...", opt: ["A. 2√2", "B. 4√2", "C. 8√2", "D. 16√2"], ans: 1 },
+        { type: "pg", q: "11. Bentuk sederhana dari 12 / (3 + √3) setelah dirasionalkan adalah...", opt: ["A. 6 - 2√3", "B. 6 + 2√3", "C. 4 - 2√3", "D. 3 - √3"], ans: 0 },
+        { type: "pg", q: "12. Nilai dari 64^(2/3) adalah...", opt: ["A. 8", "B. 16", "C. 32", "D. 64"], ans: 1 },
+        { type: "pg", q: "13. Luas sebuah persegi adalah 180 cm². Panjang sisi persegi tersebut dalam bentuk akar paling sederhana adalah...", opt: ["A. 6√5 cm", "B. 5√6 cm", "C. 9√2 cm", "D. 12√5 cm"], ans: 0 },
+        { type: "pg", q: "14. Pernyataan yang benar mengenai bunyi Teorema Pythagoras adalah...", opt: ["A. Pada segitiga sembarang, kuadrat sisi miring sama dengan jumlah sisi lainnya", "B. Pada segitiga siku-siku, kuadrat sisi miring sama dengan jumlah kuadrat kedua sisi siku-sikunya", "C. Pada segitiga siku-siku, jumlah panjang sisi tegak sama dengan panjang sisi miring", "D. Pada segitiga sama kaki, kuadrat alas sama dengan jumlah kuadrat sisi miring"], ans: 1 },
+        { type: "pg", q: "15. Jika segitiga PQR siku-siku di Q, maka rumus Teorema Pythagoras yang berlaku adalah...", opt: ["A. PR² = PQ² + QR²", "B. PQ² = PR² + QR²", "C. QR² = PQ² + PR²", "D. PR = PQ + QR"], ans: 0 },
+        { type: "pg", q: "16. Panjang sisi siku-siku sebuah segitiga adalah 9 cm dan 12 cm. Panjang sisi miringnya adalah...", opt: ["A. 13 cm", "B. 14 cm", "C. 15 cm", "D. 17 cm"], ans: 2 },
+        { type: "pg", q: "17. Diketahui panjang sisi miring segitiga siku-siku adalah 25 cm dan panjang salah satu sisi siku-sikunya 7 cm. Panjang sisi siku-siku lainnya adalah...", opt: ["A. 20 cm", "B. 22 cm", "C. 23 cm", "D. 24 cm"], ans: 3 },
+        { type: "pg", q: "18. Kelompok tiga bilangan berikut yang merupakan Tripel Pythagoras adalah...", opt: ["A. 6, 8, 12", "B. 8, 15, 17", "C. 9, 12, 16", "D. 10, 20, 26"], ans: 1 },
+        { type: "pg", q: "19. Pasangan bilangan berikut yang BUKAN merupakan Tripel Pythagoras adalah...", opt: ["A. 5, 12, 13", "B. 7, 24, 25", "C. 9, 40, 41", "D. 10, 15, 20"], ans: 3 },
+        { type: "pg", q: "20. Jika (x, 24, 25) merupakan Tripel Pythagoras dengan 25 sebagai bilangan terbesar, maka nilai x adalah...", opt: ["A. 6", "B. 7", "C. 8", "D. 9"], ans: 1 },
+        { type: "pg", q: "21. Sebuah tangga sepanjang 10 meter disandarkan pada dinding. Jarak ujung bawah tangga ke dinding adalah 6 meter. Tinggi dinding yang dicapai tangga tersebut adalah...", opt: ["A. 7 meter", "B. 8 meter", "C. 8,5 meter", "D. 9 meter"], ans: 1 },
+        { type: "pg", q: "22. Suatu kapal berlayar ke arah Utara sejauh 12 km, kemudian berbelok ke arah Timur sejauh 16 km. Jarak kapal sekarang dari titik awal keberangkatan adalah...", opt: ["A. 20 km", "B. 22 km", "C. 24 km", "D. 28 km"], ans: 0 },
+        { type: "pg", q: "23. Panjang diagonal persegi panjang yang berukuran panjang 16 cm dan lebar 12 cm adalah...", opt: ["A. 18 cm", "B. 20 cm", "C. 22 cm", "D. 25 cm"], ans: 1 },
+        { type: "pg", q: "24. Jenis segitiga dengan panjang sisi-sisi 7 cm, 24 cm, dan 25 cm adalah...", opt: ["A. Segitiga Lancip", "B. Segitiga Siku-siku", "C. Segitiga Tumpul", "D. Segitiga Sama Sisi"], ans: 1 },
+        { type: "pg", q: "25. Panjang diagonal sebuah persegi adalah 10√2 cm. Panjang sisi persegi tersebut adalah...", opt: ["A. 8 cm", "B. 10 cm", "C. 12 cm", "D. 14 cm"], ans: 1 }
+      ],
+      "8.2": [],
+      "9.1": [
+        { type: "pg", q: "1. Pengertian yang paling tepat untuk Persamaan Linear Dua Variabel (PLDV) adalah...", opt: ["A. Persamaan yang memuat satu variabel berpangkat dua", "B. Persamaan yang memuat dua variabel dengan pangkat tertinggi dari setiap variabelnya adalah satu", "C. Persamaan yang memuat dua variabel dengan salah satu variabel berpangkat dua", "D. Perkalian antara dua variabel dalam satu suku"], ans: 1 },
+        { type: "pg", q: "2. Bentuk umum dari Sistem Persamaan Linear Dua Variabel (SPLDV) adalah...", opt: ["A. ax + by = c dan px + qy = r", "B. ax² + bx + c = 0", "C. ax + b = 0", "D. ax + by + cz = d"], ans: 0 },
+        { type: "pg", q: "3. Di antara persamaan-persamaan berikut, yang merupakan Persamaan Linear Dua Variabel adalah...", opt: ["A. 3x + 5 = 14", "B. 2x² + y = 7", "C. 4x - 3y = 12", "D. xy + 6 = 0"], ans: 2 },
+        { type: "pg", q: "4. Pasangan berurutan (x, y) yang merupakan salah satu penyelesaian dari persamaan 2x + y = 8 adalah...", opt: ["A. (2, 3)", "B. (3, 2)", "C. (4, 1)", "D. (1, 5)"], ans: 1 },
+        { type: "pg", q: "5. Jika x = 2 merupakan nilai x dari penyelesaian 3x + 2y = 12, maka nilai y yang sesuai adalah...", opt: ["A. 2", "B. 3", "C. 4", "D. 5"], ans: 1 },
+        { type: "pg", q: "6. Suatu SPLDV dikatakan memiliki tepat satu penyelesaian secara grafik jika kedua garisnya...", opt: ["A. Sejajar", "B. Berimpit", "C. Berpotongan di satu titik", "D. Tegak lurus tanpa titik potong"], ans: 2 },
+        { type: "pg", q: "7. Langkah pertama dalam menyelesaikan SPLDV dengan metode substitusi adalah...", opt: ["A. Menjumlahkan kedua persamaan", "B. Mengubah salah satu persamaan menjadi bentuk x = ... atau y = ...", "C. Mengalikan kedua persamaan dengan konstanta", "D. Menggambar grafik kedua persamaan"], ans: 1 },
+        { type: "pg", q: "8. Diketahui y = 2x - 1. Jika disubstitusikan ke dalam persamaan x + y = 8, diperoleh nilai x = ...", opt: ["A. 2", "B. 3", "C. 4", "D. 5"], ans: 1 },
+        { type: "pg", q: "9. Penyelesaian dari SPLDV:\n   x = y + 3\n   2x + y = 12\ndengan metode substitusi adalah...", opt: ["A. x = 5, y = 2", "B. x = 4, y = 1", "C. x = 6, y = 3", "D. x = 3, y = 0"], ans: 0 },
+        { type: "pg", q: "10. Diketahui sistem persamaan:\n   y = 3x\n   2x + 3y = 22\nNilai dari x + y adalah...", opt: ["A. 6", "B. 8", "C. 10", "D. 12"], ans: 1 },
+        { type: "pg", q: "11. Himpunan penyelesaian dari SPLDV x - 2y = 0 dan 3x + y = 14 menggunakan substitusi adalah...", opt: ["A. {(2, 4)}", "B. {(4, 2)}", "C. {(2, 1)}", "D. {(6, 3)}"], ans: 1 },
+        { type: "pg", q: "12. Jika x + y = 10 dan x - y = 4, maka nilai dari x × y dengan menggunakan substitusi adalah...", opt: ["A. 21", "B. 24", "C. 25", "D. 28"], ans: 0 },
+        { type: "pg", q: "13. Prinsip dasar dari metode eliminasi pada penyelesaian SPLDV adalah...", opt: ["A. Memasukkan satu persamaan ke persamaan lainnya", "B. Menghilangkan salah satu variabel dengan cara menjumlahkan atau mengurangkan persamaan", "C. Menggambar titik potong pada bidang Cartesius", "D. Membagi kedua persamaan dengan koefisien terbesarnya"], ans: 1 },
+        { type: "pg", q: "14. Diketahui SPLDV:\n   x + y = 9\n   x - y = 3\nUntuk mengeliminasi variabel y, langkah yang harus dilakukan adalah...", opt: ["A. Mengurangkan kedua persamaan", "B. Menjumlahkan kedua persamaan", "C. Mengalikan persamaan pertama dengan 2", "D. Membagi persamaan kedua dengan 3"], ans: 1 },
+        { type: "pg", q: "15. Dengan metode eliminasi, nilai x dari sistem persamaan 2x + 3y = 12 dan 2x - y = 4 adalah...", opt: ["A. 2", "B. 3", "C. 4", "D. 5"], ans: 1 },
+        { type: "pg", q: "16. Himpunan penyelesaian dari sistem persamaan 3x + 2y = 16 dan 2x + 2y = 12 adalah...", opt: ["A. {(4, 2)}", "B. {(2, 4)}", "C. {(3, 3)}", "D. {(5, 1)}"], ans: 0 },
+        { type: "pg", q: "17. Diketahui sistem persamaan 4x - y = 11 dan 2x + 3y = 9. Nilai y yang memenuhi adalah...", opt: ["A. 1", "B. 2", "C. 3", "D. 4"], ans: 0 },
+        { type: "pg", q: "18. Jika 5x + 2y = 19 dan 3x + 2y = 13, maka nilai dari 2x - y adalah...", opt: ["A. 2", "B. 4", "C. 5", "D. 6"], ans: 1 },
+        { type: "pg", q: "19. Metode campuran dalam penyelesaian SPLDV merupakan kombinasi antara metode...", opt: ["A. Grafik dan Substitusi", "B. Eliminasi dan Substitusi", "C. Grafik dan Eliminasi", "D. Matriks dan Grafik"], ans: 1 },
+        { type: "pg", q: "20. Dengan metode campuran, penyelesaian dari 2x + y = 8 dan x - y = 1 adalah...", opt: ["A. x = 2, y = 4", "B. x = 3, y = 2", "C. x = 4, y = 0", "D. x = 3, y = 1"], ans: 1 },
+        { type: "pg", q: "21. Diketahui SPLDV 3x + 4y = 24 dan x + 2y = 10. Nilai dari 2x + 3y adalah...", opt: ["A. 15", "B. 17", "C. 18", "D. 20"], ans: 1 },
+        { type: "pg", q: "22. Jumlah dua buah bilangan cacah adalah 27, sedangkan selisih kedua bilangan tersebut adalah 5. Bilangan terbesar dari kedua bilangan tersebut adalah...", opt: ["A. 11", "B. 13", "C. 16", "D. 18"], ans: 2 },
+        { type: "pg", q: "23. Harga 3 buah buku tulis dan 2 buah pensil adalah Rp13.000,00. Sedangkan harga 2 buah buku tulis dan 5 buah pensil adalah Rp16.000,00. Harga 1 buah buku tulis adalah...", opt: ["A. Rp2.000,00", "B. Rp3.000,00", "C. Rp4.000,00", "D. Rp5.000,00"], ans: 1 },
+        { type: "pg", q: "24. Di sebuah tempat parkir terdapat 40 kendaraan yang terdiri dari mobil (roda 4) dan sepeda motor (roda 2). Jika jumlah seluruh roda kendaraan ada 110 buah, maka banyak mobil di tempat parkir tersebut adalah...", opt: ["A. 15 unit", "B. 20 unit", "C. 25 unit", "D. 30 unit"], ans: 0 },
+        { type: "pg", q: "25. Umur Pak Andi 3 kali umur Budi. Jika selisih umur mereka adalah 30 tahun, maka umur Budi adalah...", opt: ["A. 10 tahun", "B. 15 tahun", "C. 20 tahun", "D. 25 tahun"], ans: 1 }
+      ],
+      "9.2": []
+    };
+    bankSoalMatematika["7.2"] = bankSoalMatematika["7.1"];
+    bankSoalMatematika["7.3"] = bankSoalMatematika["7.1"];
+    bankSoalMatematika["8.2"] = bankSoalMatematika["8.1"];
+    bankSoalMatematika["9.2"] = bankSoalMatematika["9.1"];
+
+    // Bank Soal IPS Kelas 7 (Khusus kelas 7.1, 7.2, dan 7.3)
+    const bankSoalIPS = {
+      "7.1": [
+        { type: "pg", q: "1. Silsilah keluarga memiliki peran penting dalam pemahaman sejarah diri seseorang. Manfaat utama dari pembuatan bagan silsilah keluarga adalah...", opt: ["A. Mengetahui posisi sosial dan tingkat kekayaan keluarga di masyarakat", "B. Mengetahui hubungan kekerabatan dan garis keturunan", "C. Menentukan pembagian harta warisan secara adil", "D. Membandingkan status sosial keluarga sendiri dengan keluarga lain"], ans: 1 },
+        { type: "pg", q: "2. Dalam bagan silsilah keluarga, generasi yang lebih tua biasanya diletakkan pada posisi...", opt: ["A. Bagian paling bawah bagan", "B. Bagian paling atas bagan", "C. Sisi sebelah kiri bagan", "D. Sisi sebelah kanan bagan"], ans: 1 },
+        { type: "pg", q: "3. Sejarah asal usul keluarga termasuk dalam ruang lingkup sejarah lokal dan sejarah lisan karena...", opt: ["A. Dicatat dalam dokumen resmi negara dan undang-undang", "B. Ditulis oleh sejarawan profesional di perpustakaan nasional", "C. Diwariskan secara turun-temurun melalui cerita lisan anggota keluarga", "D. Dipelajari di seluruh sekolah secara nasional"], ans: 2 },
+        { type: "pg", q: "4. Candi Borobudur terletak pada koordinat 7° 36' 28'' LS dan 110° 12' 13'' BT. Pernyataan tersebut merupakan contoh dari konsep...", opt: ["A. Lokasi relatif", "B. Lokasi absolut", "C. Lokasi strategis", "D. Jarak relatif"], ans: 1 },
+        { type: "pg", q: "5. Pernyataan berikut yang menunjukkan penerapan konsep lokasi relatif adalah...", opt: ["A. Indonesia terletak pada 6° LU – 11° LS dan 95° BT – 141° BT", "B. Kota Jakarta terletak di 6° 12' LS dan 106° 49' BT", "C. Kabupaten Magelang berada di sebelah utara Kota Yogyakarta", "D. Garis khatulistiwa melintasi Kota Pontianak"], ans: 2 },
+        { type: "pg", q: "6. Seseorang menyebutkan bahwa rumahnya berjarak 15 menit dari stasiun kereta api. Penggunaan jarak waktu tersebut menggambarkan karakteristik lokasi...", opt: ["A. Absolut, karena angkanya sudah pasti", "B. Astronomis, karena dihitung berdasarkan rotasi bumi", "C. Geologis, karena berkaitan dengan morfologi tanah", "D. Relatif, karena bergantung pada kondisi lalu lintas dan moda transportasi"], ans: 3 },
+        { type: "pg", q: "7. Indonesia berada di antara tiga lempeng tektonik utama, yaitu Lempeng Indo-Australia, Eurasian, dan Pasifik. Kondisi geologis ini menyebabkan Indonesia...", opt: ["A. Memiliki iklim tropis dan dua musim", "B. Sering mengalami gempa bumi dan memiliki banyak gunung api aktif", "C. Memiliki tiga pembagian zona waktu", "D. Bebas dari bencana alam gempa bumi"], ans: 1 },
+        { type: "pg", q: "8. Perbedaan utama antara cuaca dan iklim terletak pada aspek...", opt: ["A. Cakupan wilayah dan durasi waktu pengamatan", "B. Jenis alat pengukur yang digunakan", "C. Unsur-unsur pembentuknya seperti suhu dan curah hujan", "D. Dampaknya terhadap kehidupan manusia"], ans: 0 },
+        { type: "pg", q: "9. Indonesia terletak pada 6° LU – 11° LS dan 95° BT – 141° BT. Pengaruh dari letak astronomis tersebut terhadap kondisi iklim Indonesia adalah...", opt: ["A. Beriklim sub-tropis dengan 4 musim", "B. Beriklim tropis dengan kelembapan udara yang tinggi", "C. Memiliki tingkat curah hujan sangat rendah", "D. Terjadi musim dingin yang sangat panjang"], ans: 1 },
+        { type: "pg", q: "10. Komponen peta yang berfungsi untuk memberikan petunjuk arah mata angin dinamakan...", opt: ["A. Skala peta", "B. Legenda", "C. Orientasi peta", "D. Inset peta"], ans: 2 },
+        { type: "pg", q: "11. Jika sebuah peta memiliki skala 1 : 100.000, hal tersebut berarti...", opt: ["A. 1 cm pada peta mewakili 100.000 km di lapangan", "B. 1 cm pada peta mewakili 100.000 cm (1 km) di lapangan", "C. 1 km pada peta mewakili 100.000 cm di lapangan", "D. 100.000 cm pada peta mewakili 1 cm di lapangan"], ans: 1 },
+        { type: "pg", q: "12. Salah satu fungsi utama peta dalam perencanaan tata ruang wilayah adalah...", opt: ["A. Memperindah ruangan kantor pemerintahan", "B. Menggantikan peran satelit navigasi", "C. Menentukan batas usia penduduk di suatu daerah", "D. Menunjukkan potensi dan persebaran sumber daya alam"], ans: 3 },
+        { type: "pg", q: "13. Pengertian dari sejarah lisan (oral history) adalah...", opt: ["A. Mitos dan dongeng yang diciptakan oleh nenek moyang", "B. Ingatan kolektif yang disampaikan langsung oleh pelaku atau saksi sejarah", "C. Naskah kuno yang tertulis pada daun lontar", "D. Prasasti kuno yang ditemukan di situs arkeologi"], ans: 1 },
+        { type: "pg", q: "14. Cerita rakyat, mitos, dan legenda yang berkembang di masyarakat merupakan bentuk dari...", opt: ["A. Tradisi lisan", "B. Sejarah lisan", "C. Dokumen tertulis", "D. Artefak kuno"], ans: 0 },
+        { type: "pg", q: "15. Seorang siswa melakukan wawancara dengan seorang veteran pejuang kemerdekaan di kotanya. Hasil wawancara tersebut dikategorikan sebagai...", opt: ["A. Sumber tertulis sekunder", "B. Sumber lisan primer", "C. Benda peninggalan purbakala", "D. Sumber visual tersier"], ans: 1 },
+        { type: "pg", q: "16. Manusia dinamakan sebagai makhluk sosial (homo socius) karena...", opt: ["A. Mampu menghasilkan alat-alat pemuas kebutuhan mandiri", "B. Tidak dapat hidup sendiri dan selalu membutuhkan bantuan orang lain", "C. Selalu mengejar keuntungan pribadi dalam setiap aktivitas", "D. Memiliki kekuasaan penuh atas lingkungan sekitarnya"], ans: 1 },
+        { type: "pg", q: "17. Contoh tindakan manusia sebagai makhluk ekonomi yang bermoral adalah...", opt: ["A. Mengurangi timbangan demi mendapat keuntungan maksimal", "B. Menjual barang kadaluarsa agar tidak merugi", "C. Seorang pedagang menjual barang berkualitas sesuai dengan harga jujur", "D. Memborong sembako saat krisis untuk dijual kembali dengan harga sangat tinggi"], ans: 2 },
+        { type: "pg", q: "18. Apabila manusia hanya bertindak sebagai homo economicus tanpa mempedulikan statusnya sebagai makhluk sosial yang bermoral, maka yang terjadi adalah...", opt: ["A. Terjaganya kelestarian sumber daya alam secara merata", "B. Terciptanya tatanan masyarakat yang harmonis dan sejahtera", "C. Munculnya sifat serakah, egois, dan ketidakadilan sosial", "D. Meningkatnya rasa kepedulian dan gotong royong"], ans: 2 },
+        { type: "pg", q: "19. Sosialisasi dapat didefinisikan sebagai...", opt: ["A. Proses biologis pertumbuhan tubuh manusia", "B. Proses mempelajari nilai, norma, dan peran sosial dalam masyarakat", "C. Kegiatan berkumpul bersama teman-teman tanpa aturan", "D. Proses pertukaran barang dan jasa di pasar"], ans: 1 },
+        { type: "pg", q: "20. Agen sosialisasi primer yang paling awal dan paling utama diterima oleh seorang individu adalah...", opt: ["A. Sekolah", "B. Kelompok sepermainan", "C. Keluarga", "D. Media massa"], ans: 2 },
+        { type: "pg", q: "21. Tahap sosialisasi ketika seorang anak mulai menirukan peran orang dewasa (seperti berpura-pura menjadi dokter atau guru) tetapi belum memahami sepenuhnya makna dari peran tersebut dinamakan...", opt: ["A. Preparatory stage", "B. Game stage", "C. Generalized other", "D. Play stage"], ans: 3 },
+        { type: "pg", q: "22. Aturan yang berisi petunjuk tingkah laku yang dianggap benar dan harus dipatuhi oleh anggota masyarakat disebut...", opt: ["A. Nilai sosial", "B. Interaksi sosial", "C. Peran sosial", "D. Norma sosial"], ans: 3 },
+        { type: "pg", q: "23. Seseorang yang mengucapkan terima kasih saat menerima bantuan dari orang lain sedang menjalankan bentuk norma...", opt: ["A. Agama", "B. Kesopanan (Folkways)", "C. Hukum", "D. Kesusilaan"], ans: 1 },
+        { type: "pg", q: "24. Sanksi bagi pelanggar norma hukum bersifat tegas dan mengikat, contohnya adalah...", opt: ["A. Rasa bersalah dalam hati", "B. Cemoohan dari tetangga", "C. Hukuman penjara atau denda finansial", "D. Pengucilan dari kelompok pertemanan"], ans: 2 },
+        { type: "pg", q: "25. Faktor utama yang memicu terjadinya interaksi antarwilayah karena adanya perbedaan potensi hasil alam (seperti daerah pegunungan penghasil sayur dan daerah pantai penghasil ikan) adalah...", opt: ["A. Saling melengkapi (Regional Complementarity)", "B. Kesempatan antara (Intervening Opportunity)", "C. Kemudahan transfer (Transferability)", "D. Isolasionalisme wilayah"], ans: 0 },
+        { type: "pg", q: "26. Kota A biasanya membeli beras dari Kota B. Namun, ditemukan Kota C yang lokasinya lebih dekat dengan harga beras yang lebih murah. Akibatnya, Kota A beralih membeli beras ke Kota C. Ilustrasi ini menggambarkan konsep...", opt: ["A. Saling melengkapi", "B. Kesempatan antara (Intervening Opportunity)", "C. Kemudahan pemindahan barang", "D. Konektivitas tanpa batas"], ans: 1 },
+        { type: "pg", q: "27. Pembangunan jalan raya dan jembatan antarprovinsi akan berdampak positif terhadap interaksi antarwilayah, yaitu...", opt: ["A. Menghambat laju pergerakan orang", "B. Menurunkan biaya distribusi dan mempercepat kemudahan transfer", "C. Membatasi ruang gerak antarwilayah", "D. Mengurangi pertukaran informasi antar daerah"], ans: 1 },
+        { type: "pg", q: "28. Kebutuhan yang harus dipenuhi terlebih dahulu untuk mempertahankan kelangsungan hidup manusia dinamakan kebutuhan...", opt: ["A. Sekunder", "B. Tersier", "C. Primer", "D. Jasmani"], ans: 2 },
+        { type: "pg", q: "29. Sepatu sekolah termasuk alat pemuas kebutuhan berdasarkan hubungan penggunaannya yang dikategorikan sebagai barang...", opt: ["A. Substitusi (pengganti) bagi sandal", "B. Komplementer (pelengkap) jika dipasangkan dengan kaus kaki", "C. Bebas yang tidak memerlukan pengorbanan", "D. Mentah yang belum diolah"], ans: 1 },
+        { type: "pg", q: "30. Perbedaan tingkat pendapatan seseorang akan memengaruhi pola pemenuhan kebutuhannya. Pernyataan yang mencerminkan hal tersebut adalah...", opt: ["A. Seseorang berpendapatan tinggi memiliki variasi kebutuhan yang lebih kompleks", "B. Seseorang berpendapatan rendah fokus pada pemenuhan barang-barang mewah", "C. Pendapatan tidak memengaruhi tingkat konsumsi sama sekali", "D. Kebutuhan primer masyarakat kaya selalu lebih kecil dibanding masyarakat miskin"], ans: 0 }
+      ]
+    };
+    bankSoalIPS["7.2"] = bankSoalIPS["7.1"];
+    bankSoalIPS["7.3"] = bankSoalIPS["7.1"];
+
+    // Bank Soal IPA
+    const bankSoalIPA = {
+      "7.1": [
+        { type: "pg", q: "1. Langkah pertama dalam metode ilmiah adalah...", opt: ["A. Merumuskan hipotesis", "B. Melakukan eksperimen", "C. Mengamati/Mengidentifikasi masalah", "D. Menarik kesimpulan"], ans: 2 },
+        { type: "pg", q: "2. Alat ukur yang digunakan untuk mengukur massa suatu benda adalah...", opt: ["A. Neraca", "B. Jangka sorong", "C. Mikrometer sekrup", "D. Gelas ukur"], ans: 0 },
+        { type: "pg", q: "3. Satuan SI untuk besaran suhu adalah...", opt: ["A. Celcius", "B. Fahrenheit", "C. Reamur", "D. Kelvin"], ans: 3 },
+        { type: "pg", q: "4. Besaran berikut yang merupakan besaran turunan adalah...", opt: ["A. Panjang", "B. Massa", "C. Luas", "D. Waktu"], ans: 2 },
+        { type: "pg", q: "5. Perubahan zat dari wujud gas menjadi cair disebut...", opt: ["A. Menguap", "B. Mengembun", "C. Menyublim", "D. Membeku"], ans: 1 },
+        { type: "pg", q: "6. Peristiwa berikut yang menunjukkan perubahan kimia adalah...", opt: ["A. Es mencair", "B. Beras ditumbuk jadi tepung", "C. Kayu terbakar jadi arang", "D. Garam dilarutkan dalam air"], ans: 2 },
+        { type: "pg", q: "7. Sifat zat padat adalah...", opt: ["A. Bentuk dan volume berubah-ubah", "B. Bentuk tetap, volume berubah", "C. Bentuk dan volume tetap", "D. Bentuk berubah, volume tetap"], ans: 2 },
+        { type: "pg", q: "8. Alat untuk mengukur suhu benda dengan ketelitian tinggi adalah...", opt: ["A. Barometer", "B. Thermometer", "C. Higrometer", "D. Anemometer"], ans: 1 },
+        { type: "pg", q: "9. Pemuaian pada zat cair terjadi ketika zat cair tersebut...", opt: ["A. Dipanaskan", "B. Didinginkan", "C. Dibekukan", "D. Ditekan"], ans: 0 },
+        { type: "pg", q: "10. Kalor yang dibutuhkan untuk menaikkan suhu 1 kg zat sebesar 1 °C disebut...", opt: ["A. Kalor laten", "B. Kalor jenis", "C. Kalor lebur", "D. Kalor uap"], ans: 1 },
+        { type: "pg", q: "11. Perpindahan kalor tanpa disertai perpindahan partikel perantaranya disebut...", opt: ["A. Konduksi", "B. Konveksi", "C. Radiasi", "D. Evaporasi"], ans: 0 },
+        { type: "pg", q: "12. Contoh perpindahan kalor secara radiasi adalah...", opt: ["A. Memanaskan sendok logam di atas api", "B. Terjadinya angin darat dan angin laut", "C. Panas matahari sampai ke bumi", "D. Air yang mendidih dalam panci"], ans: 2 },
+        { type: "pg", q: "13. Urutan hierarki organisasi kehidupan dari yang terkecil adalah...", opt: ["A. Sel - Jaringan - Organ - Sistem Organ - Organisme", "B. Jaringan - Sel - Organ - Sistem Organ - Organisme", "C. Organ - Sel - Jaringan - Sistem Organ - Organisme", "D. Sel - Organ - Jaringan - Sistem Organ - Organisme"], ans: 0 },
+        { type: "pg", q: "14. Bagian sel yang berfungsi sebagai pengatur seluruh kegiatan sel adalah...", opt: ["A. Sitoplasma", "B. Membran sel", "C. Inti sel (Nukleus)", "D. Mitokondria"], ans: 2 },
+        { type: "pg", q: "15. Organel sel yang hanya dimiliki oleh sel tumbuhan adalah...", opt: ["A. Dinding sel dan Kloroplas", "B. Membran sel dan Mitokondria", "C. Ribosom dan Lisosom", "D. Sentrosom dan Inti sel"], ans: 0 },
+        { type: "pg", q: "16. Kumpulan dari beberapa jaringan yang bekerja sama melakukan fungsi tertentu disebut...", opt: ["A. Sel", "B. Organ", "C. Sistem Organ", "D. Organisme"], ans: 1 },
+        { type: "pg", q: "17. Komponen biotik dalam ekosistem meliputi...", opt: ["A. Air, tanah, udara", "B. Tumbuhan, hewan, mikroorganisme", "C. Cahaya matahari, suhu, kelembapan", "D. Batu, pasir, iklim"], ans: 1 },
+        { type: "pg", q: "18. Interaksi antara dua makhluk hidup yang saling menguntungkan disebut simbiosis...", opt: ["A. Parasitisme", "B. Komensalisme", "C. Mutualisme", "D. Amensalisme"], ans: 2 },
+        { type: "pg", q: "19. Contoh simbiosis komensalisme terjadi pada...", opt: ["A. Kutu pada kepala manusia", "B. Ikan remora dan ikan hiu", "C. Lebah dan bunga", "D. Cacing pita di usus manusia"], ans: 1 },
+        { type: "pg", q: "20. Peran tumbuhan hijau dalam rantai makanan adalah sebagai...", opt: ["A. Konsumen I", "B. Konsumen II", "C. Produsen", "D. Pengurai"], ans: 2 },
+        { type: "pg", q: "21. Gas yang menyebabkan efek rumah kaca di atmosfer bumi adalah...", opt: ["A. Oksigen", "B. Karbon dioksida", "C. Nitrogen", "D. Hidrogen"], ans: 1 },
+        { type: "pg", q: "22. Upaya yang dapat dilakukan untuk mengurangi pencemaran udara adalah...", opt: ["A. Menebang pohon di hutan", "B. Menggunakan kendaraan pribadi secara berlebihan", "C. Reboisasi dan penanaman pohon", "D. Membakar sampah plastik"], ans: 2 },
+        { type: "pg", q: "23. Planet yang paling dekat dengan Matahari adalah...", opt: ["A. Venus", "B. Bumi", "C. Merkurius", "D. Mars"], ans: 2 },
+        { type: "pg", q: "24. Peristiwa berputarnya Bumi pada porosnya dinamakan...", opt: ["A. Revolusi Bumi", "B. Rotasi Bumi", "C. Presesi Bumi", "D. Eksentrisitas"], ans: 1 },
+        { type: "pg", q: "25. Akibat dari terjadinya revolusi Bumi adalah...", opt: ["A. Pergantian siang dan malam", "B. Perbedaan waktu antar wilayah", "C. Gerak semut harian matahari", "D. Perubahan musim di bumi"], ans: 3 }
+      ],
+      "7.2": [],
+      "7.3": [],
+      "8.1": [
+        { type: "pg", q: "1. Tulang penyusun rangka manusia yang termasuk tulang pipa adalah...", opt: ["A. Tulang tengkorak", "B. Tulang paha", "C. Tulang rusuk", "D. Tulang belikat"], ans: 1 },
+        { type: "pg", q: "2. Sendi yang memungkinkan gerakan ke segala arah adalah...", opt: ["A. Sendi engsel", "B. Sendi peluru", "C. Sendi putar", "D. Sendi pelana"], ans: 1 },
+        { type: "pg", q: "3. Otot yang bekerja secara sadar (volunter) dan melekat pada rangka adalah...", opt: ["A. Otot polos", "B. Otot jantung", "C. Otot lurik", "D. Otot organ dalam"], ans: 2 },
+        { type: "pg", q: "4. Kelainan tulang akibat penumpukan kalsium yang berkurang sehingga tulang menjadi rapuh disebut...", opt: ["A. Lordosis", "B. Kifosis", "C. Skoliosis", "D. Osteoporosis"], ans: 3 },
+        { type: "pg", q: "5. Usaha dapat dirumuskan sebagai perkalian antara...", opt: ["A. Gaya dan waktu", "B. Gaya dan perpindahan", "C. Massa dan percepatan", "D. Daya dan jarak"], ans: 1 },
+        { type: "pg", q: "6. Seorang siswa mendorong tembok dengan gaya 100 N namun tembok tidak bergeser. Usaha yang dilakukan siswa adalah...", opt: ["A. 100 Joule", "B. 10 Joule", "C. 0 Joule", "D. 1000 Joule"], ans: 2 },
+        { type: "pg", q: "7. Pesawat sederhana yang menggunakan prinsip bidang miring adalah...", opt: ["A. Gunting", "B. Tangga", "C. Pembuka botol", "D. Katrol bergerak"], ans: 1 },
+        { type: "pg", q: "8. Katrol tetap memiliki keuntungan mekanis sebesar...", opt: ["A. 1", "B. 2", "C. 3", "D. 4"], ans: 0 },
+        { type: "pg", q: "9. Jaringan tumbuhan yang berfungsi mengangkut air dan garam mineral dari akar ke daun adalah...", opt: ["A. Floem", "B. Xilem", "C. Epidermis", "D. Parenkim"], ans: 1 },
+        { type: "pg", q: "10. Bagian daun yang berfungsi sebagai tempat terjadinya fotosintesis utama adalah...", opt: ["A. Jaringan epidermis", "B. Jaringan tiang (palisade)", "C. Stomata", "D. Berkas pengangkut"], ans: 1 },
+        { type: "pg", q: "11. Hasil utama dari proses fotosintesis adalah...", opt: ["A. Karbon dioksida dan air", "B. Glukosa dan oksigen", "C. Karbon monoksida dan hidrogen", "D. Nitrogen dan oksigen"], ans: 1 },
+        { type: "pg", q: "12. Organ pencernaan tempat terjadinya pencernaan kimiawi dan mekanis secara bersamaan pertama kali adalah...", opt: ["A. Lambung", "B. Mulut", "C. Usus halus", "D. Kerongkongan"], ans: 1 },
+        { type: "pg", q: "13. Enzim ptyalin yang terdapat pada air liur berfungsi untuk mengubah...", opt: ["A. Protein menjadi pepton", "B. Lemak menjadi asam lemak", "C. Amilum menjadi glukosa/maltosa", "D. Pepton menjadi asam amino"], ans: 2 },
+        { type: "pg", q: "14. Zat makanan yang berfungsi sebagai sumber energi utama bagi tubuh adalah...", opt: ["A. Protein", "B. Lemak", "C. Karbohidrat", "D. Vitamin"], ans: 2 },
+        { type: "pg", q: "15. Zat aditif makanan yang digunakan sebagai pengawet sintetis adalah...", opt: ["A. Monosodium glutamat (MSG)", "B. Natrium benzoat", "C. Tartrazin", "D. Sakarin"], ans: 1 },
+        { type: "pg", q: "16. Zat adiktif dalam rokok yang menyebabkan ketergantungan adalah...", opt: ["A. Tar", "B. Nikotin", "C. Karbon monoksida", "D. Kafein"], ans: 1 },
+        { type: "pg", q: "17. Sel darah yang berfungsi mengangkut oksigen ke seluruh tubuh adalah...", opt: ["A. Eritrosit", "B. Leukosit", "C. Trombosit", "D. Plasma darah"], ans: 0 },
+        { type: "pg", q: "18. Bagian jantung yang berfungsi memompa darah bersih ke seluruh tubuh adalah...", opt: ["A. Serambi kanan", "B. Serambi kiri", "C. Bilik kanan", "D. Bilik kiri"], ans: 3 },
+        { type: "pg", q: "19. Gangguan pada sistem peredaran darah berupa tingginya tekanan darah di atas normal disebut...", opt: ["A. Anemia", "B. Hipotensi", "C. Hipertensi", "D. Leukimia"], ans: 2 },
+        { type: "pg", q: "20. Tekanan pada zat cair yang disebabkan oleh berat zat cair itu sendiri dinamakan...", opt: ["A. Tekanan osmosis", "B. Tekanan hidrostatis", "C. Tekanan atmosfer", "D. Tekanan kapiler"], ans: 1 },
+        { type: "pg", q: "21. Hukum Pascal menyatakan bahwa tekanan yang diberikan pada zat cair dalam ruang tertutup akan...", opt: ["A. Diteruskan ke satu arah saja", "B. Diteruskan ke segala arah dengan sama besar", "C. Berkurang seiring bertambahnya jarak", "D. Hilang terserap wadah"], ans: 1 },
+        { type: "pg", q: "22. Alat yang bekerja berdasarkan hukum Archimedes adalah...", opt: ["A. Dongkrak hidrolik", "B. Kapal laut dan kapal selam", "C. Rem hidrolik", "D. Tensi darah"], ans: 1 },
+        { type: "pg", q: "23. Tempat pertukaran gas O2 dan CO2 pada sistem pernapasan manusia terjadi di...", opt: ["A. Bronkus", "B. Trakea", "C. Alveolus", "D. Laring"], ans: 2 },
+        { type: "pg", q: "24. Organ ekskresi yang berfungsi menyaring darah dan menghasilkan urine adalah...", opt: ["A. Hati", "B. Paru-paru", "C. Kulit", "D. Ginjal"], ans: 3 },
+        { type: "pg", q: "25. Banyaknya getaran yang terjadi dalam waktu satu detik disebut...", opt: ["A. Amplitudo", "B. Periode", "C. Frekuensi", "D. Gelombang"], ans: 2 }
+      ],
+      "8.2": [],
+      "9.1": [
+        { type: "pg", q: "1. Pembelahan sel yang menghasilkan sel anak dengan jumlah kromosom sama dengan sel induk (2n) disebut...", opt: ["A. Meiosis", "B. Mitosis", "C. Amitosis", "D. Oogenesis"], ans: 1 },
+        { type: "pg", q: "2. Organ reproduksi pria yang berfungsi menghasilkan sel sperma dan hormon testosteron adalah...", opt: ["A. Skrotum", "B. Penis", "C. Testis", "D. Vas deferens"], ans: 2 },
+        { type: "pg", q: "3. Proses pelepasan sel telur (ovum) dari ovarium dinamakan...", opt: ["A. Fertilisasi", "B. Ovulasi", "C. Menstruasi", "D. Implantasi"], ans: 1 },
+        { type: "pg", q: "4. Tempat terjadinya peleburan sel sperma dan sel telur (fertilisasi) pada wanita adalah...", opt: ["A. Uterus", "B. Vagina", "C. Tuba fallopi (Oviduk)", "D. Serviks"], ans: 2 },
+        { type: "pg", q: "5. Perkembangbiakan vegetatif alami pada tanaman pisang dilakukan dengan...", opt: ["A. Umbi batang", "B. Tunas", "C. Stolon", "D. Rizoma"], ans: 1 },
+        { type: "pg", q: "6. Perkembangbiakan generatif pada tumbuhan gymnospermae menggunakan alat reproduksi berupa...", opt: ["A. Bunga", "B. Strobilus", "C. Spora", "D. Rhizoid"], ans: 1 },
+        { type: "pg", q: "7. Hewan berikut yang berkembang biak dengan cara fragmentasi adalah...", opt: ["A. Hydra", "B. Amoeba", "C. Cacing Planaria", "D. Paramecium"], ans: 2 },
+        { type: "pg", q: "8. Penulisan genotipe heterozigot yang benar untuk sifat tinggi adalah...", opt: ["A. TT", "B. tt", "C. Tt", "D. tT"], ans: 2 },
+        { type: "pg", q: "9. Sifat fisik atau karakter yang dapat diamati pada suatu organisme dinamakan...", opt: ["A. Genotipe", "B. Fenotipe", "C. Alel", "D. Dominan"], ans: 1 },
+        { type: "pg", q: "10. Persilangan monohibrid dominan penuh antara tanaman berbunga merah (MM) dan putih (mm) menghasilkan F1 berbunga merah. Jika F1 disilangkan sesamanya, rasio fenotipe pada F2 adalah...", opt: ["A. 1 Merah : 2 Merah Muda : 1 Putih", "B. 3 Merah : 1 Putih", "C. 1 Merah : 1 Putih", "D. Semua Merah"], ans: 1 },
+        { type: "pg", q: "11. Muatan listrik statis yang sejenis jika didekatkan akan...", opt: ["A. Tarik-menarik", "B. Tolak-menolak", "C. Tidak bereaksi", "D. Menyatu"], ans: 1 },
+        { type: "pg", q: "12. Balon yang digosokkan ke rambut menjadi bermuatan negatif karena...", opt: ["A. Proton berpindah dari rambut ke balon", "B. Elektron berpindah dari rambut ke balon", "C. Elektron berpindah dari balon ke rambut", "D. Neutron bertambah pada balon"], ans: 1 },
+        { type: "pg", q: "13. Alat yang digunakan untuk mengetahui apakah suatu benda bermuatan listrik atau tidak adalah...", opt: ["A. Elektroskop", "B. Voltmeter", "C. Amperemeter", "D. Ohmmeter"], ans: 0 },
+        { type: "pg", q: "14. Kuat arus listrik diukur dengan alat Amperemeter yang dirangkai secara...", opt: ["A. Paralel", "B. Seri", "C. Seri-Paralel", "D. Sembarang"], ans: 1 },
+        { type: "pg", q: "15. Hukum Ohm menyatakan bahwa hubungan antara tegangan (V), arus (I), dan hambatan (R) adalah...", opt: ["A. V = I / R", "B. V = I × R", "C. I = V × R", "D. R = I / V"], ans: 1 },
+        { type: "pg", q: "16. Tiga buah hambatan masing-masing 2 Ω, 3 Ω, dan 5 Ω dirangkai secara seri. Hambatan penggantinya adalah...", opt: ["A. 10 Ω", "B. 1 Ω", "C. 30 Ω", "D. 0,5 Ω"], ans: 0 },
+        { type: "pg", q: "17. Bahan yang dapat ditarik dengan kuat oleh magnet dinamakan...", opt: ["A. Paramagnetik", "B. Diamagnetik", "C. Ferromagnetik", "D. Non-magnetik"], ans: 2 },
+        { type: "pg", q: "18. Contoh benda ferromagnetik adalah...", opt: ["A. Kayu dan Plastik", "B. Besi dan Baja", "C. Tembaga dan Emas", "D. Bismut dan Aluminium"], ans: 1 },
+        { type: "pg", q: "19. Pembuatan magnet dengan cara menggosok harus dilakukan dengan arah...", opt: ["A. Bolak-balik", "B. Searah dan teratur", "C. Acak", "D. Memutar balik"], ans: 1 },
+        { type: "pg", q: "20. Hewan yang menggunakan medan magnet bumi untuk navigasi migrasi adalah...", opt: ["A. Burung dan penyu", "B. Kucing dan anjing", "C. Sapi dan kambing", "D. Ayam dan bebek"], ans: 0 },
+        { type: "pg", q: "21. Pemanfaatan mikroorganisme untuk menghasilkan produk barang/jasa dinamakan...", opt: ["A. Biologi sel", "B. Bioteknologi", "C. Ekologi", "D. Genetika"], ans: 1 },
+        { type: "pg", q: "22. Mikroorganisme yang digunakan dalam pembuatan tempe adalah...", opt: ["A. Lactobacillus bulgaricus", "B. Rhizopus oryzae", "C. Saccharomyces cerevisiae", "D. Acetobacter xylinum"], ans: 1 },
+        { type: "pg", q: "23. Keunggulan bioteknologi modern dibandingkan bioteknologi konvensional adalah...", opt: ["A. Menggunakan peralatan sederhana", "B. Hasil tidak stabil", "C. Mampu melakukan rekayasa genetika DNA", "D. Biaya produksi sangat murah"], ans: 2 },
+        { type: "pg", q: "24. Partikel penyusun inti atom terdiri dari...", opt: ["A. Proton dan Elektron", "B. Proton dan Neutron", "C. Elektron dan Neutron", "D. Proton saja"], ans: 1 },
+        { type: "pg", q: "25. Atom yang bermuatan positif karena kehilangan elektron disebut...", opt: ["A. Anion", "B. Kation", "C. Molekul", "D. Isotop"], ans: 1 }
+      ],
+      "9.2": []
+    };
+    bankSoalIPA["7.2"] = bankSoalIPA["7.1"];
+    bankSoalIPA["7.3"] = bankSoalIPA["7.1"];
+    bankSoalIPA["8.2"] = bankSoalIPA["8.1"];
+    bankSoalIPA["9.2"] = bankSoalIPA["9.1"];
+
+    // Bank Soal Bahasa Inggris
+    const bankSoalBahasaInggris = {
+      "7.1": [
+        { type: "pg", q: "1. How to pronounce the letter \"K\" in English?", opt: ["A. ei", "B. bi", "C. Key", "D. di"], ans: 2 },
+        { type: "pg", q: "2. How to pronounce the letter \"Y\" in English?", opt: ["A. Way", "B. Ti", "C. Yu", "D. Vi"], ans: 0 },
+        { type: "pg", q: "3. How to called number 12 in English?", opt: ["A. Ninety nine", "B. Twelve", "C. Seventeen", "D. Thirteen"], ans: 1 },
+        { type: "pg", q: "4. How to called number 20 in English?", opt: ["A. Ten", "B. Twenty", "C. Thirty", "D. Fourty"], ans: 1 },
+        { type: "pg", q: "5. What is \"Senin\" in English?", opt: ["A. Thursday", "B. Sunday", "C. Friday", "D. Monday"], ans: 3 },
+        { type: "pg", q: "6. What is \"Sabtu\" in English?", opt: ["A. Wednesday", "B. Saturday", "C. Monday", "D. Tuesday"], ans: 1 },
+        { type: "pg", q: "7. What is the second month in the year?", opt: ["A. March", "B. May", "C. February", "D. August"], ans: 2 },
+        { type: "pg", q: "8. What is the tenth month in the year?", opt: ["A. September", "B. January", "C. November", "D. October"], ans: 3 },
+        { type: "pg", q: "9. How to say \"Merah\" in English?", opt: ["A. Blue", "B. Yellow", "C. Green", "D. Red"], ans: 3 },
+        { type: "pg", q: "10. How to say \"Putih\" in English?", opt: ["A. Black", "B. Purple", "C. Brown", "D. White"], ans: 3 },
+        { type: "pg", q: "11. How do you say 07:00 in English?", opt: ["A. It is seven quarter", "B. It is seven o'clock", "C. It is seven past", "D. It is seven to"], ans: 1 },
+        { type: "pg", q: "12. How do you say 03:30 in English?", opt: ["A. It's three o'clock", "B. It's quarter to three", "C. It's half past three", "D. It's quarter past three"], ans: 2 },
+        { type: "pg", q: "13. How do you say 8:15 in English?", opt: ["A. It's quarter to eight", "B. It's fifty to eight", "C. It's quarter past eight", "D. It's eight o'clock"], ans: 2 },
+        { type: "pg", q: "14. Indra : .... do you live?\nSasya: I live at jln Basuki Rahmat\nPlease complete the blank sentence with the correct answer!", opt: ["A. What", "B. Why", "C. Where", "D. Who"], ans: 2 },
+        { type: "pg", q: "15. Maya : Rina you really like banana, ..... do you like it?\nRina : because I think it tastes good\nPlease complete the sentence with the correct answer!", opt: ["A. What", "B. When", "C. How", "D. Why"], ans: 3 },
+        { type: "pg", q: "16. Seller : Hello sir, what can I do for you?\nBuyer : I'm looking for a cake, .... of this cake?\nSeller : It's about 25 thousand rupiah\nPlease complete the blank sentence with the correct answer!", opt: ["A. How old", "B. How much the cost", "C. How many", "D. How often"], ans: 1 },
+        { type: "pg", q: "17. Amel : Hi my name is Amel, I am 12 years old. How about you?\nCandra : Hi I am Candra and I am .....\nPlease complete the sentence..", opt: ["A. 13 years", "B. 13 old", "C. 13 age", "D. 13 years old"], ans: 3 },
+        { type: "pg", q: "18. Rudi : \"What is your name?\"\nSusan : \".... Name is Susan\"\nPlease choose the right answer to fill the blank", opt: ["A. What", "B. My", "C. Me", "D. Who"], ans: 1 },
+        { type: "pg", q: "19. Hello, my name _____ Sarah. I am twelve years old.", opt: ["A. are", "B. be", "C. is", "D. am"], ans: 2 },
+        { type: "pg", q: "20. Where _____ you live?", opt: ["A. Does", "B. Do", "C. Are", "D. Is"], ans: 1 },
+        { type: "pg", q: "21. How old are you? / _____", opt: ["A. I am 13 years old", "B. I am a student", "C. I live in jakarta", "D. My favorite food is fried chicken"], ans: 0 },
+        { type: "pg", q: "22. Hello! My name is Maya. _____ am a student at SMP Merdeka.", opt: ["A. She", "B. You", "C. He", "D. I"], ans: 3 },
+        { type: "pg", q: "23. This is my brother. _____ name is Kevin.", opt: ["A. Her", "B. His", "C. Their", "D. Our"], ans: 1 },
+        { type: "pg", q: "24. A: What are your hobbies?\nB: My hobbies _____ reading books and listening to music.\nPlease complete the sentence with the correct answer!", opt: ["A. Are", "B. Is", "C. Am", "D. Has"], ans: 0 },
+        { type: "pg", q: "25. Budi : \"Hello, my name is Galang. I am a student.\"\nIntan : \"Hi, Galang. I'm Monita. Nice to meet you.\"\nBudi : \"...\"\nWhat is the most appropriate response to complete the dialogue?", opt: ["A. I am fine, thank you", "B. Good morning, Budi", "C. Nice to meet you too", "D. See you later"], ans: 2 },
+        { type: "pg", q: "26. Teacher : Monita, how many siblings do you have?\nMonita : I ..... 2 brothers and 1 sister\nTeacher : Where do your sisters go to school?\nMonita : She goes to SMPN 4 Praya\nPlease complete the sentence with the correct answer!", opt: ["A. Has", "B. Have", "C. Hasn't", "D. Haven't"], ans: 1 },
+        { type: "pg", q: "27. Where does Monita's sister go to school?", opt: ["A. SMPN 1 Praya", "B. SMPN 4 Praya", "C. SMPN 3 Praya", "D. She is not going to school"], ans: 1 },
+        { type: "pg", q: "28. Angga : Hi Galang, where are you going?\nGalang : Oh hi Angga, I want to go to the library. I want to borrow some books.\nAngga : What is your hobby, Galang?\nGalang : I like reading books.\nWhat is Galang's hobby?", opt: ["A. Playing football", "B. Playing online games", "C. Reading", "D. Jogging"], ans: 2 },
+        { type: "pg", q: "29. Sarah goes to the swimming pool every weekend. Which set of equipment does she need for her hobby?", opt: ["A. Swimsuit", "B. Ball", "C. Racket and net", "D. Fishing rod"], ans: 0 },
+        { type: "pg", q: "30. Identify the incorrect pair of hobby and its primary equipment!", opt: ["A. Reading - pen", "B. Fishing - book", "C. Online games - handphone and connection", "D. Playing Badminton - fishing rod and net"], ans: 3 }
+      ],
+      "7.2": [],
+      "7.3": [],
+      "8.1": [
+        { type: "pg", q: "Read the text for questions 1–5:\n\nThe Panjat Pinang Competition\nLast Independence Day, our school held a Panjat Pinang competition. Before the competition started, each team discussed how to reach the prizes at the top of the pole. The pole was covered with grease, so it was difficult to climb.\nAt first, Andi tried to climb the pole alone. He slipped several times. Then, his teammates made a strong base by standing close together. Andi climbed on their shoulders, but he could not reach the top. Finally, another teammate climbed over him and reached the prizes.\nAfter they got the prizes, they helped each other climb down safely. They were tired, but they were very happy.\n\n1. Why did Andi's first attempt fail?", opt: ["A. He did not want to get the prize.", "B. The pole was too short.", "C. He tried to climb without enough support.", "D. His teammates left the competition."], ans: 2 },
+        { type: "pg", q: "2. What was the most important change in the team's strategy?", opt: ["A. They climbed the pole faster.", "B. They worked together to make a stronger base.", "C. They changed the prizes.", "D. They stopped the competition."], ans: 1 },
+        { type: "pg", q: "3. What can we infer from the story?", opt: ["A. Panjat Pinang can only be won by the strongest person.", "B. Teamwork helped the participants solve the problem.", "C. Andi was the only person who worked hard.", "D. The competition was easy for the participants."], ans: 1 },
+        { type: "pg", q: "4. If the team had continued climbing one by one, what would most likely have happened?", opt: ["A. They would have had more difficulty reaching the top.", "B. They would have finished immediately.", "C. They would not have needed teamwork.", "D. They would have received more prizes."], ans: 0 },
+        { type: "pg", q: "5. Which statement best describes the team's experience?", opt: ["A. They won because one student worked alone.", "B. They succeeded after changing their strategy and cooperating.", "C. They failed because the pole was too high.", "D. They won because the competition was easy."], ans: 1 },
+        { type: "pg", q: "6. Rani: What did you do last Independence Day?\nSinta: I ______ in the sack race with my classmates.", opt: ["A. participate", "B. participates", "C. participated", "D. participating"], ans: 2 },
+        { type: "pg", q: "7. Dika: Did you join the Panjat Pinang competition yesterday?\nBeni: No, I ______. I watched the competition instead.", opt: ["A. didn't", "B. don't", "C. wasn't", "D. haven't"], ans: 0 },
+        { type: "pg", q: "8. Alya: How was the Independence Day celebration?\nNina: It was exciting. We ______ several traditional games.", opt: ["A. play", "B. played", "C. playing", "D. plays"], ans: 1 },
+        { type: "pg", q: "9. Which sentence is grammatically correct?", opt: ["A. We join the parade yesterday.", "B. We joined the parade yesterday.", "C. We are join the parade yesterday.", "D. We will joined the parade yesterday."], ans: 1 },
+        { type: "pg", q: "10. Which sentence correctly uses an irregular past verb?", opt: ["A. Galang winned the competition.", "B. Galang wins the competition yesterday.", "C. Galang won the competition yesterday.", "D. Galang winning the competition yesterday."], ans: 2 },
+        { type: "pg", q: "Read the text for questions 11–15:\n\nGoing To A Parade\nOn August 17th, the students of Merdeka Junior High School joined an Independence Day parade. Before the parade started, they gathered in the school yard. They checked their costumes and listened to their teacher's instructions.\nFirst, the marching band moved to the front. Then, the students followed them along the route. Some students carried Indonesian flags, while others wore traditional costumes.\nAfter walking for about thirty minutes, one student noticed that his friend's shoe was loose. His friend could not walk comfortably. Instead of leaving him behind, he stopped and helped him fix the shoe. After that, they quickly caught up with the group.\n\n11. What did the students do before the parade started?", opt: ["A. They went home.", "B. They checked their costumes and listened to instructions.", "C. They started the marching band.", "D. They helped people along the road."], ans: 1 },
+        { type: "pg", q: "12. Why did the student stop during the parade?", opt: ["A. He wanted to leave the group.", "B. He wanted to take a picture.", "C. He wanted to help his friend.", "D. He wanted to change his costume."], ans: 2 },
+        { type: "pg", q: "13. What can we infer about the student who stopped?", opt: ["A. He cared about his friend's safety and comfort.", "B. He did not want to finish the parade.", "C. He was afraid of the marching band.", "D. He disliked Independence Day celebrations."], ans: 0 },
+        { type: "pg", q: "14. What happened after the student helped his friend?", opt: ["A. They returned to school.", "B. The marching band stopped.", "C. They changed their costumes.", "D. They caught up with the group."], ans: 3 },
+        { type: "pg", q: "15. Which word can best replace “Then” in the sentence “Then, the students followed them along the route”?", opt: ["A. Before", "B. Next", "C. Yesterday", "D. Finally"], ans: 1 },
+        { type: "pg", q: "16. Read the sentences.\n1. Finally, we arrived at the school field.\n2. First, we gathered in the school yard.\n3. Then, we marched along the road.\n4. After that, we watched the marching band.\nWhich is the correct chronological order?", opt: ["A. 1 – 2 – 3 – 4", "B. 2 – 3 – 4 – 1", "C. 3 – 2 – 4 – 1", "D. 4 – 2 – 3 – 1"], ans: 1 },
+        { type: "pg", q: "17. Which sentence is the best opening for a recount about a student's Independence Day experience?", opt: ["A. Finally, we went home happily.", "B. Then, we joined the competition.", "C. Last August, my school held an Independence Day celebration.", "D. After that, we ate together."], ans: 2 },
+        { type: "pg", q: "18. “First, we gathered in the school yard. Then, we walked to the parade route.” The word then is used to show ...", opt: ["A. the place of the event", "B. the sequence of events", "C. the reason for the event", "D. the feeling of the writer"], ans: 1 },
+        { type: "pg", q: "19. “First, we joined the parade. Finally, we prepared our costumes. Then, we marched along the road.” What is the main problem with the paragraph?", opt: ["A. It does not use past tense.", "B. It does not have any activities.", "C. The events are not arranged chronologically.", "D. It uses too many nouns."], ans: 2 },
+        { type: "pg", q: "20. Which sentence is most suitable as the orientation of a recount text?", opt: ["A. Finally, we returned to school.", "B. Then, we joined the competition.", "C. Last Saturday, my classmates and I attended an Independence Day celebration.", "D. After that, we watched the parade."], ans: 2 },
+        { type: "pg", q: "Read the text for questions 21–24:\n\nToday, my school held an Independence Day celebration. Many students participated in different games, such as tug of war, sack race, tandem race, and marble-in-spoon race.\nAt the beginning, I participated in the marble-in-spoon race. It was a tight competition between me and Galang. I almost beat him, but he was faster and steadier. He came first, while I came second.\nLater, I watched Andre participate in the sack race. At first, he led the race, but suddenly he fell. He finally came second.\nThe last game was the krupuk race. I met Galang again in the final. This time, I finished first. I was very happy because I had tried my best.\n\n21. Why did Galang win the marble-in-spoon race?", opt: ["A. He started earlier than Monita.", "B. He was faster and steadier.", "C. Monita left the race.", "D. The teacher helped him."], ans: 1 },
+        { type: "pg", q: "22. What happened to Andre during the sack race?", opt: ["A. He won the race.", "B. He did not participate.", "C. He fell while he was leading the race.", "D. He helped another participant."], ans: 2 },
+        { type: "pg", q: "23. What can we infer about Monita from the final paragraph?", opt: ["A. She gave up after losing to Galang.", "B. She continued trying and eventually won another competition.", "C. She did not enjoy the celebration.", "D. She avoided participating in competitions."], ans: 1 },
+        { type: "pg", q: "24. Which sequence correctly represents Monita's experience?", opt: ["A. Krupuk race → marble-in-spoon race → sack race", "B. Sack race → krupuk race → marble-in-spoon race", "C. Marble-in-spoon race → watching sack race → krupuk race", "D. Krupuk race → watching sack race → marble-in-spoon race"], ans: 2 },
+        { type: "pg", q: "25. “Last August, SMP Merdeka held an Independence Day celebration. All students joined the event. They participated in several traditional games.” This part is the orientation because it ...", opt: ["A. gives the writer's final opinion", "B. tells all events in chronological order", "C. introduces the time, place, and situation", "D. explains the rules of the games"], ans: 2 },
+        { type: "pg", q: "26. Which part of a recount text usually presents the events in chronological order?", opt: ["A. Orientation", "B. Record of Events", "C. Comment", "D. Title"], ans: 1 },
+        { type: "pg", q: "27. “It was an exciting and memorable day. I was very happy to participate in the celebration.” What is the main function of these sentences?", opt: ["A. To introduce the participants", "B. To tell the first event", "C. To give the writer's comment or evaluation", "D. To explain the rules of the game"], ans: 2 },
+        { type: "pg", q: "28. Raka: I finally won the Panjat Pinang competition!\nBudi: ______", opt: ["A. Congratulations! You did a great job!", "B. I'm sorry to hear that.", "C. Never mind. Try again tomorrow.", "D. Why didn't you participate?"], ans: 0 },
+        { type: "pg", q: "29. Sinta: Our team won the parade competition yesterday.\nMaya: ______", opt: ["A. Congratulations on your team's achievement!", "B. I'm sorry you lost.", "C. That's too bad.", "D. Don't worry about it."], ans: 0 },
+        { type: "pg", q: "30. Your teacher asks you to write the main events of your Independence Day experience. Which sentence is the best example?", opt: ["A. Independence Day is celebrated in Indonesia every year.", "B. I was very happy about the celebration.", "C. First, I joined the parade. Then, I participated in the sack race. Finally, I watched the closing ceremony.", "D. My school is located near the city center."], ans: 2 }
+      ],
+      "9.1": [
+        { 
+          type: "pg", 
+          q: "Read the following text carefully to answer questions 1–5:\n\nThe Bekantan\nThe Bekantan, also known as the proboscis monkey, is a native animal of Indonesia. It is a reddish-brown monkey with a long and big nose. An adult Bekantan weighs about 6–22 kilograms and can grow around 66–75 centimeters tall.\nBekantans usually live in mangrove forests and swampy areas. They are good swimmers and can move between trees. They mainly eat leaves, fruits, and seeds. Unfortunately, their population is decreasing because their natural habitat is being destroyed.\n\n1. Why is the Bekantan's large nose useful as a characteristic for identifying the animal?", 
+          opt: [
+            "A. It makes the Bekantan able to swim.", 
+            "B. It is a distinctive physical feature of the Bekantan.", 
+            "C. It helps the Bekantan find mangrove forests.", 
+            "D. It makes the Bekantan different in size from other animals."
+          ], 
+          ans: 1 
+        },
+        { 
+          type: "pg", 
+          q: "2. Based on the text, which place would be the most suitable habitat for a bekantan?", 
+          opt: [
+            "A. A dry area with very few trees", 
+            "B. A snowy mountain surrounded by ice", 
+            "C. A mangrove area with water and many trees", 
+            "D. An open grassland far from rivers"
+          ], 
+          ans: 2 
+        },
+        { 
+          type: "pg", 
+          q: "3. What is the most likely result if mangrove forests continue to be destroyed?", 
+          opt: [
+            "A. The bekantan population may decrease further.", 
+            "B. Bekantans may become better swimmers.", 
+            "C. Bekantans may change their food into meat.", 
+            "D. The bekantan's nose may become smaller."
+          ], 
+          ans: 0 
+        },
+        { 
+          type: "pg", 
+          q: "4. Which statement is best supported by the text?", 
+          opt: [
+            "A. The bekantan depends on its habitat to survive.", 
+            "B. The bekantan can easily adapt to any environment.", 
+            "C. The bekantan mainly depends on other animals for food.", 
+            "D. The bekantan cannot survive in areas with water."
+          ], 
+          ans: 0 
+        },
+        { 
+          type: "pg", 
+          q: "5. A student wants to describe a bekantan in one short phrase. Which phrase is the MOST effective?", 
+          opt: [
+            "A. a monkey with a nose", 
+            "B. a reddish-brown animal", 
+            "C. a long-nosed reddish-brown monkey", 
+            "D. an animal that lives in Indonesia"
+          ], 
+          ans: 2 
+        },
+        { 
+          type: "pg", 
+          q: "6. Which sentence gives the clearest description of the bekantan's physical appearance?", 
+          opt: [
+            "A. The bekantan has a nose long and big.", 
+            "B. The bekantan has a long and big nose.", 
+            "C. The bekantan has long a big nose.", 
+            "D. The bekantan has a nose is long and big."
+          ], 
+          ans: 1 
+        },
+        { 
+          type: "pg", 
+          q: "7. Read the phrase: “a reddish-brown monkey.” What information does the phrase give?", 
+          opt: [
+            "A. The monkey's habitat", 
+            "B. The monkey's food", 
+            "C. The monkey's physical appearance", 
+            "D. The monkey's behavior"
+          ], 
+          ans: 2 
+        },
+        { 
+          type: "pg", 
+          q: "8. A student writes: “a monkey long-nosed.” What is the correct form?", 
+          opt: [
+            "A. a long-nosed monkey", 
+            "B. a monkey-nosed long", 
+            "C. a long monkey-nosed", 
+            "D. a monkey is long-nosed"
+          ], 
+          ans: 0 
+        },
+        { 
+          type: "pg", 
+          q: "9. If an animal is described as “native to Indonesia,” what does it mean?", 
+          opt: [
+            "A. The animal can only eat Indonesian food.", 
+            "B. The animal originally comes from Indonesia.", 
+            "C. The animal can live in every part of Indonesia.", 
+            "D. The animal is the most common animal in Indonesia."
+          ], 
+          ans: 1 
+        },
+        { 
+          type: "pg", 
+          q: "10. Which sentence uses a noun group correctly AND gives useful information about the bekantan?", 
+          opt: [
+            "A. The bekantan is monkey reddish-brown.", 
+            "B. The bekantan has a long and big nose.", 
+            "C. The bekantan has nose a long and big.", 
+            "D. The bekantan is a nose long and big monkey."
+          ], 
+          ans: 1 
+        },
+        { 
+          type: "pg", 
+          q: "Read the following text carefully to answer questions 11–15:\n\nOrangutan\nOrangutans are great apes from Indonesia. They are native to Borneo and Sumatra. A male orangutan can be more than 150 centimeters tall. Orangutans have reddish-brown hair, strong arms, and no tails. Their strong arms help them swing between tree branches.\nOrangutans mainly eat fruits. They usually live in trees and can live alone or in small family groups. However, orangutans are endangered because their natural habitats are decreasing.\n\n11. Why are strong arms especially important for orangutans?", 
+          opt: [
+            "A. They help orangutans swim in rivers.", 
+            "B. They help orangutans move between tree branches.", 
+            "C. They help orangutans find food under the ground.", 
+            "D. They help orangutans protect their habitat from humans."
+          ], 
+          ans: 1 
+        },
+        { 
+          type: "pg", 
+          q: "12. What can we conclude about the relationship between orangutans and trees?", 
+          opt: [
+            "A. Trees are an important part of orangutans' lives.", 
+            "B. Orangutans only visit trees to find water.", 
+            "C. Orangutans can survive without trees easily.", 
+            "D. Trees are dangerous places for orangutans."
+          ], 
+          ans: 0 
+        },
+        { 
+          type: "pg", 
+          q: "13. Why might decreasing forest areas become a serious problem for orangutans?", 
+          opt: [
+            "A. Orangutans need forests for their habitat and activities.", 
+            "B. Orangutans cannot eat fruits anymore.", 
+            "C. Orangutans will lose their reddish-brown hair.", 
+            "D. Orangutans will become unable to use their arms."
+          ], 
+          ans: 0 
+        },
+        { 
+          type: "pg", 
+          q: "14. Which information is NOT provided in the text?", 
+          opt: [
+            "A. The color of orangutans' hair", 
+            "B. The height of a male orangutan", 
+            "C. The places where orangutans are native", 
+            "D. The average age of orangutans"
+          ], 
+          ans: 3 
+        },
+        { 
+          type: "pg", 
+          q: "15. Based on the text, which action could help orangutans survive?", 
+          opt: [
+            "A. Cutting down more trees", 
+            "B. Protecting their natural habitats", 
+            "C. Moving all orangutans to cities", 
+            "D. Reducing the number of fruit trees"
+          ], 
+          ans: 1 
+        },
+        { 
+          type: "pg", 
+          q: "16. “An orangutan have strong arms.” What is the correct form and why?", 
+          opt: [
+            "A. An orangutan has strong arms because “orangutan” is singular.", 
+            "B. An orangutan have strong arms because animals use “have.”", 
+            "C. An orangutan having strong arms because it is an animal.", 
+            "D. An orangutan are strong arms because “orangutan” is singular."
+          ], 
+          ans: 0 
+        },
+        { 
+          type: "pg", 
+          q: "17. Which sentence correctly describes several orangutans?", 
+          opt: [
+            "A. Orangutans has strong arms.", 
+            "B. Orangutans have strong arms.", 
+            "C. Orangutans is strong arms.", 
+            "D. Orangutans having strong arms."
+          ], 
+          ans: 1 
+        },
+        { 
+          type: "pg", 
+          q: "18. Look at the two sentences.\nA gorilla______black fur.\nGorillas_______black fur.\nWhich answer correctly completes both sentences?", 
+          opt: [
+            "A. has – has", 
+            "B. have – have", 
+            "C. has – have", 
+            "D. have – has"
+          ], 
+          ans: 2 
+        },
+        { 
+          type: "pg", 
+          q: "19. Which sentence is grammatically correct?", 
+          opt: [
+            "A. A gorilla have broad shoulders.", 
+            "B. Gorillas has broad shoulders.", 
+            "C. A gorilla has broad shoulders.", 
+            "D. A gorilla having broad shoulders."
+          ], 
+          ans: 2 
+        },
+        { 
+          type: "pg", 
+          q: "20. A student wants to describe two animals: one orangutan and several gorillas. Which sentence is correct?", 
+          opt: [
+            "A. An orangutan have strong arms and gorillas has black fur.", 
+            "B. An orangutan has strong arms and gorillas have black fur.", 
+            "C. An orangutan has strong arms and gorillas has black fur.", 
+            "D. An orangutan have strong arms and gorillas have black fur."
+          ], 
+          ans: 1 
+        },
+        { 
+          type: "pg", 
+          q: "21. An orangutan has strong arms. ___ arms help it move between branches.", 
+          opt: [
+            "A. His", 
+            "B. Her", 
+            "C. Its", 
+            "D. Their"
+          ], 
+          ans: 2 
+        },
+        { 
+          type: "pg", 
+          q: "22. Gorillas have black fur. ___ fur is thick and dark.", 
+          opt: [
+            "A. Its", 
+            "B. Their", 
+            "C. His", 
+            "D. Her"
+          ], 
+          ans: 1 
+        },
+        { 
+          type: "pg", 
+          q: "23. Which sentence has the closest meaning to “The gorilla has black fur”?", 
+          opt: [
+            "A. The gorilla's fur is black.", 
+            "B. The gorillas' fur are black.", 
+            "C. Its fur are black.", 
+            "D. Their fur is black."
+          ], 
+          ans: 0 
+        },
+        { 
+          type: "pg", 
+          q: "24. Read the sentence: “Orangutans and gorillas have strong arms.” Which sentence has the same meaning?", 
+          opt: [
+            "A. Its arms are strong.", 
+            "B. Their arms are strong.", 
+            "C. His arms are strong.", 
+            "D. Her arms are strong."
+          ], 
+          ans: 1 
+        },
+        { 
+          type: "pg", 
+          q: "25. Rina is observing an orangutan. She says: “___ hair is reddish-brown.” Why is the correct answer its?", 
+          opt: [
+            "A. Because an orangutan is referred to as “it” in this context.", 
+            "B. Because “its” is always used for animals that live in trees.", 
+            "C. Because “its” means the animal is male.", 
+            "D. Because “its” is used for plural animals."
+          ], 
+          ans: 0 
+        },
+        { 
+          type: "pg", 
+          q: "Read the following text carefully to answer questions 26–28:\n\nOrangutan and Gorilla\nOrangutans and gorillas are both great apes. However, they have several differences. Orangutans have reddish-brown hair, while gorillas have black hair and black skin. Orangutans are native to Indonesia, especially Borneo and Sumatra. In contrast, gorillas live in tropical forests in Africa. Both animals have strong arms. Orangutans often move through trees, while gorillas usually spend more time on the ground. Both are herbivores and eat plants, although their diets can include different kinds of food.\n\n26. Which similarity is directly supported by the text?", 
+          opt: [
+            "A. Both animals have reddish-brown hair.", 
+            "B. Both animals have strong arms.", 
+            "C. Both animals live in Indonesia.", 
+            "D. Both animals spend most of their time in trees."
+          ], 
+          ans: 1 
+        },
+        { 
+          type: "pg", 
+          q: "27. If a student sees a great ape with reddish-brown hair that often moves through trees, which animal is it MOST likely to be based on the text?", 
+          opt: [
+            "A. A gorilla", 
+            "B. An orangutan", 
+            "C. A bekantan", 
+            "D. A different kind of monkey"
+          ], 
+          ans: 1 
+        },
+        { 
+          type: "pg", 
+          q: "28. Which conclusion is best supported by the comparison?", 
+          opt: [
+            "A. Orangutans and gorillas are completely different animals.", 
+            "B. Orangutans and gorillas have similarities, but their habitats and behaviors differ.", 
+            "C. Gorillas are better than orangutans at living in forests.", 
+            "D. Orangutans cannot survive outside Borneo and Sumatra."
+          ], 
+          ans: 1 
+        },
+        { 
+          type: "pg", 
+          q: "29. A student wants to write a description of an orangutan. Which sentence is the BEST choice?", 
+          opt: [
+            "A. An orangutan have strong arms and reddish-brown hair.", 
+            "B. An orangutan has strong arms and reddish-brown hair.", 
+            "C. An orangutan having strong arms and reddish-brown hair.", 
+            "D. An orangutan are strong arms and reddish-brown hair."
+          ], 
+          ans: 1 
+        },
+        { 
+          type: "pg", 
+          q: "30. “Gorillas has black fur. Orangutans has reddish-brown hair. Their habitat is different.” Which revision is the MOST appropriate?", 
+          opt: [
+            "A. Gorillas have black fur. Orangutans have reddish-brown hair. Their habitats are different.", 
+            "B. Gorillas has black fur. Orangutans have reddish-brown hair. Their habitat is different.", 
+            "C. Gorilla have black fur. Orangutans has reddish-brown hair. Their habitats are different.", 
+            "D. Gorillas have black fur. Orangutans has reddish-brown hair. Its habitats are different."
+          ], 
+          ans: 0 
+        }
+      ],
+      "9.2": []
+    };
+    bankSoalBahasaInggris["7.2"] = bankSoalBahasaInggris["7.1"];
+    bankSoalBahasaInggris["7.3"] = bankSoalBahasaInggris["7.1"];
+    bankSoalBahasaInggris["8.2"] = bankSoalBahasaInggris["8.1"];
+    bankSoalBahasaInggris["9.2"] = bankSoalBahasaInggris["9.1"];
+
+    // Bank Soal Informatika
+    const bankSoalInformatika = {
+      "7.1": [
+        { type: "pg", q: "1. Kepanjangan dari TIK yang benar di bawah ini adalah …", opt: ["A. Teknologi Informasi dan Komunikasi", "B. Teknologi Informasi dan Komputer", "C. Teknologi Informasi dan Komputasi", "D. Teknologi Informasi dan Kompleks"], ans: 0 },
+        { type: "pg", q: "2. Sesuatu hal yang merupakan bentuk baru dan lebih canggih disebut …", opt: ["A. Komputer", "B. Teknologi", "C. Informasi", "D. Komunikasi"], ans: 1 },
+        { type: "pg", q: "3. Kumpulan sebuah data yang dapat menjadi sebuah berita merupakan …", opt: ["A. Komputer", "B. Teknologi", "C. Informasi", "D. Komunikasi"], ans: 2 },
+        { type: "pg", q: "4. Penyampaian informasi dari satu pihak ke pihak lain disebut …", opt: ["A. Komputer", "B. Teknologi", "C. Informasi", "D. Komunikasi"], ans: 3 },
+        { type: "pg", q: "5. Manakah yang bukan elemen pembelajaran dari Informatika …", opt: ["A. Bernalar Kritis", "B. Berpikir Komputasional", "C. Sistem Komputer", "D. Analisi Data"], ans: 0 },
+        { type: "pg", q: "6. Informatika dan Profil Pelajar Pancasila memiliki ciri-ciri berikut kecuali …", opt: ["A. Berkebinekaan Global", "B. Berdiskusi", "C. Bergotong Royong", "D. Kreatif"], ans: 1 },
+        { type: "pg", q: "7. Belajar informatika tanpa komputer merupakan kegiatan yang bersifat ….", opt: ["A. Unplug", "B. Unpluged", "C. Unplugged", "D. Unnplugged"], ans: 2 },
+        { type: "pg", q: "8. Sebuah informasi yang berisi teks dan gambar atau grafik disebut …", opt: ["A. Informatika", "B. Teknologi", "C. Informasi", "D. Infografis"], ans: 3 },
+        { type: "pg", q: "9. Infografis memiliki sebuah komponen konten yang perlu diperhatikan kecuali …", opt: ["A. Latar Belakang", "B. Masuk akal", "C. Jelas Sumbernya", "D. Harus Benar"], ans: 0 },
+        { type: "pg", q: "10. Sebuah laporan tertulis yang perlu dijelaskan agar dapat dipahami disebut …", opt: ["A. Infografis", "B. Presentasi", "C. Algoritma", "D. Pemrograman"], ans: 1 },
+        { type: "pg", q: "11. Dari segi konten bagian penting alur logika dari sebuah presentasi kecuali ….", opt: ["A. Ringkasan", "B. Latar Belakang", "C. Ukuran Huruf", "D. Penutup/Kesimpulan"], ans: 2 },
+        { type: "pg", q: "12. Menyelesaikan permasalahan secara menyeluruh, logis, dan teratur adalah ….", opt: ["A. Analisis Data", "B. Sistem Komputer", "C. Algoritma Pemrograman", "D. Berpikir Komputasional"], ans: 3 },
+        { type: "pg", q: "13. Memecah masalah yang besar/kompleks menjadi lebih kecil disebut …", opt: ["A. Dekomposisi", "B. Pengenalan Pola", "C. Abstraksi", "D. Desain Algoritma"], ans: 0 },
+        { type: "pg", q: "14. Memahami atau menganalisa dan mencari hal yang berulang disebut …", opt: ["A. Dekomposisi", "B. Pengenalan Pola", "C. Abstraksi", "D. Desain Algoritma"], ans: 1 },
+        { type: "pg", q: "15. Berfokus pada hal-hal yang penting saja membiarkan hal tidak relevan disebut …", opt: ["A. Dekomposisi", "B. Pengenalan Pola", "C. Abstraksi", "D. Desain Algoritma"], ans: 2 },
+        { type: "pg", q: "16. Membuat langkah untuk menyelesaikan masalah berdasarkan pola disebut …", opt: ["A. Dekomposisi", "B. Pengenalan Pola", "C. Abstraksi", "D. Desain Algoritma"], ans: 3 },
+        { type: "pg", q: "17. Tempat penyimpanan elektronis yang menyimpan file elektronis disebut …", opt: ["A. Folder", "B. File", "C. Map", "D. Surel"], ans: 0 },
+        { type: "pg", q: "18. Penyimpanan eletronis untuk menyimpan data dapat dibaca/ditulis disebut ….", opt: ["A. Folder", "B. File", "C. Map", "D. Surel"], ans: 1 },
+        { type: "pg", q: "19. Sebuah file memiliki nama pendek setelah tanda titik di akhir disebut …", opt: ["A. Folder", "B. Subfolder", "C. Ekstensi", "D. File"], ans: 2 },
+        { type: "pg", q: "20. Berikut ini yang termasuk aplikasi atau program pengolah kata adalah …", opt: ["A. Power Point", "B. Media Player", "C. Microsoft Excel", "D. Microsoft Word"], ans: 3 },
+        { type: "pg", q: "21. Berikut ini yang termasuk aplikasi atau program pengolah angka adalah …", opt: ["A. Microsoft Excel", "B. Microsoft Word", "C. Microsoft Access", "D. Microsoft Power Point"], ans: 0 },
+        { type: "pg", q: "22. Aplikasi pengolah kata biasanya digunakan untuk …", opt: ["A. Mengatur perangkat keras", "B. Membuat dan mengedit dokumen teks", "C. Memperbaiki jaringan internet", "D. Mengubah sumber listrik"], ans: 1 },
+        { type: "pg", q: "23. Perintah yang digunakan untuk membuat file baru adalah ….", opt: ["A. Open", "B. Save", "C. New", "D. Print"], ans: 2 },
+        { type: "pg", q: "24. Perintah yang digunakan ketika ingin mencetak file yang sudah dibuat adalah …", opt: ["A. Open", "B. Save", "C. New", "D. Print"], ans: 3 },
+        { type: "pg", q: "25. Perintah yang digunakan ketika ingin membuka file yang sudah ada adalah …", opt: ["A. Open", "B. Save", "C. New", "D. Print"], ans: 0 },
+        { type: "pg", q: "26. Perintah yang digunakan ketika ingin menyimpan file yang sudah dibuat adalah...", opt: ["A. Open", "B. Save", "C. New", "D. Print"], ans: 1 },
+        { type: "pg", q: "27. Perintah yang digunakan ketika ingin menggandakan sebuah file adalah …", opt: ["A. Delete", "B. Paste", "C. Copy", "D. Cut"], ans: 2 },
+        { type: "pg", q: "28. Perintah yang digunakan ketika ingin memindahkan sebuah file adalah ….", opt: ["A. Delete", "B. Paste", "C. Copy", "D. Cut"], ans: 3 },
+        { type: "pg", q: "29. Perintah yang digunakan ketika ingin mengubah nama sebuah file adalah …", opt: ["A. Rename", "B. Delete", "C. Copy", "D. Cut"], ans: 0 },
+        { type: "pg", q: "30. Perintah yang digunakan ketika ingin menghapus sebuah file adalah …", opt: ["A. Rename", "B. Delete", "C. Copy", "D. Cut"], ans: 1 }
+      ],
+      "7.2": [],
+      "7.3": []
+    };
+    bankSoalInformatika["7.2"] = bankSoalInformatika["7.1"];
+    bankSoalInformatika["7.3"] = bankSoalInformatika["7.1"];
+
+    // Bank Soal Prakarya
+    const bankSoalPrakarya = {
+      "7.1": [
+        { type: "pg", q: "1. Siswa kelas VII ditugaskan secara berkelompok mengumpulkan kulit jagung bekas panen untuk dijadikan bunga hias. Tindakan tersebut merupakan penerapan prinsip ....", opt: ["A. Replace", "B. Reduce", "C. Reuse", "D. Recycle"], ans: 3 },
+        { type: "pg", q: "2. Perhatikan bahan berikut:\n(1) Kulit jagung\n(2) Plastik kemasan\n(3) Jerami\n(4) Kain perca\nKelompok limbah lunak organik ditunjukkan oleh nomor ....", opt: ["A. (1) dan (3)", "B. (1) dan (2)", "C. (2) dan (4)", "D. (3) dan (4)"], ans: 0 },
+        { type: "pg", q: "3. Seorang pengrajin menggunakan pelepah pisang yang telah dikeringkan sebelum dibuat menjadi tas. Tujuan utama proses pengeringan adalah ....", opt: ["A. Mempercepat pewarnaan", "B. Mengurangi berat produk", "C. Mencegah jamur dan pembusukan", "D. Mempermudah pemasaran"], ans: 2 },
+        { type: "pg", q: "4. Berikut yang merupakan contoh limbah lunak anorganik adalah ....", opt: ["A. Kulit jagung", "B. Jerami", "C. Pelepah pisang", "D. Plastik kemasan"], ans: 3 },
+        { type: "pg", q: "5. Prinsip Reuse dalam pengolahan limbah memiliki arti...", opt: ["A. Mendaur ulang sampah menjadi barang baru", "B. Menggunakan kembali sampah atau barang bekas secara langsung tanpa diubah bentuknya", "C. Mengurangi jumlah sampah", "D. Memperbaiki barang yang rusak"], ans: 1 },
+        { type: "pg", q: "6. Teknik yang paling tepat digunakan untuk membuat bingkai foto dari koran bekas adalah ....", opt: ["A. Membatik", "B. Menganyam", "C. Menggulung", "D. Mencetak"], ans: 2 },
+        { type: "pg", q: "7. Sekelompok siswa kreatif di SMP Negeri 4 Praya membuat keranjang dari gulungan koran bekas. Kegiatan tersebut termasuk ....", opt: ["A. Reduce", "B. Reuse", "C. Recycle", "D. Replace"], ans: 2 },
+        { type: "pg", q: "8. Nilai estetika suatu kerajinan lebih banyak dipengaruhi oleh ....", opt: ["A. Harga bahan", "B. Bentuk, warna, dan keindahan produk", "C. Jumlah bahan baku", "D. Lama pengerjaan"], ans: 1 },
+        { type: "pg", q: "9. Plastik dan styrofoam termasuk limbah anorganik karena ....", opt: ["A. Berasal dari tumbuhan", "B. Mudah membusuk", "C. Sulit terurai secara alami", "D. Mudah larut dalam air"], ans: 2 },
+        { type: "pg", q: "10. Dalam penerapan K3 (keamanan, keselamatan kerja, dan kebersihan) saat membuat kerajinan, penggunaan sarung tangan bertujuan untuk ....", opt: ["A. Mempercepat pekerjaan", "B. Menambah keindahan produk", "C. Mengurangi biaya produksi", "D. Menghindari cedera saat bekerja"], ans: 3 },
+        { type: "pg", q: "11. Limbah lunak memiliki keunggulan utama dibandingkan limbah keras yaitu ...", opt: ["A. Proses pelapukan atau penguraiannya relatif lebih cepat", "B. Tidak bisa rusak sama sekali", "C. Sangat keras dan tahan api", "D. Harganya sangat mahal"], ans: 0 },
+        { type: "pg", q: "12. Perhatikan pernyataan berikut!\n(1) Mudah terurai\n(2) Berasal dari makhluk hidup\n(3) Sulit terurai\n(4) Dapat membusuk\nCiri limbah lunak organik ditunjukkan oleh nomor ....", opt: ["A. 1, 2, dan 4", "B. 1, 2, dan 3", "C. 2, 3, dan 4", "D. 1 dan 3"], ans: 0 },
+        { type: "pg", q: "13. Produk kerajinan dari pelepah pisang yang memiliki fungsi pakai adalah ....", opt: ["A. Hiasan dinding", "B. Bunga dekoratif", "C. Tas dan dompet", "D. Miniatur rumah"], ans: 2 },
+        { type: "pg", q: "14. Kain perca paling tepat dimanfaatkan menjadi ....", opt: ["A. Pot bunga", "B. Keset atau boneka", "C. Pupuk kompos", "D. Anyaman bambu"], ans: 1 },
+        { type: "pg", q: "15. Tujuan utama pemanfaatan limbah menjadi produk kerajinan adalah ....", opt: ["A. Menambah jumlah sampah", "B. Menghabiskan bahan bekas", "C. Mempercepat proses pembusukan", "D. Mengurangi pencemaran lingkungan"], ans: 3 },
+        { type: "pg", q: "16. Seorang pengrajin memilih jerami yang masih basah untuk dibuat kerajinan. Keputusan tersebut kurang tepat karena ....", opt: ["A. Jerami sulit dibentuk", "B. Jerami mudah lapuk dan berjamur", "C. Jerami terlalu mahal", "D. Jerami sulit diperoleh"], ans: 1 },
+        { type: "pg", q: "17. Teknik yang sering digunakan pada kerajinan kain perca adalah ....", opt: ["A. Menjahit dan menempel", "B. Mengelas", "C. Mencor", "D. Menempa"], ans: 0 },
+        { type: "pg", q: "18. Berikut yang menunjukkan penerapan prinsip Reduce adalah ....", opt: ["A. Membuat tas dari plastik bekas", "B. Menggunakan botol bekas sebagai vas bunga", "C. Mengurangi penggunaan kantong plastik sekali pakai", "D. Membuat hiasan dari koran bekas"], ans: 2 },
+        { type: "pg", q: "19. Faktor yang paling menentukan kualitas kerajinan limbah adalah ....", opt: ["A. Banyaknya limbah yang digunakan", "B. Kebersihan dan pengolahan bahan", "C. Harga jual produk", "D. Ukuran produk"], ans: 1 },
+        { type: "pg", q: "20. Sebuah produk kerajinan memiliki fungsi pakai dan tampilan menarik. Hal tersebut menunjukkan adanya ....", opt: ["A. Nilai ekonomi dan estetika", "B. Nilai sejarah dan budaya", "C. Nilai religius dan sosial", "D. Nilai tradisional dan modern"], ans: 0 },
+        { type: "pg", q: "21. Perhatikan tahapan berikut!\n(1) Pengumpulan bahan\n(2) Finishing\n(3) Pembersihan bahan\n(4) Pembentukan produk\nUrutan yang benar adalah ....", opt: ["A. 1-2-3-4", "B. 1-3-4-2", "C. 2-1-3-4", "D. 3-1-4-2"], ans: 1 },
+        { type: "pg", q: "22. Mengapa kerajinan dari limbah memiliki nilai ekonomi?", opt: ["A. Tidak membutuhkan keterampilan", "B. Dapat dijual dan menghasilkan keuntungan", "C. Tidak memerlukan modal", "D. Mudah rusak"], ans: 1 },
+        { type: "pg", q: "23. Seorang siswa membuat dompet dari kemasan kopi bekas. Agar produk tahan lama, langkah yang paling tepat adalah ....", opt: ["A. Tidak perlu dibersihkan", "B. Dilaminasi atau dijahit dengan rapi", "C. Direndam dalam air", "D. Dibiarkan terbuka"], ans: 1 },
+        { type: "pg", q: "24. Perbedaan utama limbah organik dan anorganik terletak pada ....", opt: ["A. Warna bahan", "B. Harga bahan", "C. Kemampuan terurai secara alami", "D. Bentuk bahan"], ans: 2 },
+        { type: "pg", q: "25. Berikut ini yang termasuk kerajinan berbahan limbah lunak anorganik adalah ....", opt: ["A. Bunga dari kulit jagung", "B. Anyaman jerami", "C. Tas dari kemasan plastik", "D. Hiasan dari pelepah pisang"], ans: 2 },
+        { type: "pg", q: "26. Jika sebuah produk kerajinan memiliki desain menarik tetapi mudah rusak, maka aspek yang perlu diperbaiki adalah ....", opt: ["A. Estetika", "B. Kemasan", "C. Fungsi dan kualitas produk", "D. Promosi"], ans: 2 },
+        { type: "pg", q: "27. Kerajinan dari limbah kertas yang dibuat melalui teknik bubur kertas disebut ....", opt: ["A. Anyaman", "B. Papier mâché", "C. Batik", "D. Kolase"], ans: 1 },
+        { type: "pg", q: "28. Seorang pengrajin menggabungkan kain perca dengan plastik bekas menjadi tas belanja. Keunggulan produk tersebut adalah ....", opt: ["A. Sulit digunakan", "B. Tidak memiliki nilai jual", "C. Lebih kreatif dan bernilai ekonomi", "D. Cepat rusak"], ans: 2 },
+        { type: "pg", q: "29. Dalam sebuah pameran, produk dari pelepah pisang kurang diminati karena warnanya kusam. Solusi terbaik adalah ....", opt: ["A. Mengurangi ukuran produk", "B. Menambah proses finishing", "C. Mengganti bahan dengan plastik", "D. Mengurangi jumlah produksi"], ans: 1 },
+        { type: "pg", q: "30. Sebuah sekolah mengadakan lomba membuat kerajinan dari limbah. Tim A menggunakan bahan baru, sedangkan Tim B menggunakan plastik bekas dan kain perca. Jika tujuan lomba mendukung pelestarian lingkungan, tim yang lebih sesuai adalah ....", opt: ["A. Tim A karena bahan baru lebih bersih", "B. Tim A karena lebih mudah dibuat", "C. Tim B karena memanfaatkan limbah yang ada", "D. Keduanya sama saja"], ans: 2 }
+      ],
+      "7.2": [],
+      "7.3": [],
+      "8.1": [
+        { type: "pg", q: "1. Limbah keras adalah limbah yang memiliki sifat...", opt: ["A. Mudah membusuk dan berbau", "B. Padat, sulit terurai, dan keras", "C. Cair dan mudah menguap", "D. Lunak dan mudah hancur"], ans: 1 },
+        { type: "pg", q: "2. Contoh limbah keras organik adalah...", opt: ["A. Botol plastik", "B. Pecahan kaca", "C. Tempurung kelapa", "D. Kaleng minuman"], ans: 2 },
+        { type: "pg", q: "3. Contoh limbah keras anorganik adalah...", opt: ["A. Tulang hewan", "B. Cangkang kerang", "C. Potongan kayu", "D. Pecahan keramik"], ans: 3 },
+        { type: "pg", q: "4. Limbah keras organik berasal dari...", opt: ["A. Bahan kimia buatan", "B. Sisa makhluk hidup", "C. Logam hasil industri", "D. Plastik kemasan"], ans: 1 },
+        { type: "pg", q: "5. Limbah keras anorganik sulit terurai karena...", opt: ["A. Berasal dari tumbuhan", "B. Mengandung banyak air", "C. Terbuat dari bahan buatan atau mineral", "D. Mudah dimakan mikroorganisme"], ans: 2 },
+        { type: "pg", q: "6. Prinsip pengolahan limbah yang berarti menggunakan kembali barang bekas disebut...", opt: ["A. Reduce", "B. Reuse", "C. Recycle", "D. Repair"], ans: 1 },
+        { type: "pg", q: "7. Prinsip pengolahan limbah yang berarti mengurangi penggunaan barang sekali pakai disebut...", opt: ["A. Reduce", "B. Reuse", "C. Recycle", "D. Replace"], ans: 0 },
+        { type: "pg", q: "8. Prinsip recycle dalam pengolahan limbah berarti...", opt: ["A. Membuang limbah ke sungai", "B. Mengolah limbah menjadi produk baru", "C. Membakar semua sampah", "D. Menimbun limbah di tanah"], ans: 1 },
+        { type: "pg", q: "9. Tujuan utama pengolahan limbah keras adalah...", opt: ["A. Menambah jumlah sampah", "B. Mengurangi pencemaran lingkungan", "C. Membuat lingkungan kotor", "D. Menghilangkan nilai guna barang"], ans: 1 },
+        { type: "pg", q: "10. Membuat barang hias dari bahan alam, buatan, atau barang bekas adalah...", opt: ["A. Kerajinan", "B. Rekayasa", "C. Budidaya", "D. Pengolahan"], ans: 0 },
+        { type: "pg", q: "11. Tempurung kelapa dapat dimanfaatkan menjadi...", opt: ["A. Kompos cair", "B. Arang dan kerajinan hias", "C. Pupuk daun", "D. Minyak goreng"], ans: 1 },
+        { type: "pg", q: "12. Pecahan kaca termasuk limbah keras...", opt: ["A. Organik", "B. Anorganik", "C. Basah", "D. Cair"], ans: 1 },
+        { type: "pg", q: "13. Cangkang kerang dapat dijadikan produk kerajinan berupa...", opt: ["A. Vas bunga, hiasan dinding, dan aksesori", "B. Sabun mandi dan sampo", "C. Kain batik dan benang", "D. Minyak wangi dan pewarna makanan"], ans: 0 },
+        { type: "pg", q: "14. Berikut yang bukan termasuk limbah keras anorganik adalah...", opt: ["A. Kaleng bekas", "B. Pecahan keramik", "C. Botol plastik", "D. Tulang ayam"], ans: 3 },
+        { type: "pg", q: "15. Mempelajari dasar system konversi produk teknologi tepat guna adalah...", opt: ["A. Kerajinan", "B. Rekayasa", "C. Budi daya", "D. Pengolahan"], ans: 1 },
+        { type: "pg", q: "16. Sebelum diolah menjadi kerajinan, limbah keras sebaiknya...", opt: ["A. Dibiarkan kotor", "B. Dibersihkan dan dikeringkan", "C. Dicampur dengan sampah basah", "D. Dibuang ke selokan"], ans: 1 },
+        { type: "pg", q: "17. Proses awal dalam membuat kerajinan limbah keras adalah...", opt: ["A. Pengemasan", "B. Perencanaan desain", "C. Pemasaran produk", "D. Pengiriman barang"], ans: 1 },
+        { type: "pg", q: "18. Manfaat membuat kerajinan dari limbah keras adalah...", opt: ["A. Menambah pencemaran", "B. Mengurangi kreativitas", "C. Meningkatkan nilai guna limbah", "D. Merusak lingkungan"], ans: 2 },
+        { type: "pg", q: "19. Limbah kaleng bekas dapat dibuat menjadi...", opt: ["A. Pot tanaman", "B. Pupuk kompos", "C. Makanan ternak", "D. Bahan pewarna alami"], ans: 0 },
+        { type: "pg", q: "20. Limbah tulang ikan termasuk limbah keras...", opt: ["A. Organik", "B. Anorganik", "C. Cair", "D. Gas"], ans: 0 },
+        { type: "pg", q: "21. Teknik yang dapat digunakan untuk menghias kerajinan dari limbah keras adalah...", opt: ["A. Membakar sembarangan", "B. Mengecat dan menempel", "C. Mengubur dalam tanah", "D. Merendam di air kotor"], ans: 1 },
+        { type: "pg", q: "22. Berikut yang merupakan contoh produk kerajinan dari botol plastik adalah...", opt: ["A. Lampu hias", "B. Beras kemasan", "C. Pupuk kandang", "D. Garam dapur"], ans: 0 },
+        { type: "pg", q: "23. Limbah keras dari bahan kaca harus ditangani dengan hati-hati karena...", opt: ["A. Mudah membusuk", "B. Dapat melukai kulit", "C. Mengandung banyak air", "D. Mudah dimakan hewan"], ans: 1 },
+        { type: "pg", q: "24. Nilai estetika pada produk kerajinan berarti nilai...", opt: ["A. Keindahan", "B. Kekuatan mesin", "C. Harga bahan baku", "D. Jumlah limbah"], ans: 0 },
+        { type: "pg", q: "25. Nilai fungsional pada produk kerajinan berarti produk tersebut...", opt: ["A. Hanya untuk dipajang", "B. Memiliki kegunaan tertentu", "C. Tidak dapat digunakan", "D. Mudah rusak"], ans: 1 },
+        { type: "pg", q: "26. Faktor penting dalam memilih bahan limbah keras untuk kerajinan adalah...", opt: ["A. Kebersihan, keamanan, dan bentuk bahan", "B. Bau busuk dan warna kusam", "C. Jumlah sampah basah", "D. Tingkat pembusukan"], ans: 0 },
+        { type: "pg", q: "27. Mengubah bahan makanan/minuman menjadi produk siap konsumsi adalah …", opt: ["A. Kerajinan", "B. Rekayasa", "C. Budidaya", "D. Pengolahan"], ans: 3 },
+        { type: "pg", q: "28. Produk kerajinan dari limbah keras dapat memiliki nilai ekonomi apabila...", opt: ["A. Dibuat asal-asalan", "B. Memiliki desain menarik dan kualitas baik", "C. Tidak dibersihkan", "D. Tidak memiliki fungsi"], ans: 1 },
+        { type: "pg", q: "29. Pengemasan produk kerajinan bertujuan untuk...", opt: ["A. Merusak produk", "B. Melindungi dan memperindah tampilan produk", "C. Menghilangkan fungsi produk", "D. Menambah limbah basah"], ans: 1 },
+        { type: "pg", q: "30. Sikap yang tepat dalam mengelola limbah keras adalah...", opt: ["A. Membuang semua limbah ke sungai", "B. Membakar limbah di sembarang tempat", "C. Memilah dan memanfaatkan limbah dengan bijak", "D. Menumpuk limbah tanpa pengolahan"], ans: 2 }
+      ],
+      "8.2": []
+    };
+    bankSoalPrakarya["7.2"] = bankSoalPrakarya["7.1"];
+    bankSoalPrakarya["7.3"] = bankSoalPrakarya["7.1"];
+    bankSoalPrakarya["8.2"] = bankSoalPrakarya["8.1"];
+
+    // Bank Soal Mulok Kelas 9 (Khusus kelas 9.1 dan 9.2)
+    const bankSoalMulok = {
+      "7.1": [],
+      "7.2": [],
+      "7.3": [],
+      "8.1": [],
+      "8.2": [],
+      "9.1": [
+        { type: "pg", q: "1. Masa ketika manusia belum mengenal tulisan disebut ....", opt: ["A. zaman sejarah", "B. zaman modern", "C. zaman prasejarah", "D. zaman kerajaan"], ans: 2 },
+        { type: "pg", q: "2. Salah satu contoh benda yang dapat menjadi sumber informasi tentang masa prasejarah adalah ....", opt: ["A. komputer", "B. telepon", "C. tengkorak manusia purba", "D. buku pelajaran"], ans: 2 },
+        { type: "pg", q: "3. Masa setelah manusia mengenal tulisan disebut ....", opt: ["A. zaman batu", "B. zaman prasejarah", "C. zaman sejarah", "D. zaman purba"], ans: 2 },
+        { type: "pg", q: "4. Salah satu penyebab peristiwa pada masa lalu tidak tercatat secara tertulis adalah ....", opt: ["A. manusia belum mengenal huruf dan budaya baca-tulis", "B. manusia sudah memiliki teknologi tinggi", "C. semua peristiwa tidak penting", "D. manusia tidak hidup berkelompok"], ans: 0 },
+        { type: "pg", q: "5. Sasak menurut salah satu pendapat berasal dari bahasa ....", opt: ["A. Arab", "B. Melayu", "C. Sansekerta", "D. Belanda"], ans: 2 },
+        { type: "pg", q: "6. Sasak dan Lombok mempunyai kaitan yang erat sehingga tidak bisa di pisahkan. Keduanya terjalin menjadi satu yang berasal dari kata Sa’sa’ loombo yang berarti…", opt: ["A. Satu-satunya kelurusan", "B. kelurusan yang satu", "C. kesatuan yang terpuji", "D. semua benar"], ans: 0 },
+        { type: "pg", q: "7. Sebelum kerajaan ini Bernama selaparang dulunya di sebut..", opt: ["A. Berperang", "B. gunung batu", "C. watu parang", "D. batu karang"], ans: 2 },
+        { type: "pg", q: "8. Sampai akhir abad ke-19, Pulau Lombok dikenal dengan nama ....", opt: ["A. Selaparang", "B. Selapawis", "C. Watu", "D. Mamben"], ans: 0 },
+        { type: "pg", q: "9. Sasak dan Lombok memiliki hubungan yang ....", opt: ["A. tidak berkaitan", "B. sangat erat", "C. saling bertentangan", "D. hanya berkaitan dalam bahasa"], ans: 1 },
+        { type: "pg", q: "10. Istilah yang menunjukkan kesatuan Sasak dan Lombok adalah ....", opt: ["A. Sa'sa' Lombo'", "B. Watu Parang", "C. Selapawis", "D. Jejawan"], ans: 0 },
+        { type: "pg", q: "11. Kata Sa' dalam istilah Sa'sa' Lombo' berarti ....", opt: ["A. lurus", "B. pergi", "C. satu", "D. asal"], ans: 2 },
+        { type: "pg", q: "12. Kata Lombo' berarti ....", opt: ["A. satu", "B. lurus", "C. batu", "D. pergi"], ans: 1 },
+        { type: "pg", q: "13. Sasak Lombok secara keseluruhan dapat dimaknai sebagai ....", opt: ["A. banyak jalan", "B. satu-satunya kelurusan", "C. negeri yang jauh", "D. batu yang ditaklukkan"], ans: 1 },
+        { type: "pg", q: "14. Dari segi keyakinan dan bermasyarakat, masyarakat Sasak bersandar pada ....", opt: ["A. Sa'sa' Lombo'", "B. Selapawis", "C. Watu Parang", "D. Jejawan"], ans: 0 },
+        { type: "pg", q: "15. Salah satu sikap dalam kehidupan beragama masyarakat Sasak adalah ....", opt: ["A. mengutamakan kepentingan pribadi", "B. penyerahan diri kepada Tuhan", "C. menghindari kehidupan bermasyarakat", "D. tidak menaati aturan"], ans: 1 },
+        { type: "pg", q: "16. Penyerahan diri kepada Tuhan disebut ....", opt: ["A. tauhid", "B. ta'aruf", "C. ta'awun", "D. tarohum"], ans: 0 },
+        { type: "pg", q: "17. Selain taat kepada Tuhan, masyarakat Sasak juga diajarkan untuk taat kepada ....", opt: ["A. orang asing", "B. pemerintah", "C. pedagang", "D. teman sebaya saja"], ans: 1 },
+        { type: "pg", q: "18. Sikap taat kepada orang tua merupakan salah satu nilai yang dijunjung dalam kehidupan masyarakat ....", opt: ["A. Sasak", "B. modern", "C. asing", "D. perkotaan"], ans: 0 },
+        { type: "pg", q: "19. Salah satu sikap yang sangat dipegang masyarakat Sasak dalam kehidupan bermasyarakat adalah ....", opt: ["A. kesombongan", "B. kejujuran", "C. persaingan", "D. kemewahan"], ans: 1 },
+        { type: "pg", q: "20. Kesederhanaan dalam kehidupan masyarakat Sasak menunjukkan bahwa seseorang sebaiknya ....", opt: ["A. hidup berlebihan", "B. mengutamakan kemewahan", "C. hidup secara sederhana", "D. menghindari masyarakat"], ans: 2 },
+        { type: "pg", q: "21. Sikap tidak membohongi orang yang lebih tua merupakan contoh penerapan nilai ....", opt: ["A. kejujuran", "B. keberanian", "C. persaingan", "D. kekayaan"], ans: 0 },
+        { type: "pg", q: "22. Sikap yang sopan Ketika berbicara dengan orang yang lebih tua dari kita adalah…", opt: ["A. Berlari", "B. berjalan", "C. jongkok sedikit", "D. berbalik"], ans: 2 },
+        { type: "pg", q: "23. “Amangku wahne lalo jok bangket” jika bahasa Sasak tersebut diubah menjadi bahasa sasak halus yang baik dan benar adalah…", opt: ["A. Amaq ye lalo jok bangket", "B. mamiq tyg sampun lumbar jok bangket", "C. wah.n lalo jok bangket amaq", "D. amaq no jok bangket"], ans: 1 },
+        { type: "pg", q: "24. Tata cara bertamu adat sasak yang baik dan benar adalah..", opt: ["A. Berteriak dan mendobrak pintu", "B. Lansung masuk tanpa permisi", "C. memanggil nama pemilik rumah", "D. mengucap salam dan mengetuk pintu"], ans: 3 },
+        { type: "pg", q: "25. Silsilah dari bapak yang memiliki kakek kita menyebutnya sebagai…", opt: ["A. Boyot", "B. goner", "C. balo’", "D. papuk"], ans: 2 },
+        { type: "pg", q: "26. Hal yang baik di lakukan bila kita lewat di depan orang yang sedang duduk adalah.", opt: ["A. Betabe’", "B. berlari", "C. jalan biasa", "D. semua benar"], ans: 0 },
+        { type: "pg", q: "27. Bahasa sasak halus dari “pengendike” adalah", opt: ["A. Masuk", "B. datang", "C. pamit", "D. ucapan"], ans: 3 },
+        { type: "pg", q: "28. Bahasa sasak halus dari “maturpewikan” adalah", opt: ["A. Persilahkan", "B. Permintaan", "C. permakluman", "D. permohonan"], ans: 2 },
+        { type: "pg", q: "29. Bahasa sasak halus dari “bangun tidur” adalah", opt: ["A. Mensare", "B. Mesingit", "C. Lanjaran", "D. Mentangi"], ans: 3 },
+        { type: "pg", q: "30. Bahasa Indonesia dari “wareng” adalah", opt: ["A. Bisa", "B. Lapar", "C. Kenyang", "D. Cukup"], ans: 2 }
+      ],
+      "9.2": []
+    };
+    bankSoalMulok["9.2"] = bankSoalMulok["9.1"];
+
+    // Bank Soal PAI (Dapat diakses oleh seluruh pilihan kelas tanpa terkecuali)
+    const bankSoalPAI = [
+      { type: "pg", q: "1. (Matematika) Hasil dari (-12) + 8 - (-5) adalah ...", opt: ["A. -9", "B. 1", "C. -1", "D. 21"], ans: 1 },
+      { type: "pg", q: "2. (IPA) Berikut ini yang merupakan contoh perubahan kimia dalam kehidupan sehari-hari adalah ...", opt: ["A. Es batu mencair menjadi air", "B. Beras ditumbuk menjadi tepung", "C. Kayu dibakar menjadi arang", "D. Lilin meleleh saat dipanaskan"], ans: 2 },
+      { type: "pg", q: "3. (IPS) Kebutuhan manusia yang harus dipenuhi terlebih dahulu untuk mempertahankan kelangsungan hidupnya disebut kebutuhan ...", opt: ["A. Sekunder", "B. Primer", "C. Tersier", "D. Jasmani"], ans: 1 },
+      { type: "pg", q: "4. (Bahasa Indonesia) Teks yang menggambarkan suatu objek, tempat, atau peristiwa secara rinci sehingga pembaca seolah-olah melihat atau merasakannya sendiri disebut teks ...", opt: ["A. Eksplanasi", "B. Narasi", "C. Deskripsi", "D. Prosedur"], ans: 2 },
+      { type: "pg", q: "5. (Bahasa Inggris) Complete the sentence with the correct form of the verb:\nSiti and Dayu ... (study) English together in the library every Tuesday.", opt: ["A. studies", "B. study", "C. studied", "D. is studying"], ans: 1 },
+      { type: "pg", q: "6. (Informatika) Urutan langkah-langkah logis dan sistematis yang disusun untuk menyelesaikan suatu masalah dalam pemrograman komputer disebut ...", opt: ["A. Algoritma", "B. Hardware", "C. Software", "D. Database"], ans: 0 },
+      { type: "pg", q: "7. (PPKn) Rumusan Pancasila yang sah dan resmi sebagai dasar negara Indonesia tercantum dalam ...", opt: ["A. Batang Tubuh UUD 1945", "B. Piagam Jakarta", "C. Pembukaan UUD 1945 Alinea IV", "D. Teks Proklamasi Kemerdekaan"], ans: 2 },
+      { type: "pg", q: "8. (Prakarya) Bahan alam serat tumbuhan yang banyak dimanfaatkan untuk membuat kerajinan tas, topi, dan dompet karena sifatnya yang kuat dan lentur adalah ...", opt: ["A. Tanah liat", "B. Enceng gondok / Daun pandan", "C. Kayu jati", "D. Cangkang kerang"], ans: 1 },
+      { type: "pg", q: "9. (PJOK) Gerakan menendang bola menggunakan kaki bagian dalam pada permainan sepak bola biasanya digunakan untuk ...", opt: ["A. Menembak bola dengan keras ke gawang (shooting)", "B. Mengoper bola jarak pendek (passing)", "C. Lemparan ke dalam (throw in)", "D. Menghadang pergerakan lawan (tackling)"], ans: 1 },
+      { type: "pg", q: "10. (Mulok Bahasa Sasak) Sape aran penganggo adat/pakaian adat khas Sasak suku Lombok saq biasae teanggoq siq sekenuq/mame (pria)?", opt: ["A. Kebaya dan Sarung", "B. Capuq, Pegon, dan Sapuk", "C. Baju Bodo", "D. Baju Koko dan Peci"], ans: 1 },
+      { type: "pg", q: "11. (PAI) Sifat wajib bagi Allah SWT 'As-Sami'' (السميع) memiliki arti bahwa Allah Maha ...", opt: ["A. Melihat", "B. Mendengar", "C. Mengetahui", "D. Bijaksana"], ans: 1 }
+    ];
+
+    // Bank Soal PJOK
+    const bankSoalPJOK = {
+      "7.1": [
+        { type: "pg", q: "1. Sikap kedua lengan yang benar saat melakukan gerak spesifik passing bawah adalah...", opt: ["A. Ditekuk di depan dada", "B. Direntangkan ke samping", "C. Dirapatkan dan diluruskan di depan badan", "D. Disilangkan di atas kepala"], ans: 2 },
+        { type: "pg", q: "2. Untuk memberikan umpan kepada teman yang akan melakukan spike, teknik yang paling tepat digunakan adalah...", opt: ["A. Passing bawah", "B. Passing atas", "C. Servis bawah", "D. Block"], ans: 1 },
+        { type: "pg", q: "3. Pukulan pertama untuk memulai suatu permainan dalam bola voli disebut...", opt: ["A. Spike", "B. Passing", "C. Block", "D. Servis"], ans: 3 },
+        { type: "pg", q: "4. Perkenaan bola yang benar pada saat melakukan passing atas adalah pada...", opt: ["A. Telapak tangan", "B. Pergelangan tangan", "C. Ujung jari-jari tangan", "D. Lengan bawah"], ans: 2 },
+        { type: "pg", q: "5. Usaha membendung serangan (spike) lawan di atas net disebut...", opt: ["A. Passing", "B. Bendungan (Block)", "C. Servis", "D. Umpan"], ans: 1 },
+        { type: "pg", q: "6. Jumlah pemain bola voli yang bermain dalam satu regu adalah...", opt: ["A. 4 orang", "B. 5 orang", "C. 6 orang", "D. 7 orang"], ans: 2 },
+        { type: "pg", q: "7. Pukulan serangan yang keras dan menukik ke daerah lawan disebut...", opt: ["A. Servis", "B. Passing", "C. Spike", "D. Block"], ans: 2 },
+        { type: "pg", q: "8. Posisi awal badan saat akan melakukan passing bawah adalah...", opt: ["A. Berdiri tegak", "B. Kuda-kuda dengan lutut sedikit ditekuk", "C. Jongkok", "D. Membungkuk"], ans: 1 },
+        { type: "pg", q: "9. Tujuan utama dari permainan bola voli adalah...", opt: ["A. Melakukan passing selama mungkin", "B. Menjatuhkan bola di daerah permainan sendiri", "C. Menjatuhkan bola di daerah permainan lawan dan memenangkan pertandingan", "D. Melakukan servis sekeras mungkin"], ans: 2 },
+        { type: "pg", q: "10. Dalam permainan bola voli, satu regu maksimal boleh menyentuh bola sebanyak...", opt: ["A. 1 kali", "B. 2 kali", "C. 3 kali", "D. 4 kali"], ans: 2 },
+        { type: "pg", q: "11. Gerakan memutar badan dengan salah satu kaki sebagai poros untuk melindungi bola dari lawan disebut...", opt: ["A. Shooting", "B. Dribbling", "C. Rebound", "D. Pivot"], ans: 3 },
+        { type: "pg", q: "12. Lemparan yang paling efektif untuk operan jarak dekat tanpa hadangan lawan adalah...", opt: ["A. Bounce Pass", "B. Chest Pass", "C. Overhead Pass", "D. Baseball Pass"], ans: 1 },
+        { type: "pg", q: "13. Untuk menghindari sergapan lawan, seorang pemain sebaiknya melakukan dribble...", opt: ["A. Tinggi", "B. Sedang", "C. Rendah", "D. Cepat"], ans: 2 },
+        { type: "pg", q: "14. Lemparan yang dilakukan dengan memantulkan bola ke lantai terlebih dahulu disebut...", opt: ["A. Chest Pass", "B. Overhead Pass", "C. Bounce Pass", "D. Jump Pass"], ans: 2 },
+        { type: "pg", q: "15. Tujuan utama dari permainan bola basket adalah...", opt: ["A. Menggiring bola secepat mungkin", "B. Melempar bola sejauh mungkin", "C. Memasukkan bola ke keranjang lawan", "D. Melakukan pivot seindah mungkin"], ans: 2 },
+        { type: "pg", q: "16. Gerakan mengambil bola yang gagal masuk ke dalam ring disebut...", opt: ["A. Passing", "B. Shooting", "C. Rebound", "D. Blocking"], ans: 2 },
+        { type: "pg", q: "17. Jumlah pemain bola basket yang bermain di lapangan untuk satu tim adalah...", opt: ["A. 3 orang", "B. 5 orang", "C. 6 orang", "D. 11 orang"], ans: 1 },
+        { type: "pg", q: "18. Saat melakukan chest pass, posisi bola pada awalnya berada di...", opt: ["A. Atas kepala", "B. Depan dada", "C. Samping pinggang", "D. Bawah lutut"], ans: 1 },
+        { type: "pg", q: "19. Pelanggaran yang terjadi karena pemain membawa bola lebih dari dua langkah tanpa melakukan dribble disebut...", opt: ["A. Foul", "B. Traveling", "C. Double Dribble", "D. Back Ball"], ans: 1 },
+        { type: "pg", q: "20. Lemparan yang digunakan untuk mengoper bola melewati hadangan lawan yang tinggi adalah...", opt: ["A. Chest Pass", "B. Bounce Pass", "C. Overhead Pass", "D. Underhand Pass"], ans: 2 },
+        { type: "pg", q: "21. Berikut ini adalah Gerakan dalam permainan bola basket, kecuali …", opt: ["A. Melempar bola", "B. Mengontrol bola", "C. Menangkap bola", "D. Menggiring bola"], ans: 1 },
+        { type: "pg", q: "22. Untuk dapat melempar atau menoper bola dengan baik terlebih dahulu yang harus dikuasai adalah …", opt: ["A. Melempar bola", "B. Mengontrol bola", "C. Menangkap bola", "D. Menggiring bola"], ans: 3 },
+        { type: "pg", q: "23. Salah satu usaha seorang pemain untuk membagi atau memberi bola kepada temannya agar dapat memasukkan bola ke keranjang lawan disebut …", opt: ["A. Melempar bola", "B. Mengontrol bola", "C. Menangkap bola", "D. Menggiring bola"], ans: 0 },
+        { type: "pg", q: "24. Upaya membawa bola dengan cara memantulkan bola di tempat, memantulkan bola sambil berjalan dan memantulkan bola sambil berlari disebut …", opt: ["A. Melempar bola", "B. Mengontrol bola", "C. Menangkap bola", "D. Menggiring bola"], ans: 3 },
+        { type: "pg", q: "25. Berikut merupakan Teknik dasar bermain bola basket adalah …", opt: ["A. Passing, Dribbling, Shooting, Pivot, Rebound", "B. Passing, Dribbling, Shooting, Pivot, Smash", "C. Servis, Dribbling, Shooting, Pivot, Rebound", "D. Block, Dribbling, Shooting, Pivot, Rebound"], ans: 0 },
+        { type: "pg", q: "26. Sebuah teknik dasar yang wajib pertama kali harus dipelajari bagi seorang pemula adalah …", opt: ["A. Servis", "B. Passing", "C. Blocking", "D. Crossing"], ans: 1 },
+        { type: "pg", q: "27. Gerakan bola hasil passing bawah dalam bola voli adalah …", opt: ["A. Lurus", "B. Menukik", "C. Memantul", "D. Melengkung"], ans: 2 },
+        { type: "pg", q: "28. Di bawah ini adalah Teknik permainan bola voli, kecuali …", opt: ["A. Servis", "B. Passing", "C. Mengontrol bola", "D. Smash"], ans: 2 },
+        { type: "pg", q: "29. Anggota tubuh pemain bola voli yang boleh digunakan untuk memainkan bola adalah …", opt: ["A. Tangan saja", "B. Seluruh tubuh", "C. Tangan dan kaki", "D. Tangan, kaki, dan kepala"], ans: 3 },
+        { type: "pg", q: "30. Servis dalam permainan bola voli hanya dapat dilakukan pada …", opt: ["A. Belakang garis servis selebar 9 meter", "B. Kotak servis 3 meter", "C. Tempat bebas", "D. Menurut kesukaan yang melakukan servis"], ans: 0 }
+      ],
+      "7.2": [],
+      "7.3": [],
+      "8.1": [
+        { type: "pg", q: "1. Gerakan mengoper bola dengan cara memantulkannya ke lantai terlebih dahulu kepada teman disebut...", opt: ["A. Chest Pass", "B. Bounce Pass", "C. Overhead Pass", "D. Jump Shot"], ans: 1 },
+        { type: "pg", q: "2. Saat menggiring bola (dribble), bagian tangan yang paling dominan untuk memantulkan bola adalah...", opt: ["A. Telapak tangan", "B. Ujung jari-jari", "C. Punggung tangan", "D. Pergelangan tangan"], ans: 1 },
+        { type: "pg", q: "3. Tujuan utama dari permainan invasi seperti bola basket adalah...", opt: ["A. Menunjukkan keterampilan individu", "B. Menyerang daerah lawan untuk mencetak skor", "C. Melatih kekuatan fisik", "D. Menjatuhkan lawan"], ans: 1 },
+        { type: "pg", q: "4. Posisi awal badan passing atau lemparan bola basket melalui atas kepala adalah ....", opt: ["A. Menghadap arah lemparan", "B. Menyamping arah lemparan", "C. Membelakangi arah lemparan", "D. Menyilang arah lemparan"], ans: 0 },
+        { type: "pg", q: "5. Berikut ini adalah teknik atau cara yang tepat untuk dapat menangkap bola hasil operan dengan baik dari teman saat bermain basket ….", opt: ["A. Salah satu tangan menghalau lawan dan satu tangan lain diangkat ke atas untuk siap menerima bola", "B. Kedua tangan ke depan dengan jari-jari tangan tertutup untuk menangkap bola", "C. Salah satu tangan diangkat ke atas untuk siap menerima bola", "D. Kedua tangan ke depan dengan jari-jari tangan terbuka untuk menangkap bola"], ans: 3 },
+        { type: "pg", q: "6. Teknik yang dapat digunakan untuk memanfaatkan hasil tembakan bola yang gagal masuk ke dalam keranjang adalah ….", opt: ["A. Rebound", "B. Passing", "C. Shooting", "D. Pivot"], ans: 0 },
+        { type: "pg", q: "7. Teknik mengoper pada permainan basket disebut dengan ….", opt: ["A. throw in", "B. freethrow", "C. dribble", "D. passing"], ans: 3 },
+        { type: "pg", q: "8. Permainan invasi bisa juga disebut dengan … .", opt: ["A. permainan menggunakan net", "B. permainan menyerang", "C. permainan lapangan", "D. permainan menggunakan angka"], ans: 1 },
+        { type: "pg", q: "9. Pengembangan latihan gerak spesifik bola basket ke dalam beberapa bentuk latihan gerak yang sejenis disebut dengan … .", opt: ["A. kombinasi gerak spesifik bola basket", "B. gerak dasar latihan bola basket", "C. variasi gerak spesifik bola basket", "D. teknik dasar permainan basket"], ans: 2 },
+        { type: "pg", q: "10. Cara awal yang dapat dilakukan untuk dapat melatih teknik operan pantul (bounce pass) dengan baik adalah … .", opt: ["A. Bola digiring (dribble)", "B. Bola dipegang di atas kepala", "C. Bola dipegang di depan dada", "D. Bola dilempar dengan mengayunkan tangan"], ans: 2 },
+        { type: "pg", q: "11. Berikut ini merupakan teknik dasar permainan bola basket, kecuali … .", opt: ["A. Passing", "B. throw in", "C. shooting", "D. rebound"], ans: 1 },
+        { type: "pg", q: "12. Berikut ini adalah tujuan menggiring bola (dribble) dalam permainan basket, kecuali … .", opt: ["A. pemain dapat mengarahkan bola dengan cepat dan sesuai keinginan", "B. pemain dapat menembus pertahanan lawan dan melakukan serangan", "C. untuk melewati hadangan lawan dan mendekati target", "D. untuk menembakkan bola ke jaring"], ans: 3 },
+        { type: "pg", q: "13. Teknik berputar dengan satu tumpuan kaki sebagai porosnya yang digunakan untuk menguasai bola dan menghindari sergapan lawan yang akan merebut bola disebut … .", opt: ["A. teknik dribbling", "B. teknik passing", "C. teknik rebound", "D. teknik pivot"], ans: 3 },
+        { type: "pg", q: "14. Jumlah pemain dalam satu tim bola basket di lapangan adalah ….", opt: ["A. 5 pemain", "B. 6 pemain", "C. 7 pemain", "D. 8 pemain"], ans: 0 },
+        { type: "pg", q: "15. Teknik dasar dalam permainan bola voli yang bertujuan untuk mengumpan bola kepada teman satu tim dengan menggunakan jari-jari tangan di atas kepala disebut…", opt: ["A. Passing bawah", "B. Passing atas", "C. Servis atas", "D. Smash"], ans: 1 },
+        { type: "pg", q: "16. Teknik dasar yang perlu dikuasai dalam permainan bola voli adalah ….", opt: ["A. Passing, Servis, smash, dan block", "B. Teknik penyerangan", "C. Strategi", "D. Cara membentuk tim yang Tangguh"], ans: 0 },
+        { type: "pg", q: "17. Permulaan permainan bola voli diawali dengan dilakukannya ….", opt: ["A. Passing", "B. Smash", "C. Servis", "D. Bendungan"], ans: 2 },
+        { type: "pg", q: "18. Cara memainkan bola dengan efisien dan efektif sesuai dengan peraturan permainan yang berlaku untuk mencapai suatu hasil yang optimal dalam permainan bola voli disebut ….", opt: ["A. Teknik permainan", "B. Strategi permainan", "C. Variasi permainan", "D. Kombinasi permainan"], ans: 0 },
+        { type: "pg", q: "19. Berikut adalah prinsip dasar permainan bola voli, kecuali ….", opt: ["A. Passing", "B. Mengontrol bola", "C. Servis", "D. Smash"], ans: 1 },
+        { type: "pg", q: "20. Kedua kaki terbuka, lutut ditekuk, dua lengan lurus dijulurkan ke depan bawah dan tangan satu sama lain dikaitkan atau berpegangan, ini merupakan Gerakan ….", opt: ["A. Servis", "B. Smash", "C. Passing bawah", "D. Passing atas"], ans: 2 },
+        { type: "pg", q: "21. Pada waktu bola datang, bola didorong dengan jari-jari tangan dan perkenaannya melalui ruas pertama dan kedua dari jari telunjuk sampai kelingking, sedangkan ibu jari hanya pada ruas pertama saja, merupakan Gerakan ….", opt: ["A. Servis", "B. Smash", "C. Passing bawah", "D. Passing atas"], ans: 3 },
+        { type: "pg", q: "22. Gerak membendung bola yang datang dari arah lawan yang dilakukan dekat net oleh seorang atau lebih pemain depan disebut ….", opt: ["A. Spike", "B. Smash", "C. Passing", "D. Block"], ans: 3 },
+        { type: "pg", q: "23. Manakah yang bukan termasuk sarana dan prasarana dalam permainan bola voli ….", opt: ["A. lapangan bola voli", "B. Bola voli", "C. Tongkat estafet", "D. Net"], ans: 2 },
+        { type: "pg", q: "24. Servis yang dilakukan dengan ayunan lengan dari atas kepala disebut ….", opt: ["A. Servis atas kepala", "B. Servis tangan bawah", "C. Floating servis", "D. Jump servis"], ans: 0 },
+        { type: "pg", q: "25. Yang menciptakan permainan bola voli adalah …..", opt: ["A. William G. Morgan", "B. Halsted Springfield", "C. George J. Fisher", "D. W.J. Latumeten"], ans: 0 },
+        { type: "pg", q: "26. Saat melakukan passing bawah, posisi kedua lengan yang benar adalah….", opt: ["A. Ditekuk disamping badan", "B. Lurus dan rapat didepan badan", "C. Diangkat tinggi diatas kepala", "D. Salah satu lengan didepan lainnya dibelakang"], ans: 1 },
+        { type: "pg", q: "27. Permainan bola voli termasuk ke dalam jenis permainan ….", opt: ["A. Invasi", "B. Lapangan", "C. Net", "D. Tradisional"], ans: 2 },
+        { type: "pg", q: "28. Posisi tangan yang benar ketika melakukan variasi passing bawah ke arah belakang adalah ….", opt: ["A. lurus sejajar bahu", "B. serong ke atas", "C. serong ke bawah", "D. di atas kepala"], ans: 1 },
+        { type: "pg", q: "29. Dalam permainan bola voli modern variasi service berfungsi untuk ….", opt: ["A. melakukan serangan", "B. menyajikan bola", "C. menyebrangkan bola melewati net", "D. menahan serangan lawan"], ans: 0 },
+        { type: "pg", q: "30. Yang dimaksud dengan “blocking” dalam permainan bola basket adalah ….", opt: ["A. Menembakkan bola ke arah keranjang", "B. Menghalangi tembakan lawan dengan tangan", "C. Menggiring bola tanpa henti", "D. Mengoper bola ke pemain lain"], ans: 1 }
+      ],
+      "9.1": [
+        { type: "pg", q: "1. Untuk memberikan umpan kepada teman yang berada pada jarak jauh, bagian kaki yang paling efektif digunakan adalah...", opt: ["A. Ujung kaki", "B. Tumit", "C. Kaki bagian dalam", "D. Punggung kaki"], ans: 3 },
+        { type: "pg", q: "2. Posisi badan yang benar saat akan menghentikan bola yang datang menyusur tanah adalah...", opt: ["A. Membelakangi arah datangnya bola", "B. Condong ke depan dan sedikit jongkok", "C. Berdiri tegak lurus", "D. Melompat tinggi"], ans: 1 },
+        { type: "pg", q: "3. Tujuan utama menggiring bola dalam permainan sepak bola adalah...", opt: ["A. Menunjukkan keahlian individu", "B. Mengulur waktu permainan", "C. Melewati lawan dan mencari ruang", "D. Mengoper kepada kiper"], ans: 2 },
+        { type: "pg", q: "4. Bagian kepala yang aman dan dianjurkan untuk menyundul bola adalah...", opt: ["A. Ubun-ubun", "B. Dahi", "C. Kepala bagian belakang", "D. Pelipis"], ans: 1 },
+        { type: "pg", q: "5. Berikut ini adalah aturan yang benar saat melakukan lemparan ke dalam (throw-in), kecuali...", opt: ["A. Bola dilempar dengan kedua tangan dari belakang kepala.", "B. Salah satu kaki boleh terangkat saat melempar.", "C. Kedua kaki harus berada di luar atau di atas garis samping.", "D. Menghadap ke arah lapangan permainan."], ans: 1 },
+        { type: "pg", q: "6. Teknik menendang bola dengan kaki bagian dalam berguna untuk ....", opt: ["A. Menendang keras", "B. Umpan jarak jauh", "C. Umpan pendek dan akurat", "D. Menyundul bola"], ans: 2 },
+        { type: "pg", q: "7. Jika dalam suatu kejuaraan sepak bola dengan menggunakan sistem kompetisi, nilai yang diperoleh setiap tim jika berhasil mengalahkan tim lawan adalah 3 (tiga), dan tim yang kalah mendapatkan nilai 0 (nol), berapakah nilai yang diperoleh tim jika imbang (draw).......", opt: ["A. Satu", "B. Dua", "C. Tiga", "D. Empat"], ans: 0 },
+        { type: "pg", q: "8. Gambar berikut merupakan bola yang dipakai untuk permainan bola besar. Manakah bola yang dipakai untuk olahraga permainan sepak bola....", opt: ["A. Gambar 1 (Bola Voli)", "B. Gambar 2 (Bola Basket)", "C. Gambar 3 (Sepak Bola)", "D. Gambar 4 (Bola Takraw/Voli)"], ans: 2 },
+        { type: "pg", q: "9. Perhatikan berbagai teknik olahraga permainan di bawah ini:\n1. Service\n2. Shooting\n3. Smash\n4. Controlling\n5. Dribling\n6. Passing\n7. Blocking\n8. Lob\nYang merupakan teknik dasar permainan bola voli adalah....", opt: ["A. 1, 2, 4", "B. 3, 7, 8", "C. 2, 5, 7", "D. 1, 3, 7"], ans: 3 },
+        { type: "pg", q: "10. Pemain yang bertugas untuk menerima bola pertama dalam permainan bola voli adalah libero, adapun yang mengatur penyerangan kapan memberi umpan ke pemain untuk melakukan smash adalah tugas dari pemain....", opt: ["A. Tosser", "B. Blocker", "C. Spiker", "D. Servicer"], ans: 0 },
+        { type: "pg", q: "11. Menendang bola dengan memutar yang akan digunakan untuk menendang ke arah luar, cara tersebut merupakan teknik menendang bola menggunakan …", opt: ["A. Punggung kaki bagian dalam", "B. Punggung kaki", "C. Kaki bagian dalam", "D. Kaki bagian luar"], ans: 3 },
+        { type: "pg", q: "12. Agar bisa melewati penjagaan lawan ketika menguasai bola dalam permainan sepak bola adalah …", opt: ["A. Berlomba lari sambil menggiring bola", "B. Meminta bantuan lawan", "C. Membuat gerak tipu", "D. Mengoperkan bola kepada teman"], ans: 2 },
+        { type: "pg", q: "13. Posisi telapak kaki yang benar saat menahan bola pada permainan sepak bola adalah dengan … arah datangnya bola.", opt: ["A. Menyamping", "B. Menyilang", "C. Menghadap", "D. Membelakangi"], ans: 2 },
+        { type: "pg", q: "14. Berikut ini bagian kaki yang tidak lazim digunakan untuk menahan bola memantul adalah …", opt: ["A. Kaki bagian luar", "B. Kaki bagian dalam", "C. Ujung kaki", "D. Punggung kaki"], ans: 2 },
+        { type: "pg", q: "15. Saat mendapatkan operan bola dari teman satu tim, bisa dilakukan dengan cara memposisikan diri ...", opt: ["A. Jauh dari teman si pengoper, namun jangkauan operan lawan", "B. Dekat dengan teman yang akan mengoper bola", "C. Dalam kerumunan pemain terhadap bola", "D. Di belakang pemain yang menguasai bola"], ans: 1 },
+        { type: "pg", q: "16. Gerakan yang dominan dilakukan dalam permainan sepak bola adalah …", opt: ["A. Menendang bola", "B. Menahan bola", "C. Menggiring bola", "D. Menyundul bola"], ans: 0 },
+        { type: "pg", q: "17. Dalam permainan bola voli pukulan yang tidak diperbolehkan adalah jika saat menerima bola …", opt: ["A. Menggunakan kaki", "B. Menggunakan lutut", "C. Terkena muka", "D. Dipukul dua kali/double"], ans: 3 },
+        { type: "pg", q: "18. Kedua kaki terbuka, lutut ditekuk, kedua lengan lurus dijulurkan ke depan bawah dan tangan satu sama lain dikaitkan atau berpegangan, merupakan teknik …", opt: ["A. Service", "B. Smash", "C. Passing atas", "D. Passing bawah"], ans: 3 },
+        { type: "pg", q: "19. Pada waktu bola datang, bola didorong dengan jari-jari tangan dan perkenaannya melalui ruas pertama dan kedua dari jari telunjuk sampai kelingking, sedangkan ibu jari hanya pada ruas pertama saja adalah …", opt: ["A. Passing atas", "B. Passing bawah", "C. Smash", "D. Service"], ans: 0 },
+        { type: "pg", q: "20. Teknik bertahan yang bisa dilakukan salah satu pemain atau lebih dengan cara kedua tangan diluruskan ke atas dan lompatan di depan net disebut teknik …", opt: ["A. Smash", "B. Blocking", "C. Service", "D. Passing"], ans: 1 },
+        { type: "pg", q: "21. Suatu serangan dalam permainan bola voli dengan teknik pukulan yang keras dan tajam menukik melewati net merupakan salah satu teknik bola voli disebut …", opt: ["A. Service", "B. Passing", "C. Smash", "D. Blocking"], ans: 2 },
+        { type: "pg", q: "22. Berikut ini adalah urutan yang benar pada saat melakukan teknik smash adalah …", opt: ["A. Memukul, mendarat, awalan, dan meloncat", "B. Awalan, meloncat, memukul, dan mendarat", "C. Meloncat, memukul, mendarat, dan awalan", "D. Mendarat, awalan, meloncat, dan memukul"], ans: 1 },
+        { type: "pg", q: "23. Dalam permainan bola voli, teknik passing dapat dibagi menjadi 2 yaitu …", opt: ["A. Depan dan belakang", "B. Luar dan dalam", "C. Bawah dan atas", "D. Kiri dan kanan"], ans: 2 },
+        { type: "pg", q: "24. Mengoper bola adalah suatu usaha dari salah satu pemain untuk membagi atau memberi bola kepada temannya agar memasukkan bola ke dalam ring, mengoper bola dengan kedua tangan dari depan dada biasa disebut …", opt: ["A. Chest pass", "B. Bounce pass", "C. Over head pass", "D. Base ball pass"], ans: 0 },
+        { type: "pg", q: "25. Tujuan utama dalam permainan bola voli adalah….", opt: ["A. Menahan bola agar tidak menyentuh net", "B. Memantulkan bola ke arah lawan agar tidak bisa dikembalikan", "C. Menendang bola sekuat mungkin ke arah lawan", "D. Menggiring bola agar melewati net"], ans: 1 },
+        { type: "pg", q: "26. Bagian tubuh yang paling sering digunakan untuk melakukan passing bawah adalah….", opt: ["A. Ujung jari tangan", "B. Pergelangan kaki", "C. Lengan bagian bawah", "D. Punggung tangan"], ans: 2 },
+        { type: "pg", q: "27. Gerakan mengoper bola kepada rekan satu tim menggunakan kedua lengan bawah yang dirapatkan dinamakan ....", opt: ["A. Passing atas", "B. Passing bawah", "C. Servis atas", "D. Set up"], ans: 1 },
+        { type: "pg", q: "28. Teknik dasar yang digunakan untuk menerima servis atau smes keras dari lawan biasanya adalah...", opt: ["A. Passing atas", "B. Passing bawah", "C. Servis atas", "D. Block"], ans: 1 },
+        { type: "pg", q: "29. Posisi jari-jari tangan saat akan melakukan passing atas membentuk seperti...", opt: ["A. Kepalan tinju", "B. Mangkok", "C. Gunting", "D. Cakar"], ans: 1 },
+        { type: "pg", q: "30. Pukulan keras dan menukik yang bertujuan untuk mematikan lawan disebut...", opt: ["A. Servis", "B. Passing", "C. Smes", "D. Block"], ans: 2 }
+      ],
+      "9.2": []
+    };
+    bankSoalPJOK["7.2"] = bankSoalPJOK["7.1"];
+    bankSoalPJOK["7.3"] = bankSoalPJOK["7.1"];
+    bankSoalPJOK["8.2"] = bankSoalPJOK["8.1"];
+    bankSoalPJOK["9.2"] = bankSoalPJOK["9.1"];
+
+    let studentData = { name: "", class: "", violations: 0 };
+    let currentSubject = "mtk";
+    let currentIdx = 0;
+    let userAnswersPG = [];
+    let userAnswersEssay = [];
+    const MAX_VIOLATIONS = 3;
+
+    // --- FITUR KEAMANAN PERANGKAT & TOMBOL ---
+    document.addEventListener('keydown', function (e) {
+      if (
+        e.key === 'F12' ||
+        (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c')) ||
+        (e.ctrlKey && (e.key === 'u' || e.key === 'U' || e.key === 'c' || e.key === 'C' || e.key === 'v' || e.key === 'V' || e.key === 'a' || e.key === 'A'))
+      ) {
+        e.preventDefault();
+        return false;
+      }
+    });
+
+    document.addEventListener('copy', (e) => e.preventDefault());
+    document.addEventListener('paste', (e) => e.preventDefault());
+    document.addEventListener('cut', (e) => e.preventDefault());
+
+    // --- FITUR DETEKSI AUTO TRANSLATE KHUSUS BAHASA INGGRIS ---
+    const observerTranslate = new MutationObserver((mutations) => {
+      if (currentSubject === 'inggris' && document.getElementById('examScreen').classList.contains('active')) {
+        const isTranslated = document.documentElement.classList.contains('translated-ltr') || 
+                             document.documentElement.classList.contains('translated-rtl') ||
+                             document.querySelector('font[style]') ||
+                             document.querySelector('goog-te-banner-frame');
+        if (isTranslated) {
+          registerViolation("menggunakan penerjemah otomatis / Google Translate pada mata pelajaran Bahasa Inggris");
+        }
+      }
+    });
+
+    observerTranslate.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class'],
+      childList: true,
+      subtree: true
+    });
+
+    function enterFullscreen() {
+      const elem = document.documentElement;
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen().catch(() => {});
+      } else if (elem.webkitRequestFullscreen) {
+        elem.webkitRequestFullscreen();
+      } else if (elem.msRequestFullscreen) {
+        elem.msRequestFullscreen();
+      }
+    }
+
+    function startExam() {
+      const name = document.getElementById('studentName').value.trim();
+      const studentClass = document.getElementById('studentClass').value;
+      const inputToken = document.getElementById('examToken').value.trim();
+
+      if (!name) return alert("Silakan isi nama lengkap!");
+      if (!inputToken) return alert("Silakan masukkan token ujian!");
+
+      document.getElementById('loadingText').innerText = "Memverifikasi Token...";
+      document.getElementById('loading').style.display = 'flex';
+
+      fetch(`${SCRIPT_URL}?action=getToken`)
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById('loading').style.display = 'none';
+          const activeServerToken = data.token || "SMP99";
+
+          if (inputToken.toUpperCase() !== activeServerToken.toUpperCase()) {
+            return alert("Token ujian salah atau sudah diperbarui oleh guru! Silakan minta token terbaru.");
+          }
+
+          enterFullscreen();
+          studentData = { name, class: studentClass, violations: 0 };
+          document.getElementById('studentBadge').innerText = `${name} (${studentClass})`;
+          showScreen('examScreen');
+          startQuiz();
+        })
+        .catch(err => {
+          document.getElementById('loading').style.display = 'none';
+          console.error(err);
+          alert("Gagal terhubung ke server untuk verifikasi token. Periksa koneksi internet Anda.");
+        });
+    }
+
+    function registerViolation(reason) {
+      if (!document.getElementById('examScreen').classList.contains('active')) return;
+
+      studentData.violations++;
+      document.getElementById('violWarning').innerText = `Perhatian: Dilarang berpindah tab/aplikasi & menggunakan penerjemah! (Pelanggaran: ${studentData.violations}/${MAX_VIOLATIONS})`;
+      
+      if (studentData.violations >= MAX_VIOLATIONS) {
+        alert(`Ujian Anda dihentikan secara otomatis karena telah melakukan pelanggaran lebih dari ${MAX_VIOLATIONS} kali (${reason})!`);
+        finishExam(true);
+      } else {
+        alert(`Peringatan (${studentData.violations}/${MAX_VIOLATIONS}): Terdeteksi ${reason}! Jawaban Anda bisa didiskualifikasi jika melanggar lagi.`);
+      }
+    }
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        registerViolation("berpindah tab/browser");
+      }
+    });
+
+    window.addEventListener("blur", () => {
+      registerViolation("membuka aplikasi lain / keluar fokus ujian");
+    });
+
+    function showScreen(id) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    function loadSubject(subj, btn) {
+      document.querySelectorAll('.mapel-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentSubject = subj;
+      startQuiz();
+    }
+
+    function getQuestions() {
+      if (currentSubject === 'pai') {
+        return bankSoalPAI;
+      } else if (currentSubject === 'mtk') {
+        if (bankSoalMatematika[studentData.class]) {
+          return bankSoalMatematika[studentData.class];
+        }
+      } else if (currentSubject === 'ipa') {
+        if (bankSoalIPA[studentData.class]) {
+          return bankSoalIPA[studentData.class];
+        }
+      } else if (currentSubject === 'ips') {
+        if (bankSoalIPS[studentData.class]) {
+          return bankSoalIPS[studentData.class];
+        }
+      } else if (currentSubject === 'inggris') {
+        if (bankSoalBahasaInggris[studentData.class]) {
+          return bankSoalBahasaInggris[studentData.class];
+        }
+      } else if (currentSubject === 'informa') {
+        if (bankSoalInformatika[studentData.class]) {
+          return bankSoalInformatika[studentData.class];
+        }
+      } else if (currentSubject === 'prakarya') {
+        if (bankSoalPrakarya[studentData.class]) {
+          return bankSoalPrakarya[studentData.class];
+        }
+      } else if (currentSubject === 'pjok') {
+        if (bankSoalPJOK[studentData.class]) {
+          return bankSoalPJOK[studentData.class];
+        }
+      } else if (currentSubject === 'mulok') {
+        if (bankSoalMulok[studentData.class]) {
+          return bankSoalMulok[studentData.class];
+        }
+      }
+      return [];
+    }
+
+    function startQuiz() {
+      currentIdx = 0;
+      userAnswersPG = [];
+      userAnswersEssay = [];
+      showQuestion();
+    }
+
+    function showQuestion() {
+      const questions = getQuestions();
+      const contentArea = document.getElementById('quizContent');
+      contentArea.innerHTML = '';
+
+      if (questions.length === 0) {
+        document.getElementById('sectionBadge').style.display = 'none';
+        document.getElementById('questionText').innerText = "Belum ada soal yang tersedia untuk kelas/mapel ini.";
+        document.getElementById('prevBtn').style.display = 'none';
+        document.getElementById('nextBtn').style.display = 'none';
+        document.getElementById('finishBtn').style.display = 'none';
+        return;
+      }
+
+      document.getElementById('sectionBadge').style.display = 'inline-block';
+      const qData = questions[currentIdx];
+
+      document.getElementById('prevBtn').style.display = currentIdx === 0 ? 'none' : 'inline-block';
+      if (currentIdx === questions.length - 1) {
+        document.getElementById('nextBtn').style.display = 'none';
+        document.getElementById('finishBtn').style.display = 'inline-block';
+      } else {
+        document.getElementById('nextBtn').style.display = 'inline-block';
+        document.getElementById('finishBtn').style.display = 'none';
+      }
+
+      if (qData.type === 'pg') {
+        document.getElementById('sectionBadge').innerText = "Bagian A: Pilihan Ganda";
+        document.getElementById('questionText').innerText = qData.q;
+
+        const grid = document.createElement('div');
+        grid.classList.add('options-grid');
+
+        qData.opt.forEach((option, idx) => {
+          const btn = document.createElement('button');
+          btn.classList.add('option-btn', 'notranslate');
+          btn.setAttribute('translate', 'no');
+          if (userAnswersPG[currentIdx] === idx) btn.classList.add('selected');
+          btn.innerText = option;
+          btn.onclick = () => selectOption(idx, btn);
+          grid.appendChild(btn);
+        });
+        contentArea.appendChild(grid);
+      } else if (qData.type === 'essay') {
+        document.getElementById('sectionBadge').innerText = "Bagian B: Soal Essay / Uraian";
+        document.getElementById('questionText').innerText = qData.q;
+
+        const textarea = document.createElement('textarea');
+        textarea.classList.add('form-control', 'notranslate');
+        textarea.setAttribute('translate', 'no');
+        textarea.placeholder = "Tuliskan langkah-langkah penyelesaian dan jawaban Anda di sini...";
+        textarea.value = userAnswersEssay[currentIdx] || '';
+        textarea.oninput = (e) => {
+          userAnswersEssay[currentIdx] = e.target.value;
+        };
+
+        contentArea.appendChild(textarea);
+      }
+    }
+
+    function selectOption(selectedIdx, btn) {
+      document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      userAnswersPG[currentIdx] = selectedIdx;
+    }
+
+    function prevQuestion() {
+      if (currentIdx > 0) {
+        currentIdx--;
+        showQuestion();
+      }
+    }
+
+    function nextQuestion() {
+      const questions = getQuestions();
+      if (currentIdx < questions.length - 1) {
+        currentIdx++;
+        showQuestion();
+      }
+    }
+
+    function finishExam(forceSubmit = false) {
+ 
+      document.getElementById('loadingText').innerText = "Mengirim Jawaban Ke Server...";
+      document.getElementById('loading').style.display = 'flex';
+
+      const questions = getQuestions();
+      let totalCorrect = 0;
+      let totalPG = 0;
+
+      questions.forEach((q, idx) => {
+        if (q.type === 'pg') {
+          totalPG++;
+          if (userAnswersPG[idx] === q.ans) {
+            totalCorrect++;
+          }
+        }
+      });
+
+      const scorePG = totalPG > 0 ? Math.round((totalCorrect / totalPG) * 100) : 0;
+
+      const payload = {
+        name: studentData.name,
+        class: studentData.class,
+        subject: currentSubject,
+        score: scorePG,
+        answersPG: JSON.stringify(userAnswersPG),
+        answersEssay: JSON.stringify(userAnswersEssay),
+        violations: studentData.violations
+      };
+
+      fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      })
+      .then(() => {
+        document.getElementById('loading').style.display = 'none';
+        showScreen('doneScreen');
+      })
+      .catch(err => {
+        document.getElementById('loading').style.display = 'none';
+        console.error(err);
+        alert("Terjadi kesalahan pengiriman. Sistem akan mencoba menyimpan jawaban Anda.");
+        showScreen('doneScreen');
+      });
+    }
+  </script>
+</body>
+</html>
