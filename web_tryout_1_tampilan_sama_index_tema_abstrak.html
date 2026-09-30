@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="id" class="notranslate" translate="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google" content="notranslate">
+  <title>Ujian Online Siswa - SMPN 4 Praya</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-body: #f0f7ff;
+      --primary: #0284c7;
+      --primary-cyan: #06b6d4;
+      --primary-light: #38bdf8;
+      --accent-yellow: #f59e0b;
+      --yellow-bright: #facc15;
+      --success: #10b981;
+      --danger: #ef4444;
+      --dark: #0f172a;
+      --card-bg: #ffffff;
+      --border-color: #e2e8f0;
+    }
+    
+    /* Mencegah seleksi teks global untuk keamanan */
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+      font-family: 'Plus Jakarta Sans', sans-serif; 
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    /* Mengizinkan seleksi teks hanya pada kolom isian */
+    input, textarea {
+      -webkit-user-select: text !important;
+      -moz-user-select: text !important;
+      -ms-user-select: text !important;
+      user-select: text !important;
+    }
+
+    body { 
+      background: var(--bg-body); 
+      background-image: radial-gradient(circle at 10% 10%, rgba(56, 189, 248, 0.08) 0%, transparent 40%),
+                        radial-gradient(circle at 90% 90%, rgba(250, 204, 21, 0.08) 0%, transparent 40%);
+      min-height: 100vh; 
+      color: var(--dark); 
+      padding: 24px 16px; 
+    }
+    .container { max-width: 800px; margin: 0 auto; }
+    
+    /* Header Banner Futuristik */
+    .header-banner {
+      background: linear-gradient(135deg, #0284c7 0%, #06b6d4 50%, #0284c7 100%);
+      color: #ffffff;
+      border-radius: 24px;
+      padding: 28px 24px;
+      text-align: center;
+      box-shadow: 0 12px 30px rgba(2, 132, 199, 0.25);
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+    .header-banner::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(250, 204, 21, 0.35) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .header-banner h1 { 
+      font-size: 1.6rem; 
+      font-weight: 800; 
+      letter-spacing: 1px; 
+      text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .header-banner h2 { 
+      font-size: 1.25rem; 
+      font-weight: 800; 
+      margin-top: 6px; 
+      color: var(--yellow-bright); 
+      text-shadow: 0 0 10px rgba(250, 204, 21, 0.4);
+    }
+    .header-banner p { font-size: 0.9rem; opacity: 0.95; margin-top: 6px; font-weight: 500; }
+
+    .screen { display: none; animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+    .screen.active { display: block; }
+    
+    .card { 
+      background: var(--card-bg); 
+      border-radius: 20px; 
+      padding: 26px; 
+      box-shadow: 0 10px 25px -5px rgba(2, 132, 199, 0.08); 
+      border: 1px solid rgba(56, 189, 248, 0.25); 
+      margin-bottom: 20px; 
+      backdrop-filter: blur(8px);
+    }
+    
+    .form-group { margin-bottom: 18px; text-align: left; }
+    .form-group label { font-weight: 700; display: block; margin-bottom: 6px; font-size: 0.9rem; color: #334155; }
+    .form-control { 
+      width: 100%; 
+      padding: 12px 16px; 
+      border-radius: 14px; 
+      border: 1.5px solid #cbd5e1; 
+      font-size: 0.95rem; 
+      outline: none; 
+      transition: all 0.25s ease; 
+      background: #f8fafc;
+    }
+    .form-control:focus { 
+      border-color: var(--primary-light); 
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.2); 
+    }
+    
+    .btn { 
+      font-size: 0.95rem; 
+      font-weight: 700; 
+      padding: 12px 24px; 
+      border: none; 
+      border-radius: 14px; 
+      cursor: pointer; 
+      transition: all 0.25s ease; 
+    }
+    .btn-primary { 
+      background: linear-gradient(135deg, #0284c7 0%, #06b6d4 100%); 
+      color: #fff; 
+      box-shadow: 0 4px 15px rgba(2, 132, 199, 0.3);
+    }
+    .btn-primary:hover { 
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(2, 132, 199, 0.45);
+    }
+    .btn-secondary { background: #94a3b8; color: #fff; }
+    .btn-secondary:hover { background: #64748b; transform: translateY(-2px); }
+    .btn-group { display: flex; gap: 10px; margin-top: 24px; justify-content: space-between; }
+    
+    .warning-banner { 
+      background: #fef2f2; 
+      border-left: 5px solid var(--danger); 
+      padding: 14px 18px; 
+      border-radius: 12px; 
+      margin-bottom: 20px; 
+      font-size: 0.875rem; 
+      color: #991b1b; 
+      font-weight: 700; 
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.08);
+    }
+    
+    .mapel-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 10px; margin-bottom: 22px; }
+    .mapel-btn { 
+      background: #f8fafc; 
+      border: 1.5px solid var(--border-color); 
+      padding: 12px 6px; 
+      border-radius: 14px; 
+      text-align: center; 
+      cursor: pointer; 
+      font-size: 0.8rem; 
+      font-weight: 700; 
+      color: #475569; 
+      transition: all 0.25s ease; 
+    }
+    .mapel-btn i { display: block; font-size: 1.25rem; margin-bottom: 5px; color: var(--primary-cyan); transition: transform 0.25s ease; }
+    .mapel-btn:hover { border-color: var(--primary-light); transform: translateY(-2px); }
+    .mapel-btn.active { 
+      background: linear-gradient(135deg, #0284c7 0%, #06b6d4 100%); 
+      color: #fff; 
+      border-color: transparent; 
+      box-shadow: 0 4px 12px rgba(6, 182, 212, 0.35);
+    }
+    .mapel-btn.active i { color: var(--yellow-bright); transform: scale(1.1); }
+    
+    .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .options-grid { display: grid; gap: 12px; margin-top: 18px; }
+    .option-btn { 
+      background: #f8fafc; 
+      border: 1.5px solid var(--border-color); 
+      padding: 14px 18px; 
+      border-radius: 14px; 
+      text-align: left; 
+      font-size: 0.95rem; 
+      font-weight: 600;
+      cursor: pointer; 
+      width: 100%; 
+      transition: all 0.25s ease; 
+      color: var(--dark); 
+    }
+    .option-btn:hover { background: #f0f9ff; border-color: var(--primary-light); transform: translateX(3px); }
+    .option-btn.selected { 
+      background: #e0f2fe; 
+      border-color: var(--primary); 
+      font-weight: 800; 
+      color: var(--primary); 
+      box-shadow: 0 2px 10px rgba(2, 132, 199, 0.15);
+    }
+    
+    .badge-section { 
+      background: linear-gradient(135deg, #fef08a 0%, #facc15 100%); 
+      color: #713f12; 
+      padding: 6px 16px; 
+      border-radius: 20px; 
+      font-size: 0.8rem; 
+      font-weight: 800; 
+      margin-bottom: 14px; 
+      display: inline-block; 
+      box-shadow: 0 2px 8px rgba(250, 204, 21, 0.3);
+    }
+    textarea.form-control { resize: vertical; min-height: 120px; white-space: pre-wrap; }
+    .loading-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.8); color: #fff; justify-content: center; align-items: center; flex-direction: column; z-index: 9999; backdrop-filter: blur(6px); }
+    
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+<style id="tema-abstrak-elegan">
+
+  /* =========================================================
+     TEMA VISUAL BARU — ABSTRAK ELEGAN SMPN 4 PRAYA
+     HANYA MENGUBAH TAMPILAN/CSS. FUNGSI, DATA, DAN JAVASCRIPT
+     TIDAK DIUBAH.
+     Palet terinspirasi logo: turquoise, cyan, kuning, hijau, navy.
+     ========================================================= */
+
+  :root {
+    --bg-body: #eef9f8;
+    --primary: #087f8c;
+    --primary-cyan: #13b8c8;
+    --primary-light: #55d6df;
+    --accent-yellow: #d8a900;
+    --yellow-bright: #f6d43a;
+    --success: #15966f;
+    --danger: #d94b55;
+    --dark: #173642;
+    --card-bg: rgba(255, 255, 255, 0.88);
+    --border-color: rgba(19, 184, 200, 0.22);
+  }
+
+  html {
+    background: #eef9f8;
+  }
+
+  body {
+    position: relative;
+    isolation: isolate;
+    overflow-x: hidden;
+    background:
+      radial-gradient(circle at 8% 8%, rgba(19,184,200,.18) 0, transparent 27%),
+      radial-gradient(circle at 92% 12%, rgba(246,212,58,.16) 0, transparent 22%),
+      radial-gradient(circle at 82% 88%, rgba(21,150,111,.12) 0, transparent 28%),
+      linear-gradient(135deg, #f7fcfc 0%, #eef9f8 48%, #e7f6f5 100%);
+  }
+
+  body::before,
+  body::after {
+    content: "";
+    position: fixed;
+    pointer-events: none;
+    z-index: -1;
+    border-radius: 999px;
+    filter: blur(2px);
+  }
+
+  body::before {
+    width: 420px;
+    height: 420px;
+    left: -210px;
+    top: 34%;
+    background: linear-gradient(145deg, rgba(19,184,200,.16), rgba(85,214,223,.02));
+    transform: rotate(24deg);
+  }
+
+  body::after {
+    width: 360px;
+    height: 360px;
+    right: -180px;
+    bottom: 6%;
+    background: linear-gradient(145deg, rgba(246,212,58,.13), rgba(21,150,111,.04));
+    transform: rotate(-22deg);
+  }
+
+  .container {
+    position: relative;
+  }
+
+  /* Header abstrak premium */
+  .header-banner {
+    background:
+      radial-gradient(circle at 15% 25%, rgba(246,212,58,.28) 0, transparent 22%),
+      radial-gradient(circle at 88% 15%, rgba(85,214,223,.28) 0, transparent 24%),
+      linear-gradient(135deg, #075f69 0%, #087f8c 42%, #10a9b6 72%, #087f8c 100%);
+    border: 1px solid rgba(255,255,255,.28);
+    box-shadow:
+      0 20px 45px rgba(7,95,105,.20),
+      inset 0 1px 0 rgba(255,255,255,.22);
+    border-radius: 28px;
+    padding: 30px 24px;
+  }
+
+  .header-banner::before {
+    top: -105px;
+    right: -60px;
+    width: 280px;
+    height: 280px;
+    background:
+      radial-gradient(circle, rgba(246,212,58,.40) 0, rgba(246,212,58,.10) 36%, transparent 70%);
+  }
+
+  .header-banner::after {
+    content: "";
+    position: absolute;
+    left: -100px;
+    bottom: -150px;
+    width: 330px;
+    height: 330px;
+    border-radius: 50%;
+    border: 55px solid rgba(85,214,223,.12);
+    box-shadow: 0 0 0 28px rgba(255,255,255,.035);
+    transform: rotate(-18deg);
+    pointer-events: none;
+  }
+
+  .school-logo {
+    border: 3px solid rgba(246,212,58,.72);
+    box-shadow:
+      0 0 0 7px rgba(255,255,255,.09),
+      0 10px 28px rgba(0,0,0,.24);
+  }
+
+  .school-name,
+  .header-banner h1 {
+    text-shadow: 0 3px 12px rgba(0,0,0,.22);
+  }
+
+  .school-exam-title,
+  .header-banner h2 {
+    color: #ffe66d;
+    text-shadow: 0 2px 12px rgba(0,0,0,.22);
+  }
+
+  /* Kartu */
+  .card {
+    background:
+      linear-gradient(145deg, rgba(255,255,255,.94), rgba(244,252,251,.84));
+    border: 1px solid rgba(19,184,200,.18);
+    box-shadow:
+      0 18px 42px rgba(23,54,66,.08),
+      0 2px 8px rgba(19,184,200,.05);
+    border-radius: 22px;
+  }
+
+  .form-group label {
+    color: #28515c;
+  }
+
+  .form-control {
+    background: rgba(248,253,252,.92);
+    border-color: rgba(8,127,140,.22);
+    color: #173642;
+  }
+
+  .form-control::placeholder {
+    color: #7a969d;
+  }
+
+  .form-control:focus {
+    border-color: var(--primary-cyan);
+    background: #ffffff;
+    box-shadow: 0 0 0 4px rgba(19,184,200,.14);
+  }
+
+  /* Tombol */
+  .btn-primary {
+    background: linear-gradient(135deg, #087f8c 0%, #13b8c8 58%, #36cbd2 100%);
+    box-shadow: 0 8px 20px rgba(8,127,140,.22);
+  }
+
+  .btn-primary:hover {
+    box-shadow: 0 12px 26px rgba(8,127,140,.30);
+  }
+
+  .btn-secondary {
+    background: #78949b;
+  }
+
+  .btn-secondary:hover {
+    background: #55767e;
+  }
+
+  /* Peringatan */
+  .warning-banner {
+    background: linear-gradient(135deg, #fff8e1, #fffdf2);
+    border-left-color: #d8a900;
+    color: #745c00;
+    box-shadow: 0 6px 18px rgba(216,169,0,.10);
+  }
+
+  /* Pilihan mata pelajaran */
+  .mapel-btn {
+    background: linear-gradient(145deg, #fbfefe, #f1f9f8);
+    border-color: rgba(19,184,200,.18);
+    color: #3b5c64;
+  }
+
+  .mapel-btn i {
+    color: #0fa8b5;
+  }
+
+  .mapel-btn:hover {
+    border-color: #55d6df;
+    box-shadow: 0 7px 18px rgba(19,184,200,.10);
+  }
+
+  .mapel-btn.active {
+    background: linear-gradient(135deg, #087f8c 0%, #13b8c8 100%);
+    border-color: transparent;
+    box-shadow: 0 8px 20px rgba(8,127,140,.22);
+  }
+
+  .mapel-btn.active i {
+    color: #ffe66d;
+  }
+
+  /* Pilihan jawaban */
+  .option-btn {
+    background: linear-gradient(145deg, #ffffff, #f4faf9);
+    border-color: rgba(19,184,200,.17);
+    color: #234751;
+  }
+
+  .option-btn:hover {
+    background: #edfafa;
+    border-color: #55d6df;
+    box-shadow: 0 6px 16px rgba(19,184,200,.09);
+  }
+
+  .option-btn.selected {
+    background: linear-gradient(135deg, #dff8f6, #eafcfa);
+    border-color: #0fa8b5;
+    color: #087f8c;
+    box-shadow: 0 5px 16px rgba(8,127,140,.12);
+  }
+
+  /* Label bagian */
+  .badge-section {
+    background: linear-gradient(135deg, #fff0a8 0%, #f6d43a 100%);
+    color: #665000;
+    box-shadow: 0 5px 14px rgba(216,169,0,.18);
+  }
+
+  /* Loading */
+  .loading-overlay {
+    background:
+      radial-gradient(circle at 50% 35%, rgba(19,184,200,.20), transparent 32%),
+      rgba(10,43,51,.88);
+    backdrop-filter: blur(10px);
+  }
+
+  .loading-overlay i {
+    color: #ffe66d !important;
+  }
+
+  /* Sentuhan tipis pada animasi dan layar */
+  .screen {
+    animation: fadeIn 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @media (max-width: 600px) {
+    body {
+      padding: 16px 10px;
+    }
+
+    .header-banner {
+      border-radius: 22px;
+      padding: 24px 14px;
+    }
+
+    .card {
+      border-radius: 18px;
+      padding: 20px;
+    }
+  }
+
+
+/* Kompatibilitas visual untuk komponen Web Tryout 1 */
+body { min-height: 100vh; }
+button, input, select, textarea { font-family: inherit; }
+button { transition: all .22s ease; }
+button:hover { transform: translateY(-1px); }
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: #13b8c8 !important;
+  box-shadow: 0 0 0 4px rgba(19,184,200,.12) !important;
+}
+
+.card, .panel, .exam-card, .question-card, .login-card,
+.result-card, .subject-card {
+  background: linear-gradient(145deg, rgba(255,255,255,.94), rgba(244,252,251,.84));
+  border-color: rgba(19,184,200,.18);
+  box-shadow: 0 18px 42px rgba(23,54,66,.08), 0 2px 8px rgba(19,184,200,.05);
+}
+
+.header, header, .topbar, .navbar {
+  background: linear-gradient(135deg, #075f69 0%, #087f8c 45%, #10a9b6 100%);
+  border-color: rgba(102,224,229,.28);
+  box-shadow: 0 14px 32px rgba(7,95,105,.18);
+}
+
+.btn-primary, .primary, button[type="submit"] {
+  background: linear-gradient(135deg, #087f8c 0%, #13b8c8 58%, #36cbd2 100%);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(8,127,140,.22);
+}
+
+.btn-success, .success {
+  background: linear-gradient(135deg, #087f8c, #15966f);
+  color: #fff;
+}
+
+.btn-danger, .danger {
+  background: linear-gradient(135deg, #c9404d, #e26970);
+  color: #fff;
+}
+
+textarea, input, select {
+  background: rgba(248,253,252,.92);
+  border: 1px solid rgba(8,127,140,.22);
+  color: #173642;
+  border-radius: 12px;
+}
+
+table {
+  border-color: rgba(19,184,200,.16);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+th {
+  background: linear-gradient(135deg, #087f8c, #13b8c8);
+  color: #fff;
+}
+
+tr:hover td { background: #edfafa; }
+
+.loading, #loading, .loading-overlay {
+  background:
+    radial-gradient(circle at 50% 35%, rgba(19,184,200,.20), transparent 32%),
+    rgba(10,43,51,.88) !important;
+  backdrop-filter: blur(10px);
+}
+
+</style>
+</head>
+<body oncontextmenu="return false;" class="notranslate" translate="no">
+  <div id="loading" class="loading-overlay">
+    <i class="fa-solid fa-spinner fa-spin fa-3x" style="margin-bottom:15px; color: var(--yellow-bright);"></i>
+    <h3 style="font-weight:800;" id="loadingText">Mengirim Jawaban Ke Server...</h3>
+  </div>
+
+  <div class="container">
+    <!-- HEADER SEKOLAH -->
+    <div class="header-banner">
+      <h1>SMP NEGERI 4 PRAYA</h1>
+      <h2>UJIAN ONLINE ASTS</h2>
+      <p>Mata Pelajaran Terpadu Tahun Pelajaran 2026/2027</p>
+    </div>
+
+    <!-- LOGIN SISWA -->
+    <div id="loginScreen" class="screen card active">
+      <div class="form-group">
+        <label>Nama Lengkap</label>
+        <input type="text" id="studentName" class="form-control" placeholder="Masukkan nama kamu..." autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label>Pilihan Kelas</label>
+        <select id="studentClass" class="form-control">
+          <option value="7.1">Kelas 7.1</option>
+          <option value="7.2">Kelas 7.2</option>
+          <option value="7.3">Kelas 7.3</option>
+          <option value="8.1">Kelas 8.1</option>
+          <option value="8.2">Kelas 8.2</option>
+          <option value="9.1">Kelas 9.1</option>
+          <option value="9.2">Kelas 9.2</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Token Ujian (Minta ke Guru)</label>
+        <input type="text" id="examToken" class="form-control" placeholder="Ketik token di sini..." autocomplete="off">
+      </div>
+      <button class="btn btn-primary" style="width:100%; margin-top:10px;" onclick="startExam()"><i class="fa-solid fa-right-to-bracket"></i> Masuk Ujian</button>
+    </div>
+
+    <!-- AREA UJIAN -->
+    <div id="examScreen" class="screen card">
+      <div class="warning-banner">
+        ⚠️ <span id="violWarning">Perhatian: Dilarang berpindah tab/aplikasi & menggunakan penerjemah! (Pelanggaran: 0/3)</span>
+      </div>
+      <div class="mapel-grid">
+        <div class="mapel-btn active" onclick="loadSubject('mtk', this)"><i class="fa-solid fa-calculator"></i> MTK</div>
+        <div class="mapel-btn" onclick="loadSubject('ipa', this)"><i class="fa-solid fa-flask"></i> IPA</div>
+        <div class="mapel-btn" onclick="loadSubject('ips', this)"><i class="fa-solid fa-earth-americas"></i> IPS</div>
+        <div class="mapel-btn" onclick="loadSubject('indo', this)"><i class="fa-solid fa-book"></i> B. Indo</div>
+        <div class="mapel-btn" onclick="loadSubject('inggris', this)"><i class="fa-solid fa-language"></i> B. Ing</div>
+        <div class="mapel-btn" onclick="loadSubject('ppkn', this)"><i class="fa-solid fa-shield-halved"></i> PPKn</div>
+        <div class="mapel-btn" onclick="loadSubject('pai', this)"><i class="fa-solid fa-kaaba"></i> PAI</div>
+        <div class="mapel-btn" onclick="loadSubject('pjok', this)"><i class="fa-solid fa-volleyball"></i> PJOK</div>
+        <div class="mapel-btn" onclick="loadSubject('informa', this)"><i class="fa-solid fa-laptop-code"></i> Informa</div>
+        <div class="mapel-btn" onclick="loadSubject('prakarya', this)"><i class="fa-solid fa-scissors"></i> Prakarya</div>
+        <div class="mapel-btn" onclick="loadSubject('mulok', this)"><i class="fa-solid fa-palette"></i> Mulok</div>
+      </div>
+      <div class="quiz-header">
+        <span id="studentBadge" style="font-weight:800; color:var(--primary);"></span>
+      </div>
+      <div id="questionContainer" class="notranslate" translate="no">
+        <div id="sectionBadge" class="badge-section">Bagian A: Pilihan Ganda</div>
+        <div style="font-size:1.05rem; font-weight:700; margin-top:5px; white-space: pre-line;" id="questionText" class="notranslate" translate="no">Memuat soal...</div>
+        <div id="quizContent" style="margin-top: 15px;" class="notranslate" translate="no"></div>
+      </div>
+
+      <!-- NAVIGASI TOMBOL KEMBALI, SELESAI & BERIKUTNYA -->
+      <div class="btn-group">
+        <button id="prevBtn" class="btn btn-secondary" onclick="prevQuestion()"><i class="fa-solid fa-arrow-left"></i> Kembali</button>
+        <div>
+          <button id="nextBtn" class="btn btn-primary" onclick="nextQuestion()">Berikutnya <i class="fa-solid fa-arrow-right"></i></button>
+          <button id="finishBtn" class="btn btn-primary" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%); display:none;" onclick="finishExam()">Kirim Jawaban <i class="fa-solid fa-check"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SELESAI -->
+    <div id="doneScreen" class="screen card" style="text-align:center;">
+      <h2 style="color:var(--primary); font-weight:800;">🎉 Jawaban Berhasil Terkirim! 🎉</h2>
+      <p style="margin-top:10px; color:#475569;">Terima kasih telah mengerjakan ujian dengan jujur. Hasil Anda telah tercatat otomatis di Google Sheet Guru.</p>
+    </div>
+  </div>
+
+  <script>
+    // URL GOOGLE APPS SCRIPT
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxIhRE-1Au2CaBQLZmG0U832RVB1XCAxKYl6hRknD2lH_cEvYkKBK_qObF5cvbbeNN6Sg/exec";
+
+    // Bank Soal Matematika
+    const bankSoalMatematika = {
+      "7.1": [],
+      "7.2": [],
+      "7.3": [],
+      "8.1": [],
+      "8.2": [],
+      "9.1": [],
+      "9.2": []
+    };
+
+    // Bank Soal Bahasa Inggris
+    const bankSoalBahasaInggris = {
+      "7.1": [],
+      "7.2": [],
+      "7.3": [],
+      "8.1": [],
+      "8.2": [],
+      "9.1": [],
+      "9.2": []
+    };
+
+    // Bank Soal Informatika
+    const bankSoalInformatika = {
+      "7.1": [],
+      "7.2": [],
+      "7.3": []
+    };
+
+    // Bank Soal Prakarya
+    const bankSoalPrakarya = {
+      "7.1": [],
+      "7.2": [],
+      "7.3": [],
+      "8.1": [],
+      "8.2": []
+    };
+
+    // Bank Soal PAI (Dapat diakses oleh seluruh pilihan kelas tanpa terkecuali)
+    const bankSoalPAI = [
+      { type: "pg", q: "1. (Matematika) Hasil dari (-12) + 8 - (-5) adalah ...", opt: ["A. -9", "B. 1", "C. -1", "D. 21"], ans: 1 },
+      { type: "pg", q: "2. (IPA) Berikut ini yang merupakan contoh perubahan kimia dalam kehidupan sehari-hari adalah ...", opt: ["A. Es batu mencair menjadi air", "B. Beras ditumbuk menjadi tepung", "C. Kayu dibakar menjadi arang", "D. Lilin meleleh saat dipanaskan"], ans: 2 },
+      { type: "pg", q: "3. (IPS) Kebutuhan manusia yang harus dipenuhi terlebih dahulu untuk mempertahankan kelangsungan hidupnya disebut kebutuhan ...", opt: ["A. Sekunder", "B. Primer", "C. Tersier", "D. Jasmani"], ans: 1 },
+      { type: "pg", q: "4. (Bahasa Indonesia) Teks yang menggambarkan suatu objek, tempat, atau peristiwa secara rinci sehingga pembaca seolah-olah melihat atau merasakannya sendiri disebut teks ...", opt: ["A. Eksplanasi", "B. Narasi", "C. Deskripsi", "D. Prosedur"], ans: 2 },
+      { type: "pg", q: "5. (Bahasa Inggris) Complete the sentence with the correct form of the verb:\nSiti and Dayu ... (study) English together in the library every Tuesday.", opt: ["A. studies", "B. study", "C. studied", "D. is studying"], ans: 1 },
+      { type: "pg", q: "6. (Informatika) Urutan langkah-langkah logis dan sistematis yang disusun untuk menyelesaikan suatu masalah dalam pemrograman komputer disebut ...", opt: ["A. Algoritma", "B. Hardware", "C. Software", "D. Database"], ans: 0 },
+      { type: "pg", q: "7. (PPKn) Rumusan Pancasila yang sah dan resmi sebagai dasar negara Indonesia tercantum dalam ...", opt: ["A. Batang Tubuh UUD 1945", "B. Piagam Jakarta", "C. Pembukaan UUD 1945 Alinea IV", "D. Teks Proklamasi Kemerdekaan"], ans: 2 },
+      { type: "pg", q: "8. (Prakarya) Bahan alam serat tumbuhan yang banyak dimanfaatkan untuk membuat kerajinan tas, topi, dan dompet karena sifatnya yang kuat dan lentur adalah ...", opt: ["A. Tanah liat", "B. Enceng gondok / Daun pandan", "C. Kayu jati", "D. Cangkang kerang"], ans: 1 },
+      { type: "pg", q: "9. (PJOK) Gerakan menendang bola menggunakan kaki bagian dalam pada permainan sepak bola biasanya digunakan untuk ...", opt: ["A. Menembak bola dengan keras ke gawang (shooting)", "B. Mengoper bola jarak pendek (passing)", "C. Lemparan ke dalam (throw in)", "D. Menghadang pergerakan lawan (tackling)"], ans: 1 },
+      { type: "pg", q: "10. (Mulok Bahasa Sasak) Sape aran penganggo adat/pakaian adat khas Sasak suku Lombok saq biasae teanggoq siq sekenuq/mame (pria)?", opt: ["A. Kebaya dan Sarung", "B. Capuq, Pegon, dan Sapuk", "C. Baju Bodo", "D. Baju Koko dan Peci"], ans: 1 },
+      { type: "pg", q: "11. (PAI) Sifat wajib bagi Allah SWT 'As-Sami'' (السميع) memiliki arti bahwa Allah Maha ...", opt: ["A. Melihat", "B. Mendengar", "C. Mengetahui", "D. Bijaksana"], ans: 1 }
+    ];
+
+    let studentData = { name: "", class: "", violations: 0 };
+    let currentSubject = "mtk";
+    let currentIdx = 0;
+    let userAnswersPG = [];
+    let userAnswersEssay = [];
+    const MAX_VIOLATIONS = 3;
+
+    // --- FITUR KEAMANAN PERANGKAT & TOMBOL ---
+    document.addEventListener('keydown', function (e) {
+      if (
+        e.key === 'F12' ||
+        (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c')) ||
+        (e.ctrlKey && (e.key === 'u' || e.key === 'U' || e.key === 'c' || e.key === 'C' || e.key === 'v' || e.key === 'V' || e.key === 'a' || e.key === 'A'))
+      ) {
+        e.preventDefault();
+        return false;
+      }
+    });
+
+    document.addEventListener('copy', (e) => e.preventDefault());
+    document.addEventListener('paste', (e) => e.preventDefault());
+    document.addEventListener('cut', (e) => e.preventDefault());
+
+    // --- FITUR DETEKSI AUTO TRANSLATE KHUSUS BAHASA INGGRIS ---
+    const observerTranslate = new MutationObserver((mutations) => {
+      if (currentSubject === 'inggris' && document.getElementById('examScreen').classList.contains('active')) {
+        const isTranslated = document.documentElement.classList.contains('translated-ltr') || 
+                             document.documentElement.classList.contains('translated-rtl') ||
+                             document.querySelector('font[style]') ||
+                             document.querySelector('goog-te-banner-frame');
+        if (isTranslated) {
+          registerViolation("menggunakan penerjemah otomatis / Google Translate pada mata pelajaran Bahasa Inggris");
+        }
+      }
+    });
+
+    observerTranslate.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class'],
+      childList: true,
+      subtree: true
+    });
+
+    function enterFullscreen() {
+      const elem = document.documentElement;
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen().catch(() => {});
+      } else if (elem.webkitRequestFullscreen) {
+        elem.webkitRequestFullscreen();
+      } else if (elem.msRequestFullscreen) {
+        elem.msRequestFullscreen();
+      }
+    }
+
+    function startExam() {
+      const name = document.getElementById('studentName').value.trim();
+      const studentClass = document.getElementById('studentClass').value;
+      const inputToken = document.getElementById('examToken').value.trim();
+
+      if (!name) return alert("Silakan isi nama lengkap!");
+      if (!inputToken) return alert("Silakan masukkan token ujian!");
+
+      document.getElementById('loadingText').innerText = "Memverifikasi Token...";
+      document.getElementById('loading').style.display = 'flex';
+
+      fetch(`${SCRIPT_URL}?action=getToken`)
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById('loading').style.display = 'none';
+          const activeServerToken = data.token || "SMP99";
+
+          if (inputToken.toUpperCase() !== activeServerToken.toUpperCase()) {
+            return alert("Token ujian salah atau sudah diperbarui oleh guru! Silakan minta token terbaru.");
+          }
+
+          enterFullscreen();
+          studentData = { name, class: studentClass, violations: 0 };
+          document.getElementById('studentBadge').innerText = `${name} (${studentClass})`;
+          showScreen('examScreen');
+          startQuiz();
+        })
+        .catch(err => {
+          document.getElementById('loading').style.display = 'none';
+          console.error(err);
+          alert("Gagal terhubung ke server untuk verifikasi token. Periksa koneksi internet Anda.");
+        });
+    }
+
+    function registerViolation(reason) {
+      if (!document.getElementById('examScreen').classList.contains('active')) return;
+
+      studentData.violations++;
+      document.getElementById('violWarning').innerText = `Perhatian: Dilarang berpindah tab/aplikasi & menggunakan penerjemah! (Pelanggaran: ${studentData.violations}/${MAX_VIOLATIONS})`;
+      
+      if (studentData.violations >= MAX_VIOLATIONS) {
+        alert(`Ujian Anda dihentikan secara otomatis karena telah melakukan pelanggaran lebih dari ${MAX_VIOLATIONS} kali (${reason})!`);
+        finishExam(true);
+      } else {
+        alert(`Peringatan (${studentData.violations}/${MAX_VIOLATIONS}): Terdeteksi ${reason}! Jawaban Anda bisa didiskualifikasi jika melanggar lagi.`);
+      }
+    }
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        registerViolation("berpindah tab/browser");
+      }
+    });
+
+    window.addEventListener("blur", () => {
+      registerViolation("membuka aplikasi lain / keluar fokus ujian");
+    });
+
+    function showScreen(id) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    function loadSubject(subj, btn) {
+      document.querySelectorAll('.mapel-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentSubject = subj;
+      startQuiz();
+    }
+
+    function getQuestions() {
+      if (currentSubject === 'pai') {
+        return bankSoalPAI;
+      } else if (currentSubject === 'mtk') {
+        if (bankSoalMatematika[studentData.class]) {
+          return bankSoalMatematika[studentData.class];
+        }
+      } else if (currentSubject === 'inggris') {
+        if (bankSoalBahasaInggris[studentData.class]) {
+          return bankSoalBahasaInggris[studentData.class];
+        }
+      } else if (currentSubject === 'informa') {
+        if (bankSoalInformatika[studentData.class]) {
+          return bankSoalInformatika[studentData.class];
+        }
+      } else if (currentSubject === 'prakarya') {
+        if (bankSoalPrakarya[studentData.class]) {
+          return bankSoalPrakarya[studentData.class];
+        }
+      }
+      return [];
+    }
+
+    function startQuiz() {
+      currentIdx = 0;
+      userAnswersPG = [];
+      userAnswersEssay = [];
+      showQuestion();
+    }
+
+    function showQuestion() {
+      const questions = getQuestions();
+      const contentArea = document.getElementById('quizContent');
+      contentArea.innerHTML = '';
+
+      if (questions.length === 0) {
+        document.getElementById('sectionBadge').style.display = 'none';
+        document.getElementById('questionText').innerText = "Belum ada soal yang tersedia untuk kelas/mapel ini.";
+        document.getElementById('prevBtn').style.display = 'none';
+        document.getElementById('nextBtn').style.display = 'none';
+        document.getElementById('finishBtn').style.display = 'none';
+        return;
+      }
+
+      document.getElementById('sectionBadge').style.display = 'inline-block';
+      const qData = questions[currentIdx];
+
+      document.getElementById('prevBtn').style.display = currentIdx === 0 ? 'none' : 'inline-block';
+      if (currentIdx === questions.length - 1) {
+        document.getElementById('nextBtn').style.display = 'none';
+        document.getElementById('finishBtn').style.display = 'inline-block';
+      } else {
+        document.getElementById('nextBtn').style.display = 'inline-block';
+        document.getElementById('finishBtn').style.display = 'none';
+      }
+
+      if (qData.type === 'pg') {
+        document.getElementById('sectionBadge').innerText = "Bagian A: Pilihan Ganda";
+        document.getElementById('questionText').innerText = qData.q;
+
+        const grid = document.createElement('div');
+        grid.classList.add('options-grid');
+
+        qData.opt.forEach((option, idx) => {
+          const btn = document.createElement('button');
+          btn.classList.add('option-btn', 'notranslate');
+          btn.setAttribute('translate', 'no');
+          if (userAnswersPG[currentIdx] === idx) btn.classList.add('selected');
+          btn.innerText = option;
+          btn.onclick = () => selectOption(idx, btn);
+          grid.appendChild(btn);
+        });
+        contentArea.appendChild(grid);
+      } else if (qData.type === 'essay') {
+        document.getElementById('sectionBadge').innerText = "Bagian B: Soal Essay / Uraian";
+        document.getElementById('questionText').innerText = qData.q;
+
+        const textarea = document.createElement('textarea');
+        textarea.classList.add('form-control', 'notranslate');
+        textarea.setAttribute('translate', 'no');
+        textarea.placeholder = "Tuliskan langkah-langkah penyelesaian dan jawaban Anda di sini...";
+        textarea.value = userAnswersEssay[currentIdx] || '';
+        textarea.oninput = (e) => {
+          userAnswersEssay[currentIdx] = e.target.value;
+        };
+
+        contentArea.appendChild(textarea);
+      }
+    }
+
+    function selectOption(selectedIdx, btn) {
+      document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      userAnswersPG[currentIdx] = selectedIdx;
+    }
+
+    function nextQuestion() {
+      const questions = getQuestions();
+      if (currentIdx < questions.length - 1) {
+        currentIdx++;
+        showQuestion();
+      }
+    }
+
+    function prevQuestion() {
+      if (currentIdx > 0) {
+        currentIdx--;
+        showQuestion();
+      }
+    }
+
+    function finishExam(forced = false) {
+      const questions = getQuestions();
+      
+      if (!forced) {
+        let unansweredQuestions = [];
+
+        questions.forEach((q, idx) => {
+          if (q.type === 'pg') {
+            if (userAnswersPG[idx] === undefined || userAnswersPG[idx] === null) {
+              unansweredQuestions.push(idx + 1);
+            }
+          } else if (q.type === 'essay') {
+            if (!userAnswersEssay[idx] || userAnswersEssay[idx].trim() === "") {
+              unansweredQuestions.push(idx + 1);
+            }
+          }
+        });
+
+        if (unansweredQuestions.length > 0) {
+          alert(`Pemberitahuan: Masih ada soal yang belum dikerjakan!\nNomor soal yang belum terjawab: ${unansweredQuestions.join(', ')}.`);
+          return;
+        }
+      }
+
+      // Hitung Nilai PG
+      let pgCount = 0;
+      let correctPG = 0;
+
+      questions.forEach((q, idx) => {
+        if (q.type === 'pg') {
+          pgCount++;
+          if (userAnswersPG[idx] === q.ans) {
+            correctPG++;
+          }
+        }
+      });
+
+      const totalScorePG = pgCount > 0 ? Math.round((correctPG / pgCount) * 100) : 0;
+
+      // Kumpulkan Jawaban Essay
+      const essayAnswersList = [];
+      questions.forEach((q, idx) => {
+        if (q.type === 'essay') {
+          essayAnswersList.push(`[Soal ${idx + 1}]: ${userAnswersEssay[idx] || '-'}`);
+        }
+      });
+
+      document.getElementById('loadingText').innerText = "Mengirim Jawaban Ke Server...";
+      document.getElementById('loading').style.display = 'flex';
+
+      const payload = {
+        name: studentData.name,
+        studentClass: studentData.class,
+        subject: currentSubject,
+        scorePG: totalScorePG,
+        essayAnswers: essayAnswersList.join("\n"),
+        violations: studentData.violations
+      };
+
+      fetch(SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      })
+      .then(() => {
+        document.getElementById('loading').style.display = 'none';
+        showScreen('doneScreen');
+      })
+      .catch(err => {
+        document.getElementById('loading').style.display = 'none';
+        console.error(err);
+        alert("Gagal mengirim jawaban. Periksa koneksi internet Anda lalu coba lagi.");
+      });
+    }
+  </script>
+</body>
+</html>
