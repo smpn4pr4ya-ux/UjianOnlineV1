@@ -1336,20 +1336,6 @@ a:hover {
     document.getElementById('teacherPin').value = '';
   }
 
-  function prepareHighConcurrencyQueue() {
-    if (!teacherSession) return Promise.resolve(false);
-    return fetch(`${SCRIPT_URL}?action=setupHighConcurrencyQueue&session=${encodeURIComponent(teacherSession)}&_=${Date.now()}`, {cache:'no-store'})
-      .then(res => res.json())
-      .then(data => {
-        if (!data || !data.success) throw new Error(data && data.message ? data.message : 'Queue belum siap.');
-        return true;
-      })
-      .catch(err => {
-        console.warn('High Concurrency Queue belum siap otomatis:', err);
-        return false;
-      });
-  }
-
   function teacherLogin() {
     const pin = document.getElementById('teacherPin').value.trim();
     const status = document.getElementById('authStatus');
@@ -1362,7 +1348,6 @@ a:hover {
         teacherSession = data.session;
         sessionStorage.setItem('TEACHER_SESSION', teacherSession);
         hideAuthGate();
-        prepareHighConcurrencyQueue();
         loadLiveToken();
         fetchLiveResults();
         fetchBlacklist();
@@ -1388,7 +1373,6 @@ a:hover {
       .then(data => {
         if (!data || !data.valid) throw new Error('Sesi tidak valid.');
         hideAuthGate();
-        prepareHighConcurrencyQueue();
         loadLiveToken();
         fetchLiveResults();
         fetchBlacklist();
